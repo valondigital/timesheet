@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllRoles, createRole } = require('../controllers/roleController')
+const { getAllRoles, createRole } = require('../controllers/roleController');
 
 const router = express.Router();
 

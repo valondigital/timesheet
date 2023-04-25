@@ -5,12 +5,12 @@ const {
   getUserDetails,
   updateUser,
   deleteUser,
-  checkId,
+  // checkId,
 } = require('../controllers/userController');
 
 const router = express.Router();
 
-router.param('id', checkId);
+// router.param('id', checkId);
 
 router.route('/').get(getAllUsers).post(createUser);
 
