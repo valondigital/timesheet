@@ -9,16 +9,22 @@ const userSchema = new mongoose.Schema(
         40,
         'A Users firstname must have less or equal than 40 characters',
       ],
-      minLength: [3, 'A users name must have more or equal than 3 characters'],
+      minLength: [
+        3,
+        'A users first name must have more or equal than 3 characters',
+      ],
     },
     lastName: {
       type: String,
       required: [true, 'A user must have a first name'],
       maxLength: [
         40,
-        'A Users firstname must have less or equal than 40 characters',
+        'A Users lastname must have less or equal than 40 characters',
       ],
-      minLength: [3, 'A users name must have more or equal than 10 characters'],
+      minLength: [
+        3,
+        'A users last name must have more or equal than 10 characters',
+      ],
     },
     email: {
       type: String,
@@ -30,23 +36,23 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Please enter a valid phone number'],
       unique: true,
     },
-    password: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
-    isActive: {
-      type: Boolean,
-      default: false,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
+    // password: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    // },
+    // isAdmin: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // isActive: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // country: {
+    //   type: String,
+    //   required: true,
+    // },
   },
   { timestamps: true }
 );
