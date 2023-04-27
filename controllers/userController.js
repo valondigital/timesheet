@@ -1,6 +1,5 @@
 const User = require('../models/userModel');
-
-// Checking if the request carries the proper paramaters
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.createUser = async (req, res) => {
   try {
@@ -21,7 +20,14 @@ exports.createUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const features = new APIFeatures(User.find(), req.query)
+      .filter()
+      .sort()
+      .limitField()
+      .paginate();
+
+    const users = await features.query;
+
     res.status(200).json({
       status: 'success',
       results: users.length,
