@@ -66,6 +66,7 @@ const userSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: false,
+      select: false,
     },
     country: {
       type: String,
@@ -94,6 +95,11 @@ userSchema.pre('save', function (next) {
   next();
 });
 
+userSchema.pre(/^find/, function (next) {
+  this.find({ isActive: { $ne: false } });
+  next();
+});
+// this points to all the query
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
