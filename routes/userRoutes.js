@@ -1,4 +1,6 @@
 const express = require('express');
+const rateLimit = require('express-rate-limit');
+
 const {
   getAllUsers,
   getUserDetails,
@@ -20,8 +22,14 @@ const {
 
 const router = express.Router();
 
+const limiter = rateLimit({
+  max: 10,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour',
+});
+
 router.route('/signup').post(signUp);
-router.route('/login').post(login);
+router.route('/login').post(limiter, login);
 
 router.route('/forgotPassword').post(forgotPassword);
 router.route('/resetPassword/:token').patch(resetPassword);
