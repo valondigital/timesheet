@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
-// const hpp = require('hpp');
+const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const AppError = require('./utils/appError');
@@ -31,7 +31,7 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // Prevent parameter pollution
-// app.use(hpp());
+app.use(hpp());
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/roles', roleRouter);
 
