@@ -1,19 +1,19 @@
-import React, { ReactNode } from 'react';
-import NavBar from './NavBar';
-import { ColorModeProvider } from "@chakra-ui/react";
+import React, { ReactNode } from "react";
+import NavBar from "./NavBar";
+import { Outlet } from "react-router-dom";
+import { Grid, GridItem } from "@chakra-ui/react";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = () => {
   return (
-    <>
-      <ColorModeProvider>
+    <Grid templateColumns="repeat(6, 1fr)">
+      <GridItem minH="100vh" bg="light.primary">
+        sidebar
+      </GridItem>
+      <GridItem colSpan={5}>
         <NavBar />
-        <div>{children}</div>
-      </ColorModeProvider>
-    </>
+        <Outlet />
+      </GridItem>
+    </Grid>
   );
 };
 

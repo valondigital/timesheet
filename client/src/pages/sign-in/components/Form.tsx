@@ -10,9 +10,10 @@ import {
   FormLabel,
   Input,
   Stack,
-  Link, 
-  Checkbox
+  Link,
+  Checkbox,
 } from "@chakra-ui/react";
+import { Link as ReactRouterLink } from "react-router-dom";
 import styled from "styled-components";
 
 function Form() {
@@ -42,9 +43,11 @@ function Form() {
                   Forgot Password?
                 </Link>
               </Flex>
-              <Button type="submit" variant="secondary" size="lg">
-                Log in
-              </Button>
+              <Link as={ReactRouterLink} to="/">
+                <Button type="submit" variant="secondary" size="lg">
+                  Log in
+                </Button>
+              </Link>
             </Stack>
           </StyledForm>
         </Box>

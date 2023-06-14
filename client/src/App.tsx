@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import SignIn from "./pages/sign-in";
+import Dashboard from "./pages/dashboard";
 import Layout from "./common/Layout";
 import paths from "./common/paths";
 
@@ -14,12 +15,10 @@ function App() {
         <Route
           path={paths.home}
           element={
-            <Layout>
-              <div>Hello</div>
-            </Layout>
+            <Layout/>
           }
         >
-          <Route path={paths.home} element={<SignIn />}/>
+          <Route path={paths.home} element={<Dashboard />}/>
         </Route>
       </Routes>
     </ChakraProvider>

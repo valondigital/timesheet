@@ -5,7 +5,7 @@ import { GrUserWorker } from "react-icons/gr";
 import { BiWallet } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 
-const paths = {
+export const paths:Record<string, string> = {
   home: '/',
   about: '/about',
   login: '/login',
@@ -22,7 +22,7 @@ const paths = {
 }
 
 
-export const pageTitles = {
+export const pageTitles: Record<string, string> = {
   dashboard: 'Dashboard',
   customers: 'Customers',
   agents: 'Agents',
@@ -34,6 +34,23 @@ export const pageTitles = {
   enterNewPassword: 'Enter New Password',
   transactions:'Your Transactions'
 }
+
+// export const pageTitles: Record<string, string> = {
+//   '/': 'Home',
+//   '/about': 'About',
+//   '/login': 'Login',
+//   '/terms': 'Terms',
+//   '/agents': 'Agents',
+//   '/bdaOrders': 'BDA Orders',
+//   '/profile': 'Profile',
+//   '/yourorders': 'Your Orders',
+//   '/wallet': 'Wallet',
+//   '/forgotpassword': 'Forgot Password',
+//   '/enternewpassword': 'Enter New Password',
+//   '/passwordcreated': 'Password Created',
+//   '/transactions': 'Transactions'
+// };
+
 
 export const NavNames = {
   dashboard: 'Dashboard',
