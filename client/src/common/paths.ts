@@ -4,6 +4,8 @@ import { FiUsers } from "react-icons/fi";
 import { GrUserWorker } from "react-icons/gr";
 import { BiWallet } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
+import { FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
+
 
 export const paths:Record<string, string> = {
   home: '/',
@@ -35,27 +37,12 @@ export const pageTitles: Record<string, string> = {
   transactions:'Your Transactions'
 }
 
-// export const pageTitles: Record<string, string> = {
-//   '/': 'Home',
-//   '/about': 'About',
-//   '/login': 'Login',
-//   '/terms': 'Terms',
-//   '/agents': 'Agents',
-//   '/bdaOrders': 'BDA Orders',
-//   '/profile': 'Profile',
-//   '/yourorders': 'Your Orders',
-//   '/wallet': 'Wallet',
-//   '/forgotpassword': 'Forgot Password',
-//   '/enternewpassword': 'Enter New Password',
-//   '/passwordcreated': 'Password Created',
-//   '/transactions': 'Transactions'
-// };
-
 
 export const NavNames = {
   dashboard: 'Dashboard',
   customers: 'Customers',
   agents: 'Agents',
+  terms: 'Terms',
   bdaOrders: 'BDA Orders',
   bdaCustomers:'BDA Customers',
   profile: 'Profile',
@@ -66,19 +53,12 @@ export const NavNames = {
   Wallet: 'Transactions'
 }
 
-// export const pathObject = [
-//   {main: { name: NavNames.dashboard, path: paths.home, icon: <FaWarehouse /> }, sub:[]},
-//   { main: {name: NavNames.agents, path: paths.agents, icon: <GrUserWorker />  }, sub:[]},
-//   {main: { name: 'BDAs' }, sub: [
-//     { name: NavNames.bdaOrders, path: paths.bdaOrders, icon: <CgProfile/> },
-//     { name: NavNames.bdaCustomers, path: paths.customers, icon: <CgProfile/> }
-//   ]},
-//   { main: {name: NavNames.yourOrders, path: paths.yourOrders, icon: <VscFileMedia /> }, sub:[]},
-//   {main: { name: 'Wallet' }, sub: [
-//     { name: NavNames.wallet, path: paths.wallet, icon: <BiWallet/> },
-//     { name: NavNames.transactions, path: paths.transactions, icon: <CgProfile/> }
-//   ]},
-//   { main: {name: NavNames.profile, path: paths.profile, icon: <CgProfile /> }, sub:[]},
-// ]
+export const pathObject = [
+  { icon: FiHome, name: NavNames.dashboard, route: "/" },
+  { icon: FiUser, name: NavNames.profile, route: "/profile" },
+  { icon: FiSettings, name: NavNames.terms, route: "/terms" },
+  { icon: FiLogOut, name: NavNames.wallet, route: "/logout" },
+];
+
 
 export default paths;
