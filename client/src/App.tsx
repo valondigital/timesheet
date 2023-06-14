@@ -4,6 +4,7 @@ import theme from "./theme";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import SignIn from "./pages/sign-in";
 import Dashboard from "./pages/dashboard";
+import Profile from "./pages/profile";
 import Layout from "./common/Layout";
 import paths from "./common/paths";
 
@@ -19,6 +20,7 @@ function App() {
           }
         >
           <Route path={paths.home} element={<Dashboard />}/>
+          <Route path={paths.profile} element={<Profile />}/>
         </Route>
       </Routes>
     </ChakraProvider>

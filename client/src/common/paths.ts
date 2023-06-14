@@ -56,8 +56,8 @@ export const NavNames = {
 export const pathObject = [
   { icon: FiHome, name: NavNames.dashboard, route: "/" },
   { icon: FiUser, name: NavNames.profile, route: "/profile" },
-  { icon: FiSettings, name: NavNames.terms, route: "/terms" },
-  { icon: FiLogOut, name: NavNames.wallet, route: "/logout" },
+  { icon: FiSettings, name: NavNames.terms, route: "/settings" },
+  { icon: FiLogOut, name: NavNames.wallet, route: "/login" },
 ];
 
 
