@@ -1,29 +1,28 @@
-import d1 from"assets/icons/d1.png"
-import d2 from"assets/icons/d2.png"
-import d3 from"assets/icons/d3.png"
-import d4 from"assets/icons/d4.png"
+import { AiOutlineInbox, AiFillCalendar, AiOutlineMessage } from "react-icons/ai";
+import { RiContactsLine, RiFileList2Line, RiShoppingCartLine } from "react-icons/ri";
+
 
 
 export const stats = [
   {
     title: "Today’s Money",
     amount: 4500,
-    icon: d1
+    icon: AiOutlineInbox
   },
   {
     title: "Today's Users",
     amount: 3500,
-    icon: d2
+    icon: AiFillCalendar
   },
   {
     title: "New Clients",
     amount: 4500,
-    icon: d3
+    icon: AiOutlineMessage
   },
   {
     title: "Total Checkins",
     amount: 4500,
-    icon: d4
+    icon: RiContactsLine
   }
 ]
 
@@ -31,6 +30,6 @@ export const metrics = [
   {
     name: "Today’s Money",
     amount: 4500,
-    icon: d1
+    icon:RiContactsLine
   },
 ]

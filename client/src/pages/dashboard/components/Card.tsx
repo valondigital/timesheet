@@ -1,14 +1,14 @@
 import React from "react";
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, Icon } from "@chakra-ui/react";
+import { IconType } from "react-icons/lib";
 
 interface CustomCardProps {
   title: string;
   amount: number;
-  icon: string;
+  icon: IconType;
 }
 
-
-function Card({title, amount, icon}: CustomCardProps) {
+function Card({ title, amount, icon }: CustomCardProps) {
   return (
     <Box>
       <Flex justifyContent="space-between">
@@ -17,7 +17,7 @@ function Card({title, amount, icon}: CustomCardProps) {
           <Text>{amount}</Text>
         </Box>
         <Box>
-          <Image src={icon}/>
+          <Icon as={icon} boxSize={8} color="light.primary"/>
         </Box>
       </Flex>
     </Box>

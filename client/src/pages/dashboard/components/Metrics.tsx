@@ -3,7 +3,7 @@ import { FaUser, FaChartBar, FaClock, FaMoneyBillAlt } from "react-icons/fa";
 
 const Metrics = () => {
   return (
-    <Box bg="white" borderRadius="lg" boxShadow="xl" p={6} width="300px">
+    <Box bg="white" borderRadius="lg" boxShadow="xl" p={6}>
       <Flex direction="column" justifyContent="space-between" height="100%">
         <Flex align="center" justify="center" mb={4}>
           <Icon as={FaUser} boxSize={16} color="light.primary" />

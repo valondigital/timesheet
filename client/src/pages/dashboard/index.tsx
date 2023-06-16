@@ -15,7 +15,7 @@ function index() {
           </StyledGridItem>
         ))}
       </Grid>
-      <Grid templateColumns="repeat(3, 1fr)" gap={4} my={8}>
+      <Grid templateColumns="repeat(4, 1fr)" gap={4} my={8}>
         {stats.map((item) => (
          <Metrics/>
         ))}
