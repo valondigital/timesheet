@@ -1,5 +1,5 @@
 import { AiOutlineInbox, AiFillCalendar, AiOutlineMessage } from "react-icons/ai";
-import { RiContactsLine, RiFileList2Line, RiShoppingCartLine } from "react-icons/ri";
+import { RiContactsLine } from "react-icons/ri";
 
 
 

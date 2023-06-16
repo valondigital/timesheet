@@ -1,4 +1,4 @@
-import { StyleFunctionProps, useColorModeValue } from "@chakra-ui/react";
+import { StyleFunctionProps } from "@chakra-ui/react";
 
 export const HeadingStyle = {
   baseStyle: () => ({

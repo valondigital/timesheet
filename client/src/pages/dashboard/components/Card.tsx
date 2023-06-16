@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, Image, Text, Icon } from "@chakra-ui/react";
+import { Box, Flex, Text, Icon } from "@chakra-ui/react";
 import { IconType } from "react-icons/lib";
 
 interface CustomCardProps {

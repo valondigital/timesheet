@@ -1,9 +1,8 @@
-import { Box, Flex, Avatar, Text, Divider, Badge, Heading, Image } from "@chakra-ui/react";
+import { Box, Flex, Avatar, Text, Divider, Badge, Heading } from "@chakra-ui/react";
 import { MdEmail, MdPhone, MdCake, MdWork } from "react-icons/md";
 
 const Index = () => {
-  // Random image URL from Pexels.com
-  const randomImageUrl = "https://images.pexels.com/photos/5740711/pexels-photo-5740711.jpeg";
+  const randomImageUrl = "https://images.pexels.com/photos/15663076/pexels-photo-15663076/free-photo-of-a-man-driving-a-car.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load";
 
   return (
     <Box p={4}>

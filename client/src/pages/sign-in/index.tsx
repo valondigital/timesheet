@@ -2,7 +2,6 @@ import React from "react";
 import {
   Grid,
   GridItem,
-  Center,
   Flex,
   Heading,
   Text,
