@@ -15,8 +15,8 @@ function NavBar() {
     }
   }, [location.pathname]);
   return (
-    <Box px={5}>
-      <Flex align="center" justifyContent="space-between" p={4}>
+    <Box>
+      <Flex align="center" justifyContent="space-between">
         <Box>{pageTitle.replace(/^\w/, (c) => c.toUpperCase())}</Box>
         <HStack align="center">
           <Link as={ReactRouterLink} to="/login" p={0}>
