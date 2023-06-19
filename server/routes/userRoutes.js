@@ -28,7 +28,9 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour',
 });
 
-router.route('/signup').post(signUp);
+router
+  .route('/signup')
+  .post(protectRoute, restrictTo('admin', 'super-admin'), signUp);
 router.route('/login').post(limiter, login);
 
 router.route('/forgotPassword').post(forgotPassword);

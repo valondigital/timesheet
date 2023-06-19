@@ -1,21 +1,12 @@
-import { VscFileMedia } from "react-icons/vsc";
-import { FaWarehouse } from "react-icons/fa";
-import { FiUsers } from "react-icons/fi";
-import { GrUserWorker } from "react-icons/gr";
-import { BiWallet } from "react-icons/bi";
-import { CgProfile } from "react-icons/cg";
-import { FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
+import { BiTimeFive } from "react-icons/bi";
+import { FiHome, FiUser, FiLogOut } from "react-icons/fi";
 
 
 export const paths:Record<string, string> = {
   home: '/',
-  about: '/about',
   login: '/login',
-  terms: '/terms',
-  agents: '/agents',
-  bdaOrders: '/bdaOrders',
   profile: '/profile',
-  yourOrders: '/yourorders',
+  timeclock: '/timeclock',
   wallet: '/wallet',
   forgotPassword: '/forgotpassword',
   enterNewPassword: '/enternewpassword',
@@ -26,38 +17,23 @@ export const paths:Record<string, string> = {
 
 export const pageTitles: Record<string, string> = {
   dashboard: 'Dashboard',
-  customers: 'Customers',
-  agents: 'Agents',
-  bdaOrders: 'BDA Orders',
+  timeclock: 'Time Clock',
   profile: 'Profile',
-  wallet: 'Wallet',
-  yourOrders: 'Your Orders',
-  forgotPassword: 'Forgot Password',
-  enterNewPassword: 'Enter New Password',
-  transactions:'Your Transactions'
 }
 
 
 export const NavNames = {
   dashboard: 'Dashboard',
-  customers: 'Customers',
-  agents: 'Agents',
-  terms: 'Terms',
-  bdaOrders: 'BDA Orders',
-  bdaCustomers:'BDA Customers',
   profile: 'Profile',
-  wallet: 'Wallet',
-  yourOrders: 'Your Orders',
-  transactions:'Transactions',
-  BDA_Orders:'BDA Orders',
-  Wallet: 'Transactions'
+  timeclock: 'Time Clock',
+  logout: "Log Out"
 }
 
 export const pathObject = [
-  { icon: FiHome, name: NavNames.dashboard, route: "/" },
-  { icon: FiUser, name: NavNames.profile, route: "/profile" },
-  { icon: FiSettings, name: NavNames.terms, route: "/settings" },
-  { icon: FiLogOut, name: NavNames.wallet, route: "/login" },
+  { icon: FiHome, name: NavNames.dashboard, route: paths.home },
+  { icon: FiUser, name: NavNames.profile, route: paths.profile },
+  { icon: BiTimeFive, name: NavNames.timeclock, route: paths.timeclock },
+  { icon: FiLogOut, name: NavNames.logout, route: paths.login },
 ];
 
 
