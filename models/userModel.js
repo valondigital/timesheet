@@ -76,7 +76,11 @@ const userSchema = new mongoose.Schema(
     passwordResetToken: String,
     passwordResetExpires: Date,
   },
+<<<<<<< HEAD
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
+=======
+  { timestamps: true }
+>>>>>>> d2d405c3e44dc14e160406092ca25773c7fa40ee
 );
 
 userSchema.pre('save', async function (next) {
@@ -95,10 +99,17 @@ userSchema.pre('save', function (next) {
   next();
 });
 
+<<<<<<< HEAD
 // userSchema.pre(/^find/, function (next) {
 //   this.find({ isActive: { $ne: false } });
 //   next();
 // });
+=======
+userSchema.pre(/^find/, function (next) {
+  this.find({ isActive: { $ne: false } });
+  next();
+});
+>>>>>>> d2d405c3e44dc14e160406092ca25773c7fa40ee
 // this points to all the query
 userSchema.methods.correctPassword = async function (
   candidatePassword,
