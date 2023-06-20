@@ -3,12 +3,13 @@ const pug = require('pug');
 const { convert } = require('html-to-text');
 
 module.exports = class Email {
-  constructor(user, url) {
+  constructor(user, url, loginDetails) {
     this.to = user.email;
     this.firstName = user.firstName;
     this.url = url;
     this.from = 'Valon Time Tracker <admin@valonconsultinggroup.com>';
-    this.transporter = this.newTransport(); // Assign the created transport object to a property
+    this.transporter = this.newTransport();
+    this.loginDetails = loginDetails; // Assign the created transport object to a property
   }
 
   newTransport() {
@@ -30,6 +31,7 @@ module.exports = class Email {
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
       firstName: this.firstName,
       url: this.url,
+      loginDetails: this.loginDetails,
       subject,
     });
 
@@ -51,5 +53,12 @@ module.exports = class Email {
 
   async sendWelcome() {
     await this.send('Welcome', 'Welcome to the Valon timesheet');
+  }
+
+  async sendPasswordReset() {
+    await this.send(
+      'passwordReset',
+      'Your password reset token (valid for only 10 minutes)'
+    );
   }
 };
