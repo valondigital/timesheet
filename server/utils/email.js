@@ -14,8 +14,15 @@ module.exports = class Email {
 
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
-      // sendgrid
-      return 1;
+      const transporter = nodemailer.createTransport({
+        host: 'smtp-relay.sendinblue.com',
+        port: 587,
+        auth: {
+          user: 'ayomoses111@gmail.com',
+          pass: 'xsmtpsib-69491b3f0bb7c7a8ea50deaec757eb7d87906ae9197f63d727240b62d38b8881-HNSWYvyQ9nsCBwz7',
+        },
+      });
+      return transporter;
     }
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
@@ -35,14 +42,14 @@ module.exports = class Email {
       subject,
     });
 
-    const text = convert(html);
+    // const text = convert(html);
 
     const mailOptions = {
       from: this.from,
       to: this.to,
       subject,
       html,
-      text,
+      // text,
     };
 
     await this.transporter.sendMail(mailOptions).catch((err) => {
