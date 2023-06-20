@@ -1,10 +1,22 @@
+// eslint-disable
 const { promisify } = require('util');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const randomstring = require('randomstring');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const sendEmail = require('../utils/email');
+const Email = require('../utils/email');
+
+const generateRandomPassword = (length = 8) => {
+  const characters =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const password = randomstring.generate({
+    length: length,
+    charset: characters,
+  });
+  return password;
+};
 
 const signToken = (id) => {
   const token = jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -38,23 +50,43 @@ exports.signUp = catchAsync(async (req, res) => {
     lastName,
     email,
     phone,
+<<<<<<< HEAD
+=======
     password,
     passwordConfirm,
+>>>>>>> d2d405c3e44dc14e160406092ca25773c7fa40ee
     country,
     passwordChangedAt,
     role,
   } = req.body;
+<<<<<<< HEAD
+  const password = generateRandomPassword();
+=======
+>>>>>>> d2d405c3e44dc14e160406092ca25773c7fa40ee
   const newUser = await User.create({
     firstName,
     lastName,
     email,
     phone,
     password,
+<<<<<<< HEAD
+    passwordConfirm: password,
+=======
     passwordConfirm,
+>>>>>>> d2d405c3e44dc14e160406092ca25773c7fa40ee
     passwordChangedAt,
     country,
     role,
   });
+<<<<<<< HEAD
+  const loginDetails = {
+    email,
+    password,
+  };
+  const url = `${req.protocol}://${req.get('host')}/login`;
+  await new Email(newUser, url, loginDetails).sendWelcome();
+=======
+>>>>>>> d2d405c3e44dc14e160406092ca25773c7fa40ee
   createSendToken(newUser, 201, res);
 });
 
@@ -136,6 +168,14 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
+<<<<<<< HEAD
+
+  try {
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/users/resetPassword/${resetToken}`;
+    await new Email(user, resetURL).sendPasswordReset();
+=======
   // send it to user's email
   const resetURL = `${req.protocol}://${req.get(
     'host'
@@ -148,6 +188,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       subject: 'Your password reset token(valid) for 10min',
       message,
     });
+>>>>>>> d2d405c3e44dc14e160406092ca25773c7fa40ee
 
     res.status(200).json({
       status: 'success',

@@ -1,15 +1,33 @@
 const mongoose = require('mongoose');
 
-const deptSchema = new mongoose.Schema(
+const departmentSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'A department must have a valid name'],
+      required: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
+    employees: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-const Department = mongoose.model('Department', deptSchema);
+departmentSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'employees',
+    select: '-passwordChangedAt -createdAt -updatedAt -__v',
+  });
+  next();
+});
+
+const Department = mongoose.model('Department', departmentSchema);
 
 module.exports = Department;

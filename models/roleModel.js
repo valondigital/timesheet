@@ -11,7 +11,7 @@ const roleSchema = new mongoose.Schema(
       required: [true, 'A role must have a valid description'],
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 const Role = mongoose.model('Role', roleSchema);
