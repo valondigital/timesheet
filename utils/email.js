@@ -22,10 +22,8 @@ module.exports = class Email {
           pass: process.env.EMAIL_API_KEY,
         },
       });
-      console.log('email sent!!!');
       return transporter;
     }
-    console.log('email sent dev');
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
