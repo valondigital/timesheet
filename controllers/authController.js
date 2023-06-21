@@ -70,8 +70,7 @@ exports.signUp = catchAsync(async (req, res) => {
     email,
     password,
   };
-  // const url = `${req.protocol}://${req.get('host')}/login`;
-  const url = 'https://ayomosesportfolio.web.app';
+  const url = `${req.protocol}://${req.get('host')}/login`;
   await new Email(newUser, url, loginDetails).sendWelcome();
   createSendToken(newUser, 201, res);
 });

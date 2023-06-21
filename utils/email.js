@@ -15,8 +15,8 @@ module.exports = class Email {
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
       const transporter = nodemailer.createTransport({
-        host: 'smtp-relay.sendinblue.com',
-        port: 587,
+        service: 'gmail',
+        // port: 587,
         auth: {
           user: process.env.EMAIL,
           pass: process.env.EMAIL_API_KEY,
