@@ -2,6 +2,12 @@ const nodemailer = require('nodemailer');
 const pug = require('pug');
 const { convert } = require('html-to-text');
 
+const removeQuotes = (str) => {
+  if (str.startsWith('"') && str.endsWith('"') && str.length >= 2) {
+    return str.slice(1, -1);
+  }
+  return str;
+};
 module.exports = class Email {
   constructor(user, url, loginDetails) {
     this.to = user.email;
@@ -14,12 +20,13 @@ module.exports = class Email {
 
   newTransport() {
     // if (process.env.NODE_ENV === 'production') {
+    const sanitizedApiKey = removeQuotes(process.env.EMAIL_API_KEY);
     const transporter = nodemailer.createTransport({
       host: 'smtp-relay.sendinblue.com',
       port: 587,
       auth: {
         user: process.env.EMAIL,
-        pass: process.env.EMAIL_API_KEY,
+        pass: sanitizedApiKey,
       },
     });
     return transporter;
