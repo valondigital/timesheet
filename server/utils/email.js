@@ -42,14 +42,14 @@ module.exports = class Email {
       subject,
     });
 
-    // const text = convert(html);
+    const text = convert(html);
 
     const mailOptions = {
       from: this.from,
       to: this.to,
       subject,
       html,
-      // text,
+      text,
     };
 
     await this.transporter.sendMail(mailOptions).catch((err) => {
