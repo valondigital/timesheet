@@ -8,15 +8,47 @@ import {
   Button,
   FormControl,
   FormLabel,
+  FormErrorMessage,
   Input,
   Stack,
   Link,
   Checkbox,
 } from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link as ReactRouterLink, useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
+import * as yup from "yup";
+import { useSignIn } from "../hooks/queryHooks";
+
+export type FormValues = {
+  email: string;
+  password: string;
+};
+
+const schema = yup
+  .object()
+  .shape({
+    email: yup.string().required(),
+    password: yup.string().required(),
+  })
+  .required();
 
 function Form() {
+  const { mutate, isLoading } = useSignIn();
+  const location = useLocation();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({ resolver: yupResolver(schema) });
+
+  const onSubmit = (data: FormValues) => {
+    console.log(data, "this is the data here!!!");
+    mutate({ data });
+  };
+
   return (
     <Container height="100%" px={20}>
       <Flex h="100%" align="center" justify="center">
@@ -27,15 +59,30 @@ function Form() {
           <Text variant="body" color="textWhite">
             Our AI technology is here to help you succeed!
           </Text>
-          <StyledForm>
+          <StyledForm onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email Address</FormLabel>
-                <Input type="email" variant="outline" autoComplete="off" />
+                <Input
+                  type="email"
+                  variant="outline"
+                  autoComplete="off"
+                  {...register("email")}
+                />
+                {errors?.email && (
+                  <FormErrorMessage>Email is required.</FormErrorMessage>
+                )}
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" variant="outline" />
+                <Input
+                  type="password"
+                  variant="outline"
+                  {...register("password")}
+                />
+                {errors?.email && (
+                  <FormErrorMessage>Email is required.</FormErrorMessage>
+                )}
               </FormControl>
               <Flex justifyContent="space-between" align="center">
                 <Checkbox defaultChecked>Remember Me</Checkbox>
@@ -43,11 +90,9 @@ function Form() {
                   Forgot Password?
                 </Link>
               </Flex>
-              <Link as={ReactRouterLink} to="/">
-                <Button type="submit" variant="secondary" size="lg">
-                  Log in
-                </Button>
-              </Link>
+              <Button type="submit" variant="secondary" size="lg">
+                Log in
+              </Button>
             </Stack>
           </StyledForm>
         </Box>

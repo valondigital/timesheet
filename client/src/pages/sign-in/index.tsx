@@ -10,7 +10,12 @@ import {
 } from "@chakra-ui/react";
 import Form from "./components/Form";
 
-function index() {
+
+
+
+const Index = () => {
+  
+  
   return (
     <Flex height="100vh">
       <Grid templateColumns="repeat(2, 1fr)" height="100%">
@@ -37,4 +42,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;
