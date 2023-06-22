@@ -53,7 +53,7 @@ module.exports = class Email {
     };
 
     await this.transporter.sendMail(mailOptions).catch((err) => {
-      console.error('Error sending email:', err);
+      console.log('Error sending email:', err);
       throw err;
     });
   }
