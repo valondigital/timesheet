@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const pug = require('pug');
 const { convert } = require('html-to-text');
+const AppError = require('./appError');
 
 module.exports = class Email {
   constructor(user, url, loginDetails) {
@@ -53,8 +54,7 @@ module.exports = class Email {
     };
 
     await this.transporter.sendMail(mailOptions).catch((err) => {
-      console.log('Error sending email:', err);
-      throw err;
+      return new AppError(err, 500);
     });
   }
 
