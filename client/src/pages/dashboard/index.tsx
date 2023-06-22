@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Grid } from "@chakra-ui/react";
 import Card from "./components/Card";
 import Metrics from "./components/Metrics";
 import { stats } from "./helpers";
 import styled from "styled-components";
 
-function index() {
+const Index = () => {
+
   return (
     <Box>
       <Grid templateColumns="repeat(4, 1fr)" gap={4}>
@@ -17,14 +18,14 @@ function index() {
       </Grid>
       <Grid templateColumns="repeat(4, 1fr)" gap={4} my={8}>
         {stats.map((item) => (
-         <Metrics/>
+          <Metrics />
         ))}
       </Grid>
     </Box>
   );
-}
+};
 
-export default index;
+export default Index;
 
 const StyledGridItem = styled(Box)`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

@@ -3,7 +3,7 @@ import { MdEmail, MdPhone, MdCake, MdWork } from "react-icons/md";
 
 const Index = () => {
   const randomImageUrl = "https://images.pexels.com/photos/15663076/pexels-photo-15663076/free-photo-of-a-man-driving-a-car.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load";
-
+  
   return (
     <Box p={4}>
       <Flex align="center" mb={4}>

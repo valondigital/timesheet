@@ -3,14 +3,22 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
+import { AxiosProvider } from "./setup/app-context-manager/AxiosContext";
+import { setupAuthAxios, setupPublicAxios } from "setup/auth/axios";
+
+setupPublicAxios(process.env.REACT_APP_BASE_URL);
+setupAuthAxios(process.env.REACT_APP_BASE_URL, "your-auth-token");
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <App />
+      <AxiosProvider>
+        <App />
+      </AxiosProvider>
     </React.StrictMode>
   </BrowserRouter>
 );
