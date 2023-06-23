@@ -18,6 +18,7 @@ type IUserDetails = {
   country: string;
   createdAt: string;
   updatedAt: string;
+  phone: number;
   __v: number;
 };
 

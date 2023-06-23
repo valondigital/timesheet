@@ -1,15 +1,16 @@
 import { Box, Flex, Avatar, Text, Divider, Badge, Heading } from "@chakra-ui/react";
 import { MdEmail, MdPhone, MdCake, MdWork } from "react-icons/md";
+import { useUserDetailsContext } from "setup/app-context-manager/UserDetailsContext";
 
 const Index = () => {
-  const randomImageUrl = "https://images.pexels.com/photos/15663076/pexels-photo-15663076/free-photo-of-a-man-driving-a-car.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load";
-  
+  const { userDetails, updateUserDetails } = useUserDetailsContext();
+  console.log(userDetails)
   return (
     <Box p={4}>
       <Flex align="center" mb={4}>
-        <Avatar name="John Doe" size="xl" src={randomImageUrl} mr={4} />
+        <Avatar name={`${userDetails?.firstName} ${userDetails?.lastName}`} size="xl" mr={4} />
         <Box>
-          <Text fontSize="xl" fontWeight="bold">John Doe</Text>
+          <Text fontSize="xl" fontWeight="bold">{userDetails?.firstName} {userDetails?.lastName}</Text>
           <Badge colorScheme="green">Active</Badge>
         </Box>
       </Flex>
@@ -18,11 +19,11 @@ const Index = () => {
         <Heading variant="tertiary" color="textLight" mb={2}>Personal Information</Heading>
         <Flex align="center" mb={2}>
           <MdEmail size={18} />
-          <Text ml={2}>john.doe@example.com</Text>
+          <Text ml={2}>{userDetails?.email}</Text>
         </Flex>
         <Flex align="center" mb={2}>
           <MdPhone size={18} />
-          <Text ml={2}>+1234567890</Text>
+          <Text ml={2}>{userDetails?.phone}</Text>
         </Flex>
         <Flex align="center" mb={2}>
           <MdCake size={18} />
