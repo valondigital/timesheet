@@ -10,7 +10,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
 
 setupPublicAxios(process.env.REACT_APP_BASE_URL);
-setupAuthAxios(process.env.REACT_APP_BASE_URL, "your-auth-token");
+setupAuthAxios(process.env.REACT_APP_BASE_URL, localStorage.jwt_token);
+
+console.log(localStorage.jwt_token)
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

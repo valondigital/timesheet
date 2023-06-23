@@ -8,59 +8,94 @@ import {
   Input,
   Stack,
   Link,
-  useToast,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { useSignUp } from "../hooks/queryHooks";
+
+export type FormValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: number;
+  country: string;
+};
+
+const schema = yup
+  .object()
+  .shape({
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    email: yup.string().required(),
+    phone: yup.number().required(),
+    country: yup.string().required(),
+  })
+  .required();
 
 function Form() {
-  const toast = useToast()
+  const { mutate, isLoading } = useSignUp();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({ resolver: yupResolver(schema) });
+
+  const onSubmit = (data: FormValues) => {
+    console.log(data)
+    mutate({ data });
+  };
   return (
     <Box maxW="50%">
       <Heading variant="h2" color="blue2" marginBottom={4}>
         Create User
       </Heading>
-
-    <Button
-      onClick={() =>
-        toast({
-          title: 'Account created.',
-          description: "We've created your account for you.",
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        })
-      }
-    >
-      Show Toast
-    </Button>
-      <StyledForm>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>
           <FormControl id="firstName">
             <FormLabel>First Name</FormLabel>
-            <Input type="text" variant="outline" autoComplete="off" />
+            <Input
+              type="text"
+              variant="outline"
+              autoComplete="off"
+              {...register("firstName")}
+            />
           </FormControl>
           <FormControl id="lastName">
             <FormLabel>Last Name</FormLabel>
-            <Input type="text" variant="outline" autoComplete="off" />
+            <Input
+              type="text"
+              variant="outline"
+              autoComplete="off"
+              {...register("lastName")}
+            />
           </FormControl>
           <FormControl id="email">
             <FormLabel>Email Address</FormLabel>
-            <Input type="email" variant="outline" autoComplete="off" />
+            <Input
+              type="email"
+              variant="outline"
+              autoComplete="off"
+              {...register("email")}
+            />
           </FormControl>
           <FormControl id="phone">
             <FormLabel>Phone</FormLabel>
-            <Input type="number" variant="outline" />
+            <Input type="number" variant="outline" {...register("phone")} />
           </FormControl>
           <FormControl id="country">
             <FormLabel>Country</FormLabel>
-            <Input type="text" variant="outline" />
+            <Input type="text" variant="outline" {...register("country")} />
           </FormControl>
-          <Link as={ReactRouterLink} to="/">
-            <Button type="submit" variant="secondary" size="lg">
-              Add User
-            </Button>
-          </Link>
+          <Button
+            type="submit"
+            variant="secondary"
+            size="lg"
+          >
+            Add User
+          </Button>
         </Stack>
       </StyledForm>
     </Box>

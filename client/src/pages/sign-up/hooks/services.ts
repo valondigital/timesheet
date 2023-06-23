@@ -1,6 +1,6 @@
 import endpoints from "common/endpoints";
 import { Params } from "common/types";
-import { publicAxios as axios } from "setup/auth/axios";
+import { authAxios as axios } from "setup/auth/axios";
 
 class Services {
   signup(payload: Params) {

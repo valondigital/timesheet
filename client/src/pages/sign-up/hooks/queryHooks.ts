@@ -6,7 +6,7 @@ import { ErrorObj } from "common/types";
 import services from "./services";
 import { LocationState } from "common/types";
 
-export const useSignIn = () => {
+export const useSignUp = () => {
   const toast = useToast();
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,8 +21,8 @@ export const useSignIn = () => {
       console.log(data, "failed")
       const errObj: ErrorObj = data.response!.data as ErrorObj;
       toast({
-        title: "Your token has expired. Please log in again",
-        description: errObj.errorMsg,
+        title: "Your token has expired",
+        description: "Please login again",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -31,9 +31,14 @@ export const useSignIn = () => {
     },
     onSuccess: (data:  AxiosResponse) => {
       console.log(data, "success")
-      localStorage.setItem("jwt_token", data.data.token);
-      localStorage.setItem("userId", data.data.data.user._id);
-      localStorage.setItem("user", JSON.stringify(data.data.data.user));
+      toast({
+        title: "User Created",
+        description: "User Created Successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
       navigate(from, { replace: true });
     },
   });
