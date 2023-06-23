@@ -15,21 +15,19 @@ module.exports = class Email {
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
       const transporter = nodemailer.createTransport({
-        host: 'smtp-relay.sendinblue.com',
-        port: 587,
+        service: 'gmail',
         auth: {
-          user: 'ayomoses111@gmail.com',
-          pass: 'xsmtpsib-69491b3f0bb7c7a8ea50deaec757eb7d87906ae9197f63d727240b62d38b8881-HNSWYvyQ9nsCBwz7',
+          user: process.env.EMAIL,
+          pass: process.env.EMAIL_API_KEY,
         },
       });
       return transporter;
     }
     return nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
+      service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_API_KEY,
       },
     });
   }
