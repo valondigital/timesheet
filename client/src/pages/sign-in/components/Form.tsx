@@ -14,12 +14,13 @@ import {
   Link,
   Checkbox,
 } from "@chakra-ui/react";
-import { Link as ReactRouterLink, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import * as yup from "yup";
 import { useSignIn } from "../hooks/queryHooks";
+import { CircularProgress } from "@chakra-ui/react";
 
 export type FormValues = {
   email: string;
@@ -45,7 +46,6 @@ function Form() {
   } = useForm<FormValues>({ resolver: yupResolver(schema) });
 
   const onSubmit = (data: FormValues) => {
-    console.log(data, "this is the data here!!!");
     mutate({ data });
   };
 
@@ -91,7 +91,11 @@ function Form() {
                 </Link>
               </Flex>
               <Button type="submit" variant="secondary" size="lg">
-                Log in
+                {isLoading ? (
+                  <CircularProgress isIndeterminate color="blue" size={8}/>
+                ) : (
+                  "Log in"
+                )}
               </Button>
             </Stack>
           </StyledForm>

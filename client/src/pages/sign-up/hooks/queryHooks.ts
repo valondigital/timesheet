@@ -16,13 +16,13 @@ export const useSignIn = () => {
     : "/";
 
     
-  return useMutation(services.login, {
+  return useMutation(services.signup, {
     onError: (data: AxiosError) => {
       console.log(data, "failed")
       const errObj: ErrorObj = data.response!.data as ErrorObj;
       toast({
-        title: "Invalid Credential",
-        description: "Please enter your correct email and address",
+        title: "Your token has expired. Please log in again",
+        description: errObj.errorMsg,
         status: "error",
         duration: 9000,
         isClosable: true,

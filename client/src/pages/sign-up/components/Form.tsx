@@ -1,9 +1,6 @@
 import React from "react";
 import {
-  Container,
   Heading,
-  Text,
-  Flex,
   Box,
   Button,
   FormControl,
@@ -11,17 +8,32 @@ import {
   Input,
   Stack,
   Link,
-  Checkbox,
+  useToast,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import styled from "styled-components";
 
 function Form() {
+  const toast = useToast()
   return (
     <Box maxW="50%">
       <Heading variant="h2" color="blue2" marginBottom={4}>
         Create User
       </Heading>
+
+    <Button
+      onClick={() =>
+        toast({
+          title: 'Account created.',
+          description: "We've created your account for you.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+    >
+      Show Toast
+    </Button>
       <StyledForm>
         <Stack spacing={4}>
           <FormControl id="firstName">

@@ -4,7 +4,6 @@ import { useUserDetailsContext } from "setup/app-context-manager/UserDetailsCont
 
 const Index = () => {
   const { userDetails, updateUserDetails } = useUserDetailsContext();
-  console.log(userDetails)
   return (
     <Box p={4}>
       <Flex align="center" mb={4}>
