@@ -8,13 +8,21 @@ import Profile from "./pages/profile";
 import ClockInOut from "./pages/timelog";
 import Layout from "./common/Layout";
 import paths from "./common/paths";
+import { UserDetailsProvider } from "setup/app-context-manager/UserDetailsContext";
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <Routes>
         <Route path={paths.login} element={<SignIn />}></Route>
-        <Route path={paths.home} element={<Layout />}>
+        <Route
+          path={paths.home}
+          element={
+            <RequireAuth>
+              <Layout />
+            </RequireAuth>
+          }
+        >
           <Route path={paths.home} element={<Dashboard />} />
           <Route path={paths.profile} element={<Profile />} />
           <Route path={paths.timeclock} element={<ClockInOut />} />
@@ -25,3 +33,17 @@ function App() {
 }
 
 export default App;
+
+function RequireAuth({ children }: { children: JSX.Element }) {
+  let location = useLocation();
+
+  if (!localStorage.jwt_token) {
+    // Redirect them to the /login page, but save the current location they were
+    // trying to go to when they were redirected. This allows us to send them
+    // along to that page after they login, which is a nicer user experience
+    // than dropping them off on the home page.
+    return <Navigate to={paths.login} state={{ from: location }} replace />;
+  }
+
+  return <UserDetailsProvider>{children}</UserDetailsProvider>;
+}

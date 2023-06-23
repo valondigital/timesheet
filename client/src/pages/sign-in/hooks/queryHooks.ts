@@ -18,6 +18,7 @@ export const useSignIn = () => {
     
   return useMutation(services.login, {
     onError: (data: AxiosError) => {
+      console.log(data, "failed")
       const errObj: ErrorObj = data.response!.data as ErrorObj;
       toast({
         title: "Invalid Credential",
@@ -29,10 +30,10 @@ export const useSignIn = () => {
       });
     },
     onSuccess: (data:  AxiosResponse) => {
-      localStorage.setItem("la_auth", data.data.jwt);
-      localStorage.setItem("agentId", data.data.object.id);
-      localStorage.agentCode = data.data.object.agentCode;
-      localStorage.LA_AGENT = JSON.stringify(data.data.object);
+      console.log(data, "success")
+      localStorage.setItem("jwt_token", data.data.token);
+      localStorage.setItem("userId", data.data.data.user._id);
+      localStorage.setItem("user", JSON.stringify(data.data.data.user));
       navigate(from, { replace: true });
     },
   });
