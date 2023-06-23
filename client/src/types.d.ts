@@ -4,12 +4,9 @@ type SubNav = {
   icon: React.ReactNode;
 };
 
-type IRole = {
-  name: string;
-};
 
 type IUserDetails = {
-  role: IRole;
+  role: string;
   _id: string;
   firstName: string;
   lastName: string;

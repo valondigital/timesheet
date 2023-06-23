@@ -6,7 +6,7 @@ export const paths:Record<string, string> = {
   home: '/',
   login: '/login',
   profile: '/profile',
-  timeclock: '/timeclock',
+  addUser: '/addUser',
   wallet: '/wallet',
   forgotPassword: '/forgotpassword',
   enterNewPassword: '/enternewpassword',

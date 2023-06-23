@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import SignIn from "./pages/sign-in";
+import SignUp from "./pages/sign-up";
 import Dashboard from "./pages/dashboard";
 import Profile from "./pages/profile";
 import ClockInOut from "./pages/timelog";
@@ -26,6 +27,7 @@ function App() {
           <Route path={paths.home} element={<Dashboard />} />
           <Route path={paths.profile} element={<Profile />} />
           <Route path={paths.timeclock} element={<ClockInOut />} />
+          <Route path={paths.addUser} element={<SignUp />} />
         </Route>
       </Routes>
     </ChakraProvider>

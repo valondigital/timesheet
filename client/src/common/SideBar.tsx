@@ -9,11 +9,13 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useLocation } from "react-router-dom";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { pathObject } from "./paths";
+import paths, { pathObject } from "./paths";
+import { useUserDetailsContext } from "setup/app-context-manager/UserDetailsContext";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
   const { colorMode, toggleColorMode } = useColorMode();
+  const { userDetails, updateUserDetails } = useUserDetailsContext();
   return (
     <Box py={4} px={2}>
       <Flex direction="column">
@@ -35,6 +37,23 @@ const Sidebar = () => {
             </Flex>
           </Link>
         ))}
+        {userDetails.role === "admin" && (
+          <Link
+            as={ReactRouterLink}
+            to={paths.addUser}
+            mb={4}
+            p={4}
+            bg={pathname === paths.addUser ? "dark.bgGrey" : undefined}
+            borderRadius="12px"
+          >
+            <Flex align="center">
+              {/* <Icon as={item.icon} boxSize={6} color="light.text" /> */}
+              <Text ml={2} color="light.text">
+                Add User
+              </Text>
+            </Flex>
+          </Link>
+        )}
       </Flex>
       <Box>
         <Button

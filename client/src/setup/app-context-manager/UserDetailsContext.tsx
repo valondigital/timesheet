@@ -4,7 +4,7 @@ const initialUserDetails = {
     firstName: '',
     lastName: '',
     mobileNo: '',
-    role: {} as IRole
+    role: ''
 } 
  
 const UserDetailsContext =  createContext<{userDetails: Partial<IUserDetails>, updateUserDetails: (data: Partial<IUserDetails>) => void}>(null!);

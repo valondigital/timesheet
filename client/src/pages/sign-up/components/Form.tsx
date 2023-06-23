@@ -18,41 +18,40 @@ import styled from "styled-components";
 
 function Form() {
   return (
-    <Container height="100%" px={20}>
-      <Flex h="100%" align="center" justify="center">
-        <Box>
-          <Heading variant="h1" color="light.blue1" marginBottom={4}>
-            Welcome Back
-          </Heading>
-          <Text variant="body" color="textWhite">
-            Our AI technology is here to help you succeed!
-          </Text>
-          <StyledForm>
-            <Stack spacing={4}>
-              <FormControl id="email">
-                <FormLabel>Email Address</FormLabel>
-                <Input type="email" variant="outline" autoComplete="off" />
-              </FormControl>
-              <FormControl id="password">
-                <FormLabel>Password</FormLabel>
-                <Input type="password" variant="outline" />
-              </FormControl>
-              <Flex justifyContent="space-between" align="center">
-                <Checkbox defaultChecked>Remember Me</Checkbox>
-                <Link color="blue.500" fontSize="sm" href="#">
-                  Forgot Password?
-                </Link>
-              </Flex>
-              <Link as={ReactRouterLink} to="/">
-                <Button type="submit" variant="secondary" size="lg">
-                  Log in
-                </Button>
-              </Link>
-            </Stack>
-          </StyledForm>
-        </Box>
-      </Flex>
-    </Container>
+    <Box maxW="50%">
+      <Heading variant="h2" color="blue2" marginBottom={4}>
+        Create User
+      </Heading>
+      <StyledForm>
+        <Stack spacing={4}>
+          <FormControl id="firstName">
+            <FormLabel>First Name</FormLabel>
+            <Input type="text" variant="outline" autoComplete="off" />
+          </FormControl>
+          <FormControl id="lastName">
+            <FormLabel>Last Name</FormLabel>
+            <Input type="text" variant="outline" autoComplete="off" />
+          </FormControl>
+          <FormControl id="email">
+            <FormLabel>Email Address</FormLabel>
+            <Input type="email" variant="outline" autoComplete="off" />
+          </FormControl>
+          <FormControl id="phone">
+            <FormLabel>Phone</FormLabel>
+            <Input type="number" variant="outline" />
+          </FormControl>
+          <FormControl id="country">
+            <FormLabel>Country</FormLabel>
+            <Input type="text" variant="outline" />
+          </FormControl>
+          <Link as={ReactRouterLink} to="/">
+            <Button type="submit" variant="secondary" size="lg">
+              Add User
+            </Button>
+          </Link>
+        </Stack>
+      </StyledForm>
+    </Box>
   );
 }
 
