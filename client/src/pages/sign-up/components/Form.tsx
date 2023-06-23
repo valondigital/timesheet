@@ -9,7 +9,7 @@ import {
   Stack,
   Link,
 } from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { CircularProgress } from "@chakra-ui/react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -94,7 +94,11 @@ function Form() {
             variant="secondary"
             size="lg"
           >
-            Add User
+           {isLoading ? (
+                  <CircularProgress isIndeterminate color="blue" size={8}/>
+                ) : (
+                  "Log in"
+                )}
           </Button>
         </Stack>
       </StyledForm>
