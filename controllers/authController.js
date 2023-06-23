@@ -20,7 +20,8 @@ const generateRandomPassword = (length = 8) => {
 
 const signToken = (id) => {
   const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+    // expiresIn: process.env.JWT_EXPIRES_IN,
+    expiresIn: 5 * 24 * 60 * 60,
   });
   return token;
 };
