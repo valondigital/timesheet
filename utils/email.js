@@ -14,25 +14,14 @@ module.exports = class Email {
   }
 
   newTransport() {
-    if (process.env.NODE_ENV === 'production') {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        // port: 587,
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.EMAIL_API_KEY,
-        },
-      });
-      return transporter;
-    }
-    return nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_API_KEY,
       },
     });
+    return transporter;
   }
 
   async send(template, subject) {

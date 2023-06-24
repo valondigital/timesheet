@@ -19,19 +19,14 @@ const generateRandomPassword = (length = 8) => {
 };
 
 const signToken = (id) => {
-  const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-    // expiresIn: process.env.JWT_EXPIRES_IN,
-    expiresIn: 5 * 24 * 60 * 60,
-  });
+  const token = jwt.sign({ id }, process.env.JWT_SECRET);
   return token;
 };
 
 const createSendToken = (user, statusCode, res) => {
   const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
     httpOnly: true,
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365), // Set a long expiration time (e.g., 1 year)
   };
   const token = signToken(user._id);
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
@@ -45,6 +40,7 @@ const createSendToken = (user, statusCode, res) => {
     },
   });
 };
+
 exports.signUp = catchAsync(async (req, res) => {
   const {
     firstName,
@@ -71,7 +67,7 @@ exports.signUp = catchAsync(async (req, res) => {
     email,
     password,
   };
-  const url = `${req.protocol}://${req.get('host')}/login`;
+  const url = `https://valon-timesheet.web.app/login`;
   await new Email(newUser, url, loginDetails).sendWelcome();
   createSendToken(newUser, 201, res);
 });
