@@ -2,9 +2,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosError, AxiosResponse } from "axios";
 import { useToast } from "@chakra-ui/react";
-import { ErrorObj } from "common/types";
+import { ErrorObj } from "components/types";
 import services from "./services";
-import { LocationState } from "common/types";
+import { LocationState } from "components/types";
 
 export const useSignUp = () => {
   const toast = useToast();
@@ -15,10 +15,9 @@ export const useSignUp = () => {
     ? (location.state as LocationState).from!.pathname
     : "/";
 
-    
   return useMutation(services.signup, {
     onError: (data: AxiosError) => {
-      console.log(data, "failed")
+      console.log(data, "failed");
       const errObj: ErrorObj = data.response!.data as ErrorObj;
       toast({
         title: "Your token has expired",
@@ -29,8 +28,8 @@ export const useSignUp = () => {
         position: "top",
       });
     },
-    onSuccess: (data:  AxiosResponse) => {
-      console.log(data, "success")
+    onSuccess: (data: AxiosResponse) => {
+      console.log(data, "success");
       toast({
         title: "User Created",
         description: "User Created Successfully",

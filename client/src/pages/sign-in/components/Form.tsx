@@ -92,7 +92,7 @@ function Form() {
               </Flex>
               <Button type="submit" variant="secondary" size="lg">
                 {isLoading ? (
-                  <CircularProgress isIndeterminate color="blue" size={8}/>
+                  <CircularProgress isIndeterminate color="green" size={8}/>
                 ) : (
                   "Log in"
                 )}

@@ -8,6 +8,7 @@ const {
   deleteUser,
   updateMe,
   deleteMe,
+  getTasksByUser,
   // checkId,
 } = require('../controllers/userController');
 const {
@@ -46,5 +47,7 @@ router
   .get(getUserDetails)
   .patch(updateUser)
   .delete(protectRoute, restrictTo('admin', 'super-admin'), deleteUser);
+
+router.route('/:id/tasks').get(protectRoute, getTasksByUser);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Task = require('../models/taskModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -127,3 +128,14 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
     message: 'User has been deleted successfully',
   });
 });
+
+exports.getTasksByUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const tasks = await Task.find({ assignedTo: id });
+    res.status(200).json({ tasks });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

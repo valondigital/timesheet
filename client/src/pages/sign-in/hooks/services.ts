@@ -1,5 +1,5 @@
-import endpoints from "common/endpoints";
-import { Params } from "common/types";
+import endpoints from "components/endpoints";
+import { Params } from "components/types";
 import { publicAxios as axios } from "setup/auth/axios";
 
 class Services {

@@ -7,8 +7,8 @@ import SignUp from "./pages/sign-up";
 import Dashboard from "./pages/dashboard";
 import Profile from "./pages/profile";
 import ClockInOut from "./pages/timelog";
-import Layout from "./common/Layout";
-import paths from "./common/paths";
+import Layout from "./components/Layout";
+import paths from "./components/paths";
 import { UserDetailsProvider } from "setup/app-context-manager/UserDetailsContext";
 
 function App() {

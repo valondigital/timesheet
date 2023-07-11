@@ -2,18 +2,21 @@ const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    title: {
+    name: {
       type: String,
       required: true,
     },
     description: {
       type: String,
-      required: true,
+    },
+    project: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Project',
+      required: [true, 'Task must belong to a project'],
+    },
+    assignedTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
     status: {
       type: String,
@@ -22,7 +25,6 @@ const taskSchema = new mongoose.Schema(
     },
     dueDate: {
       type: Date,
-      required: true,
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
