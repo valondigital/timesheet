@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import { Outlet } from "react-router-dom";
 import { Container, Grid, GridItem } from "@chakra-ui/react";
 import Sidebar from "./SideBar";
+import PageScaffold from "./PageScaffold";
 
 const Layout = () => {
   return (
@@ -11,10 +12,9 @@ const Layout = () => {
         <Sidebar />
       </GridItem>
       <GridItem colSpan={5}>
-        <Container maxW="95%">
-          <NavBar />
+        <PageScaffold title="scaffold">
           <Outlet />
-        </Container>
+        </PageScaffold>
       </GridItem>
     </Grid>
   );
