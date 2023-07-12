@@ -15,8 +15,27 @@ import {
   Center,
   Button,
   Text,
+  Tag,
 } from '@chakra-ui/react';
 import { NavigateFunction } from 'react-router-dom';
+
+
+
+const statusTypes = [
+  {name: "inProgress", color: 'yellow'},
+  {name: "pending", color: 'red'},
+  {name: "completed", color: 'green'},
+]
+
+const getStatusTag= (name:string) => {
+  let color;
+  statusTypes.forEach((status) => {
+     if(status.name === name){
+        color = <Tag variant='solid' colorScheme={status.color}>{status.name}</Tag>
+     } 
+  })
+  return color
+}
 
 export const schema = yup
   .object()
@@ -46,6 +65,10 @@ export const columns: ITDataColumnDef<ITData>[] = [
   columnHelper.accessor('assignedTo', {
     header: 'Assignee',
     cell: (info) => info.getValue<Record<string, string>>()?.firstName,
+  }),
+  columnHelper.accessor('status', {
+    header: 'Status',
+    cell: (info) => getStatusTag(info.getValue<string>()),
   }),
   columnHelper.accessor((row) => row.id, {
     header: 'Actions',

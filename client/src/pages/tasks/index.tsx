@@ -36,8 +36,6 @@ const Index = () => {
 
   const [status] = useState('');
 
-  console.log(data, "jjfjfjnnffjfb")
-
   const {
     mutate: createTask,
     isLoading: createProjectLoading,
@@ -184,7 +182,7 @@ const Index = () => {
 
   return (
     <>
-      <Info>View all projects and manage them</Info>
+      <Info>View all tasks and manage them</Info>
       <TableTop
         onChange={handleInputChange}
         inputObj={tableTopInput}

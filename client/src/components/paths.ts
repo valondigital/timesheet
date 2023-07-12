@@ -25,7 +25,7 @@ export const pageTitles: Record<string, string> = {
   profile: 'Profile',
   projects: 'Projects',
   clients: 'Clients',
-  tasks: 'Tasks',
+  tasks: 'All Tasks',
 }
 
 
@@ -36,7 +36,7 @@ export const NavNames = {
   logout: "Log Out",
   projects: 'Projects',
   clients: 'Clients',
-  tasks: 'Tasks',
+  tasks: 'All Tasks',
   users: 'Users'
 }
 
