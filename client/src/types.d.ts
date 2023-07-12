@@ -69,6 +69,8 @@ type IValueOfUser<T> = T[keyof T];
 type ITData = {
   [key: string]: string | number | object | null | undefined | React.ReactNode;
 };
+type ITDataColumnDef<T> = ColumnDef<T, object | ReactNode>;
+
 type IFormValues = Record<string, string>;
 
 interface DefaultData {
