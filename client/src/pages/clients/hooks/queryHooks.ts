@@ -4,20 +4,20 @@ import { ErrorObj } from 'utils/types';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useToast } from '@chakra-ui/react';
 
-export const useGetAllProjects = (payload: Record<string, string>) => {
-  return useQuery<DefaultData, ErrorObj>(['allProjects', payload], () =>
-    Services.getAllProjects(payload)
+export const useGetAllClients = (payload: IFormValues) => {
+  return useQuery<DefaultData, ErrorObj>(['allClients', payload], () =>
+    Services.getAllClients(payload)
   );
 };
 
-export const useCreateProject = () => {
+export const useCreateClient = () => {
   const toast = useToast();
-  return useMutation(Services.createProject, {
+  return useMutation(Services.createClient, {
     onError: (data: AxiosError) => {
       console.log(data, 'failed');
       toast({
-        title: 'Invalid Entries',
-        description: 'Please enter a valid name for your project',
+        title: 'Invalid Details',
+        description: 'Please enter valid inputs',
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -27,8 +27,8 @@ export const useCreateProject = () => {
     onSuccess: (data: AxiosResponse) => {
       console.log(data, 'success');
       toast({
-        title: 'Project Created',
-        description: 'Project created successfully',
+        title: 'Client Created',
+        description: 'Client created successfully',
         status: 'success',
         duration: 9000,
         isClosable: true,

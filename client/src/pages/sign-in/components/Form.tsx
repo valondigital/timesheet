@@ -14,7 +14,6 @@ import {
   Link,
   Checkbox,
 } from "@chakra-ui/react";
-import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
@@ -37,7 +36,7 @@ const schema = yup
 
 function Form() {
   const { mutate, isLoading } = useSignIn();
-  const location = useLocation();
+  // const location = useLocation();
 
   const {
     register,

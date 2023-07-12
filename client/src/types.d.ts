@@ -4,7 +4,6 @@ type SubNav = {
   icon: React.ReactNode;
 };
 
-
 type IUserDetails = {
   role: string;
   _id: string;
@@ -43,7 +42,7 @@ interface InputObj {
   register?: UseFormRegisterReturn /* Record<string | number, string | number> */;
   type: string;
   label: string;
-  options?: Record<"value" | "name", string>[];
+  options?: Record<'value' | 'name', string>[];
   error?: FieldError;
   size?: string;
   placeholder?: string;
@@ -71,7 +70,12 @@ type ITData = {
 };
 type ITDataColumnDef<T> = ColumnDef<T, object | ReactNode>;
 
-type IFormValues = Record<string, string>;
+type IFormValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: number;
+};
 
 interface DefaultData {
   [key: string]: ITData[];

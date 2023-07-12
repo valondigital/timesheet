@@ -20,8 +20,11 @@ import { NavigateFunction } from "react-router-dom";
 export const schema = yup
   .object()
   .shape({
-    name: yup.string().required(),
-    description: yup.string().required(),
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    email: yup.string().required(),
+    phone: yup.number().required(),
+
   })
   .required();
 
@@ -29,12 +32,20 @@ const columnHelper = createColumnHelper<ITData>();
 
 
 export const columns: ITDataColumnDef<ITData>[] = [
-  columnHelper.accessor('name', {
-    header: 'Name',
+  columnHelper.accessor('firstName', {
+    header: 'First Name',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('description', {
-    header: 'Description',
+  columnHelper.accessor('lastName', {
+    header: 'Last Name',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('email', {
+    header: 'Email',
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor('phone', {
+    header: 'Mobile',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor((row) => row.id, {
@@ -62,29 +73,51 @@ export type FormValues = {
 
 
 export const inputObjList = (
-  register: UseFormRegister<FormValues>,
-  errors: FieldErrorsImpl<FormValues>
+  register: UseFormRegister<IFormValues>,
+  errors: FieldErrorsImpl<IFormValues>
 ) => [
   {
-    name: "name",
-    label: "Project Name",
+    name: "firstName",
+    label: "First Name",
     placeholder: "",
     type: "text",
-    register: register("name", {
-      required: "Please enter your first name",
+    register: register("firstName", {
+      required: "Please enter client first name",
     }),
-    isInvalid: !!errors.name,
-    error: errors?.name,
+    isInvalid: !!errors.firstName,
+    error: errors?.firstName,
   },
   {
-    name: "description",
-    label: "Description",
+    name: "lastName",
+    label: "Last Name",
+    placeholder: "",
     type: "text",
-    register: register("description", {
-      required: "Please enter your peoject description",
+    register: register("lastName", {
+      required: "Please enter client last name",
     }),
-    isInvalid: !!errors.description,
-    error: errors?.description,
+    isInvalid: !!errors.lastName,
+    error: errors?.lastName,
+  },
+  {
+    name: "email",
+    label: "Email",
+    placeholder: "Enter email address",
+    type: "email",
+    register: register("email", {
+      required: "Please enter your first name",
+    }),
+    isInvalid: !!errors.email,
+    error: errors?.email,
+  },
+  {
+    name: "phone",
+    label: "Mobile",
+    type: "number",
+    register: register("phone", {
+      required: "Please enter clients contact details",
+    }),
+    isInvalid: !!errors.phone,
+    error: errors?.phone,
   },
 ];
 

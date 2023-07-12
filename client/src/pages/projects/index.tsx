@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, useDisclosure, Box } from '@chakra-ui/react';
-import ActionModal from './ActionModal';
+import ActionModal from './components/ActionModal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Info } from '../../components/Info';
@@ -9,13 +9,7 @@ import ModalComponent from '../../components/Modal';
 import generateInputs from '../../components/DynamicForm';
 import TableTop from '../../components/TableTop';
 import { useNavigate } from 'react-router-dom';
-import {
-  columns,
-  schema,
-  inputObjList,
-  tableTopInput,
-  data,
-} from './components/helpers';
+import { columns, schema, inputObjList, tableTopInput, data } from './helpers';
 import { useGetAllProjects, useCreateProject } from './hooks/queryHooks';
 
 export type FormValues = {
@@ -31,8 +25,6 @@ const Index = () => {
   const { data, isLoading } = useGetAllProjects(topInputObj);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
-  const [params, setParams] = useState({});
-  const navigate = useNavigate();
 
   const [status, setStatus] = useState('');
 
@@ -101,7 +93,7 @@ const Index = () => {
         onClose={onClose}
         button={
           <Button
-            variant="secondary" 
+            variant="secondary"
             onClick={handleSubmit(onSubmit)}
             type="submit"
             isLoading={createProjectLoading}

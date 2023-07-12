@@ -1,6 +1,6 @@
-import ModalComponent from "../../components/Modal";
-import { Button } from "@chakra-ui/react";
-import { Stack } from '@chakra-ui/react'
+import ModalComponent from '../../../components/Modal';
+import { Button } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 
 type Props = {
   title: string;
@@ -8,7 +8,7 @@ type Props = {
   onClose: () => void;
   size?: string;
   handleSubmit: () => void;
-  status?:string;
+  status?: string;
 };
 
 function ActionModal(props: Props) {
@@ -20,7 +20,7 @@ function ActionModal(props: Props) {
       isOpen={isOpen}
       onClose={onClose}
       button={
-        <Stack direction='row' spacing={4} align='center'>
+        <Stack direction="row" spacing={4} align="center">
           <Button onClick={handleSubmit} type="submit">
             Yes
           </Button>
@@ -30,10 +30,7 @@ function ActionModal(props: Props) {
         </Stack>
       }
     >
-      {status === "ACTIVE"
-        ? "Deactivate Agent?"
-        : "Activate Agent?"}
-       
+      {status === 'ACTIVE' ? 'Deactivate Agent?' : 'Activate Agent?'}
     </ModalComponent>
   );
 }
