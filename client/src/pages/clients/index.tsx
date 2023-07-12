@@ -78,7 +78,7 @@ const Index = () => {
     );
   };
 
-  const handleActivate = () => {
+  const handleAddProjectToClient = () => {
     // activateAgent(params);
     // handleClose();
   };
@@ -121,7 +121,7 @@ const Index = () => {
         status={status}
         isOpen={open}
         onClose={handleClose}
-        handleSubmit={handleActivate}
+        handleSubmit={handleAddProjectToClient}
       />
     </>
   );

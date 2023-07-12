@@ -77,6 +77,13 @@ type IFormValues = {
   phone: number;
 };
 
+type TFormValues = {
+  name: string;
+  description: string;
+  project: string;
+  assignedTo: string;
+}
+
 interface DefaultData {
   [key: string]: ITData[];
   size: number;

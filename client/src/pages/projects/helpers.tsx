@@ -1,6 +1,6 @@
 import { createColumnHelper, ColumnDef , CellContext} from "@tanstack/react-table";
 import * as yup from "yup";
-import { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
+import { FieldErrorsImpl, UseFormRegister, FieldError } from "react-hook-form";
 import { FiMoreVertical } from "react-icons/fi";
 
 

@@ -30,6 +30,17 @@ const taskSchema = new mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+taskSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'assignedTo',
+    select: '-createdAt -updatedAt -__v',
+  }).populate({
+    path: 'project',
+    select: '-createdAt -updatedAt -__v',
+  });
+  next();
+});
+
 const Task = mongoose.model('Task', taskSchema);
 
 module.exports = Task;
