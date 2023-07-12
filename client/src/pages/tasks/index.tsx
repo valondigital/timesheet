@@ -8,9 +8,12 @@ import DynamicTable from '../../components/DynamicTable';
 import ModalComponent from '../../components/Modal';
 import generateInputs from '../../components/DynamicForm';
 import TableTop from '../../components/TableTop';
+import { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { columns, schema, inputObjList, tableTopInput, data } from './helpers';
 import { useCreateTask, useGetAllTasks } from './hooks/queryHooks';
+import { useGetUsers } from './useGetUsers';
+import { useGetProjects } from './useGetProjects';
 
 export type FormValues = {
   name: string;
@@ -18,6 +21,10 @@ export type FormValues = {
 };
 
 const Index = () => {
+  const { usersData } = useGetUsers();
+  const {projectsData} = useGetProjects()
+  const [users, setUsers] = useState<Record<string, any>[]>([])
+  const [projects, setProjects] = useState<Record<string, any>[]>([])
   const [topInputObj, setTopInputObj] = useState<{
     name: string;
     description: string;
@@ -31,7 +38,7 @@ const Index = () => {
   const [status, setStatus] = useState('');
 
   const {
-    mutate: createProject,
+    mutate: createTask,
     isLoading: createProjectLoading,
     isSuccess,
   } = useCreateTask();
@@ -44,10 +51,27 @@ const Index = () => {
 
   // const { mutate: activateAgent } = useActivateAgent(params);
 
+  const getArray = () => {
+    const ret = usersData?.map((item) => ({
+      value: item?._id,
+      name: item?.firstName,
+    }));
+
+    const res = projectsData?.map((item) => ({
+      value: item?._id,
+      name: item?.name,
+    }));
+    setUsers(ret  ?? [])
+    setProjects(res  ?? [])
+    return ret 
+  };
+
+
   useEffect(() => {
     if (isSuccess) {
       onClose();
     }
+    getArray()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
@@ -56,7 +80,7 @@ const Index = () => {
   };
 
   const onSubmit = (values: TFormValues) => {
-    createProject({ data: values });
+    createTask({ data: values });
   };
 
   const topTableButtons = [{ name: 'Create Task', onClick: onOpen }];
@@ -82,6 +106,80 @@ const Index = () => {
     // activateAgent(params);
     // handleClose();
   };
+
+
+  const inputObjList = (
+    register: UseFormRegister<TFormValues>,
+    errors: FieldErrorsImpl<TFormValues>
+  ) => [
+    {
+      name: 'name',
+      label: 'Task',
+      placeholder: '',
+      type: 'text',
+      register: register('name', {
+        required: 'Please enter a valid task name',
+      }),
+      isInvalid: !!errors.name,
+      error: errors?.name,
+    },
+    {
+      name: 'description',
+      label: 'Description',
+      placeholder: '',
+      type: 'text',
+      register: register('description'),
+      isInvalid: !!errors.description,
+      error: errors?.description,
+    },
+    {
+      name: 'project',
+      label: 'Project',
+      placeholder: 'Enter email address',
+      type: 'select',
+      options: projects,
+
+      register: register('project', {
+        required: 'Please select a parent object',
+      }),
+      isInvalid: !!errors.project,
+      error: errors?.project,
+    },
+    {
+      name: 'assignedTo',
+      label: 'Assignee',
+      type: 'select',
+
+      options: users,
+      register: register('assignedTo', {
+        required: 'Please select an assignee',
+      }),
+      isInvalid: !!errors.assignedTo,
+      error: errors?.assignedTo,
+    },
+  ];
+
+  const tableTopInput = [
+    {
+      name: 'query',
+      label: 'Search',
+      placeholder: 'Search by name, email',
+      type: 'text',
+    },
+
+    {
+      name: 'status',
+      label: 'Status',
+      type: 'select',
+      options: [
+        { value: 'PENDING', name: 'Pending' },
+        { value: 'ACTIVE', name: 'Active' },
+        { value: 'SUSPENDED', name: 'Suspended' },
+        { value: 'IN_ACTIVE', name: 'Inactive' },
+        { value: 'ON_HOLD', name: 'On hold' },
+      ],
+    },
+  ];
 
   return (
     <>

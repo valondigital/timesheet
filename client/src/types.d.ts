@@ -75,6 +75,14 @@ type IFormValues = {
   lastName: string;
   email: string;
   phone: number;
+  country: string;
+};
+
+type CFormValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: number;
 };
 
 type TFormValues = {
@@ -82,7 +90,7 @@ type TFormValues = {
   description: string;
   project: string;
   assignedTo: string;
-}
+};
 
 interface DefaultData {
   [key: string]: ITData[];

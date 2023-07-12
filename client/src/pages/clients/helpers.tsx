@@ -73,8 +73,8 @@ export type FormValues = {
 
 
 export const inputObjList = (
-  register: UseFormRegister<IFormValues>,
-  errors: FieldErrorsImpl<IFormValues>
+  register: UseFormRegister<CFormValues>,
+  errors: FieldErrorsImpl<CFormValues>
 ) => [
   {
     name: "firstName",

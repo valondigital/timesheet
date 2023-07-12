@@ -63,7 +63,7 @@ export interface InputObj {
   register?: UseFormRegisterReturn /* Record<string | number, string | number> */;
   type: string;
   label: string;
-  options?: Record<"value" | "name", string>[];
+  options?: Record<"value" | "name", string>;
   error?: FieldError;
   size?: string;
   placeholder?: string;

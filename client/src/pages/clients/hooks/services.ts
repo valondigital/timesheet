@@ -6,7 +6,7 @@ import getURLParams from "utils/getUrlParams";
 
 
 class Services {
-  async getAllClients(param: IFormValues) {
+  async getAllClients(param: CFormValues) {
     const params = getURLParams(param);
     const response = await  axios({
       method: "GET",

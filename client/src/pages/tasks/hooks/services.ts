@@ -18,7 +18,7 @@ class Services {
   async createTask(payload: Params) {
     return axios({
       method: "POST",
-      url: endpoints.clients,
+      url: endpoints.tasks,
       data: payload.data,
     });
   }

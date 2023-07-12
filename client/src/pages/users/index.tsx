@@ -10,37 +10,32 @@ import generateInputs from '../../components/DynamicForm';
 import TableTop from '../../components/TableTop';
 import { useNavigate } from 'react-router-dom';
 import { columns, schema, inputObjList, tableTopInput, data } from './helpers';
-import { useCreateClient, useGetAllClients } from './hooks/queryHooks';
-
-export type FormValues = {
-  name: string;
-  description: string;
-};
+import { useSignUp, useGetAllUsers } from './hooks/queryHooks';
 
 const Index = () => {
   const [topInputObj, setTopInputObj] = useState<{
-    firstName: string;
-    lastName: string;
-    phone: number;
-    email: string;
-  }>({ firstName: '', lastName: '', email: '', phone: 0 });
-  const { data, isLoading } = useGetAllClients(topInputObj);
+    name: string;
+    description: string;
+    project: string;
+    assignedTo: string;
+  }>({ name: '', description: '', project: '', assignedTo: '' });
+  const { data, isLoading } = useGetAllUsers(topInputObj);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
 
   const [status, setStatus] = useState('');
 
   const {
-    mutate: createProject,
+    mutate: createUser,
     isLoading: createProjectLoading,
     isSuccess,
-  } = useCreateClient();
+  } = useSignUp();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CFormValues>({ resolver: yupResolver(schema) });
+  } = useForm<IFormValues>({ resolver: yupResolver(schema) });
 
   // const { mutate: activateAgent } = useActivateAgent(params);
 
@@ -55,11 +50,11 @@ const Index = () => {
     setOpen(false);
   };
 
-  const onSubmit = (values: CFormValues) => {
-    createProject({ data: values });
+  const onSubmit = (values: IFormValues) => {
+    createUser({ data: values });
   };
 
-  const topTableButtons = [{ name: 'Add Client', onClick: onOpen }];
+  const topTableButtons = [{ name: 'Add User', onClick: onOpen }];
 
   const handleInputChange = (
     name: string,
@@ -67,10 +62,10 @@ const Index = () => {
   ) => {
     setTopInputObj(
       (prevState: {
-        firstName: string;
-        lastName: string;
-        email: string;
-        phone: number;
+        name: string;
+        description: string;
+        project: string;
+        assignedTo: string;
       }) => ({
         ...prevState,
         [name]: value,
@@ -83,10 +78,9 @@ const Index = () => {
     // handleClose();
   };
 
-
   return (
     <>
-      <Info>View all projects and manage them</Info>
+      <Info>View all users and manage them</Info>
       <TableTop
         onChange={handleInputChange}
         inputObj={tableTopInput}
@@ -95,10 +89,10 @@ const Index = () => {
       {isLoading ? (
         <Box>...Loading</Box>
       ) : (
-        <DynamicTable columns={columns} data={data?.Clients ?? []} />
+        <DynamicTable columns={columns} data={data?.users ?? []} />
       )}
       <ModalComponent
-        title="Create Project"
+        title="Add User"
         isOpen={isOpen}
         onClose={onClose}
         button={

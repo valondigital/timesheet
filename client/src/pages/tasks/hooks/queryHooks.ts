@@ -27,8 +27,8 @@ export const useCreateTask = () => {
     onSuccess: (data: AxiosResponse) => {
       console.log(data, 'success');
       toast({
-        title: 'Client Created',
-        description: 'Client created successfully',
+        title: 'Task Created',
+        description: 'Task created successfully',
         status: 'success',
         duration: 9000,
         isClosable: true,

@@ -4,7 +4,7 @@ import { ErrorObj } from 'utils/types';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useToast } from '@chakra-ui/react';
 
-export const useGetAllClients = (payload: IFormValues) => {
+export const useGetAllClients = (payload: CFormValues) => {
   return useQuery<DefaultData, ErrorObj>(['allClients', payload], () =>
     Services.getAllClients(payload)
   );
