@@ -5,7 +5,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useToast } from '@chakra-ui/react';
 
 export const useGetAllTasks = (payload: TFormValues) => {
-  return useQuery<DefaultData, ErrorObj>(['allClients', payload], () =>
+  return useQuery<DefaultData, ErrorObj>(['allTasks', payload], () =>
     Services.getAllTasks(payload)
   );
 };

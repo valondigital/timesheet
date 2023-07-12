@@ -9,8 +9,7 @@ import ModalComponent from '../../components/Modal';
 import generateInputs from '../../components/DynamicForm';
 import TableTop from '../../components/TableTop';
 import { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { columns, schema, inputObjList, tableTopInput, data } from './helpers';
+import { columns, schema,} from './helpers';
 import { useCreateTask, useGetAllTasks } from './hooks/queryHooks';
 import { useGetUsers } from './useGetUsers';
 import { useGetProjects } from './useGetProjects';
@@ -35,7 +34,9 @@ const Index = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
 
-  const [status, setStatus] = useState('');
+  const [status] = useState('');
+
+  console.log(data, "jjfjfjnnffjfb")
 
   const {
     mutate: createTask,

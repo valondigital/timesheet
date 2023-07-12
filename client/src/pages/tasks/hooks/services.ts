@@ -7,7 +7,6 @@ import getURLParams from "utils/getUrlParams";
 
 class Services {
   async getAllTasks(param: TFormValues) {
-    const params = getURLParams(param);
     const response = await  axios({
       method: "GET",
       url: `${endpoints.tasks}`,
