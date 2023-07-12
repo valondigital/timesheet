@@ -16,7 +16,12 @@ import {
   tableTopInput,
   data,
 } from './components/helpers';
-import { useGetAllProjects } from './hooks/queryHooks';
+import { useGetAllProjects, useCreateProject } from './hooks/queryHooks';
+
+export type FormValues = {
+  name: string;
+  description: string;
+};
 
 const Index = () => {
   const [topInputObj, setTopInputObj] = useState<{
@@ -31,37 +36,36 @@ const Index = () => {
 
   const [status, setStatus] = useState('');
 
-  // const {
-  //   mutate: registerAgent,
-  //   isLoading: registerAgentLoading,
-  //   isSuccess,
-  // } = useRegisterAgent();
+  const {
+    mutate: createProject,
+    isLoading: createProjectLoading,
+    isSuccess,
+  } = useCreateProject();
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<IFormValues>({ resolver: yupResolver(schema) });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({ resolver: yupResolver(schema) });
 
   // const { mutate: activateAgent } = useActivateAgent(params);
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     onClose();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isSuccess]);
+  useEffect(() => {
+    if (isSuccess) {
+      onClose();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess]);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  // const onSubmit = (values: IFormValues) => {
-  //   values.agentId = localStorage.agentId;
-  //   registerAgent({ data: values });
-  // };
+  const onSubmit = (values: FormValues) => {
+    createProject({ data: values });
+  };
 
-  const topTableButtons = [{ name: 'Add Agents', onClick: onOpen }];
+  const topTableButtons = [{ name: 'Add Project', onClick: onOpen }];
 
   const handleInputChange = (
     name: string,
@@ -73,23 +77,14 @@ const Index = () => {
     }));
   };
 
-  const onDeactivateAccount = (status: string, data: any = {}) => {
-    const action = status === 'ACTIVE' ? 'SUSPENDED' : 'ACTIVE';
-    setStatus(status);
-    setParams({ action, agentId: data.row.original.id });
-    setOpen(true);
-  };
-
   const handleActivate = () => {
     // activateAgent(params);
     // handleClose();
   };
 
-  console.log(data?.Projects, "check data here")
-
   return (
     <>
-      <Info>View all agent assigned to you and manage them</Info>
+      <Info>View all projects and manage them</Info>
       <TableTop
         onChange={handleInputChange}
         inputObj={tableTopInput}
@@ -101,22 +96,23 @@ const Index = () => {
         <DynamicTable columns={columns} data={data?.Projects ?? []} />
       )}
       <ModalComponent
-        title="Register Agent"
+        title="Create Project"
         isOpen={isOpen}
         onClose={onClose}
         button={
           <Button
-            // onClick={handleSubmit(onSubmit)}
+            variant="secondary" 
+            onClick={handleSubmit(onSubmit)}
             type="submit"
-            // isLoading={registerAgentLoading}
+            isLoading={createProjectLoading}
           >
             Submit
           </Button>
         }
       >
-        {/* <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {inputObjList(register, errors).map((input) => generateInputs(input))}
-        </form> */}
+        </form>
       </ModalComponent>
       <ActionModal
         title="reactivate"

@@ -20,14 +20,8 @@ import { NavigateFunction } from "react-router-dom";
 export const schema = yup
   .object()
   .shape({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    mobileNo: yup.string().required(),
-    email: yup.string().required(),
-    ageBracket: yup.string().required(),
-    gender: yup.string().required(),
-    state: yup.string().required(),
-    agentType: yup.string().required(),
+    name: yup.string().required(),
+    description: yup.string().required(),
   })
   .required();
 
@@ -61,78 +55,36 @@ export const columns: ITDataColumnDef<ITData>[] = [
   }),
 ];
 
+export type FormValues = {
+  name: string;
+  description: string;
+};
+
 
 export const inputObjList = (
-  register: UseFormRegister<IFormValues>,
-  errors: FieldErrorsImpl<{
-    [x: string]: string;
-  }>
+  register: UseFormRegister<FormValues>,
+  errors: FieldErrorsImpl<FormValues>
 ) => [
   {
-    name: "firstName",
-    label: "First Name",
-    placeholder: "Your first name",
+    name: "name",
+    label: "Project Name",
+    placeholder: "",
     type: "text",
-    register: register("firstName", {
+    register: register("name", {
       required: "Please enter your first name",
     }),
-    isInvalid: !!errors.firstName,
-    error: errors?.firstName,
+    isInvalid: !!errors.name,
+    error: errors?.name,
   },
   {
-    name: "lastName",
-    label: "Last Name",
+    name: "description",
+    label: "Description",
     type: "text",
-    register: register("lastName", {
-      required: "Please enter your last name",
+    register: register("description", {
+      required: "Please enter your peoject description",
     }),
-    isInvalid: !!errors.lastName,
-    error: errors?.lastName,
-  },
-  {
-    name: "mobileNo",
-    label: "Mobile No",
-    type: "phone",
-    register: register("mobileNo", {
-      required: "Please enter your last name",
-    }),
-    isInvalid: !!errors.mobileNo,
-    error: errors?.mobileNo,
-  },
-  {
-    name: "email",
-    label: "Email",
-    type: "email",
-    register: register("email", {
-      required: "Please enter your last name",
-    }),
-    isInvalid: !!errors.email,
-    error: errors?.email,
-  },
-  {
-    name: "gender",
-    label: "Gender",
-    type: "select",
-    register: register("gender", {
-      required: "Please enter your last name",
-    }),
-    options: ["Male", "Female", "Others"].map((item) => ({
-      value: item.toUpperCase(),
-      name: item,
-    })),
-    isInvalid: !!errors.gender,
-    error: errors?.gender,
-  },
-  {
-    name: "agenttype",
-    label: "Agent Type",
-    type: "select",
-    register: register("agentType", {
-      required: "Please select an agent type",
-    }),
-    options: [{ value: "BD_AGENT", name: "Business Development Agent(BDA)" }],
-    isInvalid: !!errors.agentType,
-    error: errors?.agentType,
+    isInvalid: !!errors.description,
+    error: errors?.description,
   },
 ];
 

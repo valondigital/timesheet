@@ -53,7 +53,7 @@ const TableTop = ({
           <FormLabel visibility="hidden" mb={0}>
             {button.name}
           </FormLabel>
-          <Button onClick={() => onClick(button.name)}>{button.name}</Button>
+          <Button variant="secondary" onClick={() => onClick(button.name)}>{button.name}</Button>
         </Box>
       ))}
     </Flex>

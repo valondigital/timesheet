@@ -1,7 +1,7 @@
 const endpoints = {
   login: '/users/login',
   signup: '/users/signup',
-  getAllProjects: '/projects',
+  projects: '/projects',
 };
 
 
