@@ -11,6 +11,7 @@ export const paths:Record<string, string> = {
   projects: '/projects',
   clients: '/clients',
   tasks: '/tasks',
+  myTasks: '/my-tasks',
   wallet: '/wallet',
   forgotPassword: '/forgotpassword',
   enterNewPassword: '/enternewpassword',
@@ -26,6 +27,7 @@ export const pageTitles: Record<string, string> = {
   projects: 'Projects',
   clients: 'Clients',
   tasks: 'All Tasks',
+  myTasks: "My Assigned Tasks"
 }
 
 
@@ -37,6 +39,7 @@ export const NavNames = {
   projects: 'Projects',
   clients: 'Clients',
   tasks: 'All Tasks',
+  myTasks: 'My Tasks',
   users: 'Users'
 }
 
@@ -48,6 +51,7 @@ export const pathObject = [
   { icon: BiTimeFive, name: NavNames.projects, route: paths.projects },
   { icon: BiTimeFive, name: NavNames.clients, route: paths.clients },
   { icon: BiTimeFive, name: NavNames.tasks, route: paths.tasks },
+  { icon: BiTimeFive, name: NavNames.myTasks, route: paths.myTasks },
   { icon: FiLogOut, name: NavNames.logout, route: paths.login },
 ];
 

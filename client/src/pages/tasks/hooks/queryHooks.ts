@@ -10,6 +10,12 @@ export const useGetAllTasks = (payload: TFormValues) => {
   );
 };
 
+export const useGetAllAssignedTasks = (payload: TFormValues) => {
+  return useQuery<DefaultData, ErrorObj>(['allAssignedTasks', payload], () =>
+    Services.getAllAssignedTasks(payload)
+  );
+};
+
 export const useCreateTask = () => {
   const toast = useToast();
   return useMutation(Services.createTask, {
