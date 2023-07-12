@@ -5,16 +5,19 @@ import {
   FormErrorMessage,
   Select,
   FormHelperText,
-} from "@chakra-ui/react";
-import DateRangePicker from "./DateRange";
+  Stack,
+  Checkbox,
+} from '@chakra-ui/react';
+import DateRangePicker from './DateRange';
 
 const generateInputs = (inputObj: InputObj) => {
   if (
-    inputObj.type === "email" ||
-    inputObj.type === "text" ||
-    inputObj.type === "phone" ||
-    inputObj.type === "number" ||
-    inputObj.type === "date"
+    inputObj.type === 'email' ||
+    inputObj.type === 'text' ||
+    inputObj.type === 'phone' ||
+    inputObj.type === 'number' ||
+    inputObj.type === 'checkbox' ||
+    inputObj.type === 'date'
   ) {
     return (
       <FormControl isInvalid={inputObj.isInvalid} mb={3} key={inputObj.name}>
@@ -25,7 +28,7 @@ const generateInputs = (inputObj: InputObj) => {
           id={inputObj.name}
           type={inputObj.type}
           {...inputObj.register}
-          size={inputObj.size ?? "md"}
+          size={inputObj.size ?? 'md'}
           placeholder={inputObj?.placeholder}
           onChange={inputObj?.onChange}
           defaultValue={inputObj?.defaultValue}
@@ -40,7 +43,7 @@ const generateInputs = (inputObj: InputObj) => {
         )}
       </FormControl>
     );
-  } else if (inputObj.type === "select") {
+  } else if (inputObj.type === 'select') {
     return (
       <FormControl isInvalid={inputObj.isInvalid} mb={4} key={inputObj.name}>
         <FormLabel mb={0} htmlFor={inputObj.name}>
@@ -48,7 +51,7 @@ const generateInputs = (inputObj: InputObj) => {
         </FormLabel>
         <Select
           id={inputObj.name}
-          size={inputObj.size ?? "md"}
+          size={inputObj.size ?? 'md'}
           {...inputObj.register}
           focusBorderColor="primary"
           onChange={inputObj?.onChange}
@@ -68,12 +71,36 @@ const generateInputs = (inputObj: InputObj) => {
         )}
       </FormControl>
     );
-  } else if (inputObj.type === "dateRange") {
-    return <DateRangePicker onChange={(dateRange) => {
-      if(inputObj.onChange){
-        inputObj?.onChange(dateRange)
-      }
-    }} />;
+  } else if (inputObj.type === 'dateRange') {
+    return (
+      <DateRangePicker
+        onChange={(dateRange) => {
+          if (inputObj.onChange) {
+            inputObj?.onChange(dateRange);
+          }
+        }}
+      />
+    );
+  } else if (inputObj.type === 'checkbox') {
+    return (
+      <FormControl isInvalid={inputObj.isInvalid} mb={4} key={inputObj.name}>
+        <FormLabel mb={0} htmlFor={inputObj.name}>
+          {inputObj.label}
+        </FormLabel>
+        <Stack spacing={[1, 5]} direction={['column', 'row']}>
+          {inputObj?.options?.map((item) => {
+            return (
+              <Checkbox value={item.value} key={item.name}>
+                {item.name}
+              </Checkbox>
+            );
+          })}
+        </Stack>
+        {inputObj.error && (
+          <FormErrorMessage>{inputObj.error.message}</FormErrorMessage>
+        )}
+      </FormControl>
+    );
   }
 };
 

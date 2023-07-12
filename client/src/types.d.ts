@@ -85,6 +85,16 @@ type CFormValues = {
   phone: number;
 };
 
+type LFormValues = {
+  checkIn: string;
+  checkOut: string;
+  tasks: string[];
+  workHours: number;
+  note?: string;
+};
+
+
+
 type TFormValues = {
   name: string;
   description: string;

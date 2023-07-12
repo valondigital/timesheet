@@ -6,11 +6,11 @@ import {
   Text,
   useColorMode,
   Button,
-} from "@chakra-ui/react";
-import { Link as ReactRouterLink, useLocation } from "react-router-dom";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import paths, { pathObject } from "./paths";
-import { useUserDetailsContext } from "setup/app-context-manager/UserDetailsContext";
+} from '@chakra-ui/react';
+import { Link as ReactRouterLink, useLocation } from 'react-router-dom';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import paths, { pathObject } from './paths';
+import { useUserDetailsContext } from 'setup/app-context-manager/UserDetailsContext';
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -26,24 +26,31 @@ const Sidebar = () => {
             to={item.route}
             mb={4}
             p={4}
-            bg={pathname === item.route ? "dark.bgGrey" : undefined}
+            bg={pathname === item.route ? '#bee3f8' : undefined}
             borderRadius="12px"
           >
             <Flex align="center">
-              <Icon as={item.icon} boxSize={6} color="light.text" />
-              <Text ml={2} color="light.text">
+              <Icon
+                as={item.icon}
+                boxSize={6}
+                color={pathname === item.route ? 'dark.text' : 'light.text'}
+              />
+              <Text
+                ml={2}
+                color={pathname === item.route ? 'dark.text' : 'light.text'}
+              >
                 {item.name}
               </Text>
             </Flex>
           </Link>
         ))}
-        {userDetails.role === "admin" && (
+        {userDetails.role === 'admin' && (
           <Link
             as={ReactRouterLink}
             to={paths.addUser}
             mb={4}
             p={4}
-            bg={pathname === paths.addUser ? "dark.bgGrey" : undefined}
+            bg={pathname === paths.addUser ? 'dark.bgGrey' : undefined}
             borderRadius="12px"
           >
             <Flex align="center">
@@ -62,7 +69,7 @@ const Sidebar = () => {
           borderRadius="md"
           colorScheme="teal"
         >
-          {colorMode === "light" ? (
+          {colorMode === 'light' ? (
             <>
               <MoonIcon mr={2} />
               Dark Mode
