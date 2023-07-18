@@ -9,28 +9,30 @@ import ModalComponent from '../../components/Modal';
 import generateInputs from '../../components/DynamicForm';
 import TableTop from '../../components/TableTop';
 import { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
-import { columns, schema,} from './helpers';
+import { columns, schema } from './helpers';
 import { useCreateTask, useGetAllTasks } from './hooks/queryHooks';
 import { useGetUsers } from './useGetUsers';
 import { useGetProjects } from './useGetProjects';
 
-export type FormValues = {
+export type TFormValues = {
   name: string;
   description: string;
+  project: string;
+  assignedTo: string;
 };
 
 const Index = () => {
-  const { usersData } = useGetUsers();
-  const {projectsData} = useGetProjects()
-  const [users, setUsers] = useState<Record<string, any>[]>([])
-  const [projects, setProjects] = useState<Record<string, any>[]>([])
-  const [topInputObj, setTopInputObj] = useState<{
-    name: string;
-    description: string;
-    project: string;
-    assignedTo: string;
-  }>({ name: '', description: '', project: '', assignedTo: '' });
-  const { data, isLoading } = useGetAllTasks(topInputObj);
+  const { usersData, isLoading: usersLoading } = useGetUsers();
+  const { projectsData, isLoading: projectsLoading } = useGetProjects();
+  const [users, setUsers] = useState<Record<string, any>[]>([]);
+  const [projects, setProjects] = useState<Record<string, any>[]>([]);
+  const [topInputObj, setTopInputObj] = useState<TFormValues>({
+    name: '',
+    description: '',
+    project: '',
+    assignedTo: '',
+  });
+  const { data, isLoading: tasksLoading } = useGetAllTasks(topInputObj);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
 
@@ -48,31 +50,25 @@ const Index = () => {
     formState: { errors },
   } = useForm<TFormValues>({ resolver: yupResolver(schema) });
 
-  // const { mutate: activateAgent } = useActivateAgent(params);
-
   const getArray = () => {
     const ret = usersData?.map((item) => ({
       value: item?._id,
       name: item?.firstName,
     }));
-
     const res = projectsData?.map((item) => ({
       value: item?._id,
       name: item?.name,
     }));
-    setUsers(ret  ?? [])
-    setProjects(res  ?? [])
-    return ret 
+    setUsers(ret ?? []);
+    setProjects(res ?? []);
   };
-
 
   useEffect(() => {
     if (isSuccess) {
       onClose();
     }
-    getArray()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess]);
+    getArray();
+  }, [isSuccess, usersData, projectsData, data]);
 
   const handleClose = () => {
     setOpen(false);
@@ -88,24 +84,16 @@ const Index = () => {
     name: string,
     value: string | Record<string, Date>
   ) => {
-    setTopInputObj(
-      (prevState: {
-        name: string;
-        description: string;
-        project: string;
-        assignedTo: string;
-      }) => ({
-        ...prevState,
-        [name]: value,
-      })
-    );
+    setTopInputObj((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleAddProjectToClient = () => {
     // activateAgent(params);
     // handleClose();
   };
-
 
   const inputObjList = (
     register: UseFormRegister<TFormValues>,
@@ -148,7 +136,6 @@ const Index = () => {
       name: 'assignedTo',
       label: 'Assignee',
       type: 'select',
-
       options: users,
       register: register('assignedTo', {
         required: 'Please select an assignee',
@@ -165,7 +152,6 @@ const Index = () => {
       placeholder: 'Search by name, email',
       type: 'text',
     },
-
     {
       name: 'status',
       label: 'Status',
@@ -188,7 +174,7 @@ const Index = () => {
         inputObj={tableTopInput}
         buttons={topTableButtons}
       />
-      {isLoading ? (
+      {tasksLoading || usersLoading || projectsLoading ? (
         <Box>...Loading</Box>
       ) : (
         <DynamicTable columns={columns} data={data?.Tasks ?? []} />

@@ -201,9 +201,9 @@ const Index = () => {
           </Button>
         }
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <form onSubmit={handleSubmit(onSubmit)}>
           {inputObjList(register, errors).map((input) => generateInputs(input))}
-        </form>
+        </form> */}
       </ModalComponent>
       <ActionModal
         title="reactivate"

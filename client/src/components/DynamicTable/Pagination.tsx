@@ -14,7 +14,6 @@ interface Props {
   pageIndex: number;
   pageCount: number;
 }
-
 const rowsNo = [10, 25, 50, 100, 200];
 
 const Pagination = ({

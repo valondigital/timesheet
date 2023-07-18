@@ -8,9 +8,10 @@ export const useGetUsers = () => {
     project: string;
     assignedTo: string;
   }>({ name: '', description: '', project: '', assignedTo: '' });
-  const { data } = useGetAllUsers(topInputObj);
+  const { data, isLoading } = useGetAllUsers(topInputObj);
 
   return {
     usersData: data?.users,
+    isLoading
   };
 };

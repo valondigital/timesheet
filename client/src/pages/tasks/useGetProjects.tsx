@@ -8,9 +8,10 @@ export  const useGetProjects = () => {
     project: string;
     assignedTo: string;
   }>({ name: '', description: '', project: '', assignedTo: '' });
-  const {data} = useGetAllProjects(topInputObj)
+  const {data, isLoading} = useGetAllProjects(topInputObj)
   return {
-    projectsData: data?.Projects
+    projectsData: data?.Projects,
+    isLoading
   }
 }
 

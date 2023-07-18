@@ -25,7 +25,7 @@ export const useCreateTask = () => {
         title: 'Invalid Details',
         description: 'Please enter valid inputs',
         status: 'error',
-        duration: 9000,
+        duration: 3000,
         isClosable: true,
         position: 'top',
       });
@@ -36,7 +36,7 @@ export const useCreateTask = () => {
         title: 'Task Created',
         description: 'Task created successfully',
         status: 'success',
-        duration: 9000,
+        duration: 3000,
         isClosable: true,
         position: 'top',
       });
