@@ -8,7 +8,6 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink, useLocation } from 'react-router-dom';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import paths, { pathObject } from './paths';
 import { useUserDetailsContext } from 'setup/app-context-manager/UserDetailsContext';
 
@@ -24,7 +23,6 @@ const Sidebar = () => {
       !['Users', 'Clients', 'Projects', 'All Tasks'].includes(item.name)
     );
   });
-  console.log(userDetails, 'filereddd');
 
   return (
     <Box py={4} px={2}>

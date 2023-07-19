@@ -57,7 +57,6 @@ export const pathObject = [
   { icon: RiUserSearchLine, name: NavNames.clients, route: paths.clients },
   { icon: FaTasks, name: NavNames.tasks, route: paths.tasks },
   { icon: BiTimeFive, name: NavNames.myTasks, route: paths.myTasks },
-  { icon: FiLogOut, name: NavNames.logout, route: paths.login },
 ];
 
 export default paths;

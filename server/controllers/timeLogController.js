@@ -8,9 +8,6 @@ exports.createTimeLog = catchAsync(async (req, res) => {
     user: req.user,
     checkIn,
     tasks,
-    // checkOut,
-    // workHours,
-    // note,
   });
   res.status(200).json({
     status: 'success',
@@ -21,8 +18,8 @@ exports.createTimeLog = catchAsync(async (req, res) => {
 });
 
 exports.getAllLogs = catchAsync(async (req, res) => {
-
-  const logs = await TimeLog.find({ user: req.user });
+  console.log(req.user);
+  const logs = await TimeLog.find({user: req.user});
 
   res.status(200).json({
     status: 'success',

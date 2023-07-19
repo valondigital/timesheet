@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Task = require('../models/taskModel');
+const TimeLog = require('../models/timeLogModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -139,3 +140,14 @@ exports.getTasksByUser = async (req, res, next) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+// exports.getLogssByUser = async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const tasks = await TimeLog.find({ [user._id]: id });
+//     res.status(200).json({ tasks });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// };

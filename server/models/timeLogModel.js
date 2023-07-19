@@ -34,10 +34,7 @@ timeLogSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'tasks',
     select: '-createdAt -updatedAt -__v',
-  }).populate({
-    path: 'user',
-    select: '-createdAt -updatedAt -__v',
-  });
+  })
   next();
 });
 
