@@ -1,6 +1,5 @@
 import {
   createColumnHelper,
-  ColumnDef,
   CellContext,
 } from '@tanstack/react-table';
 import * as yup from 'yup';
@@ -11,13 +10,10 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
   Center,
   Button,
-  Text,
   Tag,
 } from '@chakra-ui/react';
-import { NavigateFunction } from 'react-router-dom';
 import { formatDate } from 'utils/formatDate';
 
 const statusTypes = [
