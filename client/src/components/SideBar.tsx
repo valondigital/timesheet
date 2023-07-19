@@ -14,8 +14,7 @@ import { useUserDetailsContext } from 'setup/app-context-manager/UserDetailsCont
 
 const Sidebar = () => {
   const { pathname } = useLocation();
-  const { colorMode, toggleColorMode } = useColorMode();
-  const { userDetails, updateUserDetails } = useUserDetailsContext();
+  const { userDetails } = useUserDetailsContext();
 
   const filteredPaths = pathObject.filter((item) => {
     return (
