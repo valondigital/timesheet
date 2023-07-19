@@ -68,6 +68,7 @@ const Index = () => {
       onClose();
     }
     getArray();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, usersData, projectsData, data]);
 
   const handleClose = () => {

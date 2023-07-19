@@ -1,6 +1,7 @@
 import ModalComponent from '../../../components/Modal';
 import { Button } from '@chakra-ui/react';
 import { Stack } from '@chakra-ui/react';
+import { useGetLogDetails } from '../hooks/queryHooks';
 
 type Props = {
   title: string;
@@ -9,10 +10,15 @@ type Props = {
   size?: string;
   handleSubmit: () => void;
   status?: string;
+  id: string | null;
 };
 
 function ActionModal(props: Props) {
-  const { title, isOpen, onClose, handleSubmit, status } = props;
+  const { title, isOpen, onClose, handleSubmit, status, id } = props;
+  const { data, isLoading } = useGetLogDetails(id ?? '');
+  console.log(data, id, "here is the preferred log data")
+
+
 
   return (
     <ModalComponent

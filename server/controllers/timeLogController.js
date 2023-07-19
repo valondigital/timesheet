@@ -5,12 +5,12 @@ const AppError = require('../utils/appError');
 exports.createTimeLog = catchAsync(async (req, res) => {
   const { user, checkIn, tasks, checkOut, workHours, note } = req.body;
   const newTimeLog = await TimeLog.create({
-    user,
+    user: req.user,
     checkIn,
     tasks,
-    checkOut,
-    workHours,
-    note,
+    // checkOut,
+    // workHours,
+    // note,
   });
   res.status(200).json({
     status: 'success',
@@ -32,8 +32,27 @@ exports.getAllLogs = catchAsync(async (req, res) => {
   });
 });
 
+exports.getLogDetails = catchAsync(async (req, res) => {
+  const log = await TimeLog.findById(req.params.id);
+
+  if (!log) {
+    return next(
+      new AppError(
+        `Can't find user with id ${req.params.id} on this server`,
+        404
+      )
+    );
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      log
+    },
+  });
+});
+
 exports.updateTimeLog = catchAsync(async (req, res, next) => {
-  const { user, checkIn, tasks, checkOut, workHours, note } = req.body;
+  const {  checkOut, workHours, note } = req.body;
   const timeLog = await TimeLog.findById(req.params.id);
 
   if (!timeLog) {
@@ -41,10 +60,7 @@ exports.updateTimeLog = catchAsync(async (req, res, next) => {
       new AppError(`Time log with ID ${req.params.id} not found.`, 404)
     );
   }
-
-  timeLog.user = user;
-  timeLog.checkIn = checkIn;
-  timeLog.tasks = tasks;
+  
   timeLog.checkOut = checkOut;
   timeLog.workHours = workHours;
   timeLog.note = note;

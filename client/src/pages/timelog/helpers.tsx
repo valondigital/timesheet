@@ -20,66 +20,87 @@ import {
 import { NavigateFunction } from 'react-router-dom';
 import { formatDate } from 'utils/formatDate';
 
-
-
 const statusTypes = [
-  {name: "inProgress", color: 'yellow'},
-  {name: "pending", color: 'red'},
-  {name: "completed", color: 'green'},
-]
+  { name: 'inProgress', color: 'yellow' },
+  { name: 'pending', color: 'red' },
+  { name: 'completed', color: 'green' },
+];
 
-const getStatusTag= (name:string) => {
+const getStatusTag = (name: string) => {
   let color;
   statusTypes.forEach((status) => {
-     if(status.name === name){
-        color = <Tag variant='solid' colorScheme={status.color}>{status.name}</Tag>
-     } 
-  })
-  return color
-}
+    if (status.name === name) {
+      color = (
+        <Tag variant="solid" colorScheme={status.color}>
+          {status.name}
+        </Tag>
+      );
+    }
+  });
+  return color;
+};
 
 export const schema = yup
   .object()
   .shape({
-    checkIn: yup.string().required(),
-    checkOut: yup.string().required(),
-    workHours: yup.number().required(),
+    // checkIn: yup.string(),
+    // checkOut: yup.string().required(),
+    // workHours: yup.number().required(),
+    // note: yup.string().required(),
     tasks: yup.array().required(),
   })
   .required();
 
 const columnHelper = createColumnHelper<ITData>();
 
-export const columns: ITDataColumnDef<ITData>[] = [
-  columnHelper.accessor('checkIn', {
-    header: 'Checked In',
-    cell: (info) => formatDate(info.getValue<string>()),
-  }),
-  columnHelper.accessor('workHours', {
-    header: 'Work Hours',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('checkOut', {
-    header: 'Checked Out',
-    cell: (info) => formatDate(info.getValue<string>()),
-  }),
-  columnHelper.accessor((row) => row.id, {
-    header: 'Actions',
-    cell: (info) => (
-      <Menu>
-        <MenuButton variant="noBg" p={0} as={Button}>
-          <Center>
-            <FiMoreVertical />
-          </Center>
-        </MenuButton>
+export const columns = (
+  handleClockOut: (data: CellContext<ITData, object | React.ReactNode>) => void
+): ITDataColumnDef<ITData>[] => {
+  return [
+    columnHelper.accessor('checkIn', {
+      header: 'Checked In',
+      cell: (info) => formatDate(info.getValue<string>()),
+    }),
+    columnHelper.accessor('workHours', {
+      header: 'Work Hours',
+      cell: (info) => info.getValue() ?? getStatusTag('pending'),
+    }),
+    columnHelper.accessor('checkOut', {
+      header: 'Checked Out',
+      cell: (info) =>
+        info.getValue()
+          ? formatDate(info.getValue<string>())
+          : getStatusTag('pending'),
+    }),
+    columnHelper.accessor((row) => row.id, {
+      header: 'Actions',
+      cell: (info) =>
+        info.row.original.checkOut ? (
+          <Tag variant="solid" colorScheme="green">
+            Completed
+          </Tag>
+        ) : (
+          <Menu>
+            <MenuButton variant="noBg" p={0} as={Button}>
+              <Center>
+                <FiMoreVertical />
+              </Center>
+            </MenuButton>
 
-        <MenuList>
-          <MenuItem>View Detail</MenuItem>
-        </MenuList>
-      </Menu>
-    ),
-  }),
-];
+            <MenuList>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => handleClockOut(info)}
+              >
+                Clock Out
+              </Button>
+            </MenuList>
+          </Menu>
+        ),
+    }),
+  ];
+};
 
 export type FormValues = {
   name: string;

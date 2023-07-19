@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Button, useDisclosure, Box } from '@chakra-ui/react';
-import ActionModal from './components/ActionModal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Info } from '../../components/Info';
@@ -10,18 +9,16 @@ import generateInputs from '../../components/DynamicForm';
 import TableTop from '../../components/TableTop';
 import { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
 import { columns, schema } from './helpers';
-import { useCreateTask, useGetAllLogs } from './hooks/queryHooks';
+import {
+  useGetAllLogs,
+  useCreateLog,
+} from './hooks/queryHooks';
 import { useGetUsersTasks } from './useGetUsersTasks';
-import { useGetProjects } from './useGetProjects';
-
-export type FormValues = {
-  name: string;
-  description: string;
-};
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const { usersTasks } = useGetUsersTasks();
-  const { projectsData } = useGetProjects();
+  const navigate = useNavigate()
   const [topInputObj, setTopInputObj] = useState<{
     name: string;
     description: string;
@@ -32,23 +29,17 @@ const Index = () => {
   const { data, isLoading } = useGetAllLogs();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const [open, setOpen] = useState(false);
-
-  const [status] = useState('');
-
   const {
-    mutate: createTask,
+    mutate: clockIn,
     isLoading: createProjectLoading,
     isSuccess,
-  } = useCreateTask();
+  } = useCreateLog();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LFormValues>({ resolver: yupResolver(schema) });
-
-  // const { mutate: activateAgent } = useActivateAgent(params);
 
   const getArray = () => {
     const ret = usersTasks?.map((item) => ({
@@ -66,66 +57,24 @@ const Index = () => {
     }
     getArray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess]);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  }, [isSuccess, usersTasks]);
 
   const onSubmit = (values: LFormValues) => {
-    createTask({ data: values });
+    clockIn({ data: values });
   };
 
   const topTableButtons = [{ name: 'Clock In', onClick: onOpen }];
-
-  const handleAddProjectToClient = () => {
-    // activateAgent(params);
-    // handleClose();
-  };
 
   const inputObjList = (
     register: UseFormRegister<LFormValues>,
     errors: FieldErrorsImpl<LFormValues>
   ) => [
     {
-      name: 'checkIn',
-      label: 'Check In',
-      placeholder: '',
-      type: 'date',
-      register: register('checkIn', {
-        required: 'Please enter a valid task name',
-      }),
-      isInvalid: !!errors.checkIn,
-      error: errors?.checkIn,
-    },
-    {
-      name: 'checkOut',
-      label: 'Check Out',
-      placeholder: '',
-      type: 'text',
-      register: register('checkOut'),
-      isInvalid: !!errors.checkOut,
-      error: errors?.checkOut,
-    },
-    {
-      name: 'workHours',
-      label: 'Work Hours',
-      placeholder: '',
-      type: 'number',
-      register: register('workHours'),
-      isInvalid: !!errors.workHours,
-      error: errors?.workHours,
-    },
-    {
       name: 'tasks',
-      label: 'Tasks',
+      label: 'Please select what tasks you would be working on',
       placeholder: '',
-      type: 'number',
-      options: usersTasks?.map((task) => ({
-        value: task._id,
-        name: task.name,
-      })),
-
+      type: 'checkbox',
+      options: tasks,
       register: register('tasks', {
         required: 'Please select a parent object',
       }),
@@ -173,6 +122,12 @@ const Index = () => {
     );
   };
 
+  const handleClockOut = (data: any = {}) => {
+    console.log(data.row.original)
+    navigate(`/timesheet/${data.row.original.id}`);
+  };
+
+
   return (
     <>
       <Info>Clock In and Clock Out to Manage Your Work Hours</Info>
@@ -184,7 +139,10 @@ const Index = () => {
       {isLoading ? (
         <Box>...Loading</Box>
       ) : (
-        <DynamicTable columns={columns} data={data?.logs ?? []} />
+        <DynamicTable
+          columns={columns(handleClockOut)}
+          data={data?.logs ?? []}
+        />
       )}
       <ModalComponent
         title="Clock In"
@@ -201,17 +159,10 @@ const Index = () => {
           </Button>
         }
       >
-        {/* <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {inputObjList(register, errors).map((input) => generateInputs(input))}
-        </form> */}
+        </form>
       </ModalComponent>
-      <ActionModal
-        title="reactivate"
-        status={status}
-        isOpen={open}
-        onClose={handleClose}
-        handleSubmit={handleAddProjectToClient}
-      />
     </>
   );
 };

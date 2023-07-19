@@ -85,14 +85,13 @@ type CFormValues = {
   phone: number;
 };
 
-type LFormValues = {
-  checkIn: string;
-  checkOut: string;
+interface LFormValues  {
+  checkIn?: string ;
+  checkOut?: string; // Make it optional with the "?" symbol
   tasks: string[];
-  workHours: number;
+  workHours?: number;
   note?: string;
 };
-
 
 
 type TFormValues = {
@@ -108,6 +107,63 @@ interface DefaultData {
   totalElements: number;
   totalPages: number;
 }
+
+interface Task {
+  status: string;
+  _id: string;
+  name: string;
+  description: string;
+  project: {
+    _id: string;
+    tasks: any[]; // Replace 'any' with the appropriate type if needed
+    name: string;
+    description: string;
+  };
+  assignedTo: {
+    role: string;
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    passwordChangedAt: string;
+    country: string;
+    id: string;
+  };
+  id: string;
+}
+
+interface Log {
+  tasks: Task[];
+  checkOut: string | null;
+  workHours: number | null;
+  note: string;
+  _id: string;
+  user: {
+    role: string;
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    passwordChangedAt: string;
+    country: string;
+    id: string;
+  };
+  checkIn: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  id: string;
+}
+
+interface TDefaultData {
+  log: Log;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+}
+
 
 type IPageProps = {
   page: number;

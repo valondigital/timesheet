@@ -39,17 +39,17 @@ export const ButtonStyle = {
       width: '127px',
       borderRadius: "5px",
       ':hover': {
-        bg: props.theme.colors.primary,
+        bg: props.theme.colors[props.colorMode].primary,
         boxShadow: 'md',
       },
       ':focus': {
-        bg: props.theme.colors.primary,
+        bg: props.theme.colors[props.colorMode].primary,
         boxShadow: 'md',
       },
       ':disabled': {
         bg: props.theme.colors.muted,
         ':hover': {
-          bg: props.theme.colors.secondary,
+          bg: props.theme.colors[props.colorMode].primary,
           boxShadow: 'md',
         }
       }

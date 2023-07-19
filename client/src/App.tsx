@@ -1,20 +1,22 @@
-import React from "react";
-import { ChakraProvider } from "@chakra-ui/react";
-import theme from "./theme";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import SignIn from "./pages/sign-in";
-import SignUp from "./pages/sign-up";
-import Dashboard from "./pages/dashboard";
-import Profile from "./pages/profile";
-import Projects from './pages/projects'
-import Clients from './pages/clients'
-import Tasks from './pages/tasks'
-import AssignedTasks from './pages/tasks/AssignedTasks'
-import Users from './pages/users'
-import Timesheet from "./pages/timelog";
-import Layout from "./components/Layout";
-import paths from "./components/paths";
-import { UserDetailsProvider } from "setup/app-context-manager/UserDetailsContext";
+import React from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
+import theme from './theme';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import SignIn from './pages/sign-in';
+import SignUp from './pages/sign-up';
+import Dashboard from './pages/dashboard';
+import Profile from './pages/profile';
+import Projects from './pages/projects';
+import Clients from './pages/clients';
+import Tasks from './pages/tasks';
+import AssignedTasks from './pages/tasks/AssignedTasks';
+import Users from './pages/users';
+import TimesheetBase from './pages/timelog/Base'
+import Timesheet from './pages/timelog';
+import ClockOut from './pages/timelog/ClockOut';
+import Layout from './components/Layout';
+import paths from './components/paths';
+import { UserDetailsProvider } from 'setup/app-context-manager/UserDetailsContext';
 
 function App() {
   return (
@@ -38,7 +40,10 @@ function App() {
           <Route path={paths.tasks} element={<Tasks />} />
           <Route path={paths.myTasks} element={<AssignedTasks />} />
           <Route path={paths.users} element={<Users />} />
-          <Route path={paths.timesheet} element={<Timesheet />} />
+          <Route path={paths.timesheet} element={<TimesheetBase />}>
+            <Route index element={<Timesheet />} />
+            <Route path=":logId" element={<ClockOut />} />
+          </Route>
         </Route>
       </Routes>
     </ChakraProvider>

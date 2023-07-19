@@ -7,6 +7,7 @@ import {
   FormHelperText,
   Stack,
   Checkbox,
+  CheckboxGroup,
 } from '@chakra-ui/react';
 import DateRangePicker from './DateRange';
 
@@ -16,7 +17,6 @@ const generateInputs = (inputObj: InputObj) => {
     inputObj.type === 'text' ||
     inputObj.type === 'phone' ||
     inputObj.type === 'number' ||
-    inputObj.type === 'checkbox' ||
     inputObj.type === 'date'
   ) {
     return (
@@ -87,15 +87,17 @@ const generateInputs = (inputObj: InputObj) => {
         <FormLabel mb={0} htmlFor={inputObj.name}>
           {inputObj.label}
         </FormLabel>
-        <Stack spacing={[1, 5]} direction={['column', 'row']}>
-          {inputObj?.options?.map((item) => {
-            return (
-              <Checkbox value={item.value} key={item.name}>
-                {item.name}
-              </Checkbox>
-            );
-          })}
-        </Stack>
+        <CheckboxGroup>
+          <Stack spacing={5} direction="column">
+            {inputObj?.options?.map((item, idx) => {
+              return (
+                <Checkbox value={item.value} key={idx} {...inputObj.register}>
+                  {item.name}
+                </Checkbox>
+              );
+            })}
+          </Stack>
+        </CheckboxGroup>
         {inputObj.error && (
           <FormErrorMessage>{inputObj.error.message}</FormErrorMessage>
         )}
