@@ -18,9 +18,6 @@ export const TextStyle = {
       fontWeight: 'bold',
       fontSize: '1.15vw',
     }),
-    nav: (props: StyleFunctionProps) => ({
-      fontSize: { base: '16px', lg: '1.1vw' },
-    }),
     whiteBoldNormal: (props: StyleFunctionProps) => ({
       fontWeight: 'bold',
       textAlign: 'center',
@@ -71,6 +68,17 @@ export const TextStyle = {
       fontSize: '16px',
       lineHeight: '24px',
       color: '#667085',
+    }),
+    nav: (props: StyleFunctionProps) => ({
+      fontSize: { base: '16px', lg: '1.1vw' },
+      fontFamily: 'Inter',
+      fontStyle: 'normal',
+      fontWeight: 700,
+      lineHeight: 'normal',
+      color:
+        props.colorMode === 'dark'
+          ? props.theme.colors.primary['dark']
+          : props.theme.colors.gray1,
     }),
     smallLight: {
       fontWeight: '300',
