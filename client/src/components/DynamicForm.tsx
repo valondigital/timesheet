@@ -91,7 +91,12 @@ const generateInputs = (inputObj: InputObj) => {
           <Stack spacing={5} direction="column">
             {inputObj?.options?.map((item, idx) => {
               return (
-                <Checkbox value={item.value} key={idx} {...inputObj.register}>
+                <Checkbox
+                  value={item.value}
+                  key={idx}
+                  {...inputObj.register}
+                  onChange={inputObj?.onChange}
+                >
                   {item.name}
                 </Checkbox>
               );

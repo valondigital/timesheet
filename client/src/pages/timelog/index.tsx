@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, useDisclosure, Box } from '@chakra-ui/react';
+import { Button, useDisclosure, Box, Stack, Checkbox, VStack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Info } from '../../components/Info';
@@ -9,16 +9,13 @@ import generateInputs from '../../components/DynamicForm';
 import TableTop from '../../components/TableTop';
 import { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
 import { columns, schema } from './helpers';
-import {
-  useGetAllLogs,
-  useCreateLog,
-} from './hooks/queryHooks';
+import { useGetAllLogs, useCreateLog } from './hooks/queryHooks';
 import { useGetUsersTasks } from './useGetUsersTasks';
 import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const { usersTasks } = useGetUsersTasks();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [topInputObj, setTopInputObj] = useState<{
     name: string;
     description: string;
@@ -60,10 +57,23 @@ const Index = () => {
   }, [isSuccess, usersTasks]);
 
   const onSubmit = (values: LFormValues) => {
+    console.log(values);
     clockIn({ data: values });
   };
 
+  console.log(tasks, 'tasks');
+
   const topTableButtons = [{ name: 'Clock In', onClick: onOpen }];
+
+  const handleTaskChange = (e: any) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      setTasks((prevTasks) => [...prevTasks, value]); // Add the selected task to the tasks array
+    } else {
+      setTasks((prevTasks) => prevTasks.filter((task) => task.value !== value)); // Remove the task if it's deselected
+    }
+  };
 
   const inputObjList = (
     register: UseFormRegister<LFormValues>,
@@ -74,7 +84,7 @@ const Index = () => {
       label: 'Please select what tasks you would be working on',
       placeholder: '',
       type: 'checkbox',
-      options: tasks,
+      options: tasks, // Map the usersTasks directly with checkboxes
       register: register('tasks', {
         required: 'Please select a parent object',
       }),
@@ -123,10 +133,8 @@ const Index = () => {
   };
 
   const handleClockOut = (data: any = {}) => {
-    console.log(data.row.original)
     navigate(`/timesheet/${data.row.original.id}`);
   };
-
 
   return (
     <>
@@ -145,9 +153,10 @@ const Index = () => {
         />
       )}
       <ModalComponent
-        title="Clock In"
+        title="Please select a task which you would be working on"
         isOpen={isOpen}
         onClose={onClose}
+        size="2xl"
         button={
           <Button
             variant="secondary"
@@ -160,7 +169,24 @@ const Index = () => {
         }
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          {inputObjList(register, errors).map((input) => generateInputs(input))}
+          {inputObjList(register, errors).map((input) => (
+            <VStack
+              key={input.name}
+              spacing={[1, 5]}
+              alignItems="start"
+              direction={['column', 'row']}
+            >
+              {input?.options.map((option, index) => (
+                <Checkbox
+                  key={option.value}
+                  value={option.value}
+                  {...register(`tasks.${index}`)}
+                >
+                  {option.name}
+                </Checkbox>
+              ))}
+            </VStack>
+          ))}
         </form>
       </ModalComponent>
     </>
