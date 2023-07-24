@@ -8,14 +8,17 @@ import DynamicTable from '../../components/DynamicTable';
 import ModalComponent from '../../components/Modal';
 import generateInputs from '../../components/DynamicForm';
 import TableTop from '../../components/TableTop';
+import { FieldErrorsImpl, UseFormRegister, FieldError } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
-import { columns, schema, inputObjList, tableTopInput, data } from './helpers';
+import { columns, schema, tableTopInput, data } from './helpers';
 import { useGetAllProjects, useCreateProject } from './hooks/queryHooks';
 import { useGetUsers } from 'pages/tasks/useGetUsers';
+import { useGetAllClients } from './../clients/hooks/queryHooks';
 
 export type FormValues = {
   name: string;
   description: string;
+  client: string;
 };
 
 const Index = () => {
@@ -23,6 +26,16 @@ const Index = () => {
     name: string;
     query: string;
   }>({ name: '', query: '' });
+  const [clientInputObj, setClientInputObj] = useState<{
+    firstName: string;
+    lastName: string;
+    phone: string;
+    email: string;
+    address: string | undefined;
+    company: string | undefined;
+  }>({ firstName: '', lastName: '', email: '', phone: '', address: '', company: '' });
+  const {data: clientsData} = useGetAllClients(clientInputObj)
+  const [clients, setClients] = useState<Record<string, any>[]>([]);
   const { data, isLoading } = useGetAllProjects(topInputObj);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
@@ -36,6 +49,23 @@ const Index = () => {
     isSuccess,
   } = useCreateProject();
 
+  console.log(clientsData?.Clients, "clients from array")
+  const getArray = () => {
+    const res = clientsData?.Clients?.map((item) => ({
+      value: item?._id,
+      name: `${item?.firstName} ${item?.lastName}`,
+    }));
+    setClients(res ?? []);
+  };
+
+
+  useEffect(() => {
+    if (isSuccess) {
+      onClose();
+    }
+    getArray();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess, clientsData]);
   const {
     register,
     handleSubmit,
@@ -75,6 +105,45 @@ const Index = () => {
     // activateAgent(params);
     // handleClose();
   };
+
+  const inputObjList = (
+    register: UseFormRegister<FormValues>,
+    errors: FieldErrorsImpl<FormValues>
+  ) => [
+    {
+      name: "firstName",
+      label: "First Name",
+      placeholder: "",
+      type: "text",
+      register: register("name", {
+        required: "Please enter your first name",
+      }),
+      isInvalid: !!errors.name,
+      error: errors?.name,
+    },
+    {
+      name: "description",
+      label: "Description",
+      type: "text",
+      register: register("description", {
+        required: "Please enter your project description",
+      }),
+      isInvalid: !!errors.description,
+      error: errors?.description,
+    },
+    {
+      name: 'client',
+      label: 'Client',
+      type: 'select',
+      options: clients,
+      register: register('client', {
+        required: 'Please select an assignee',
+      }),
+      isInvalid: !!errors.client,
+      error: errors?.client,
+    },
+  ];
+  
 
   return (
     <>

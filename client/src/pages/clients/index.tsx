@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Button, useDisclosure, Box } from '@chakra-ui/react';
-import ActionModal from './components/ActionModal';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Info } from '../../components/Info';
-import DynamicTable from '../../components/DynamicTable';
-import ModalComponent from '../../components/Modal';
-import generateInputs from '../../components/DynamicForm';
-import TableTop from '../../components/TableTop';
-import { useNavigate } from 'react-router-dom';
-import { columns, schema, inputObjList, tableTopInput, data } from './helpers';
-import { useCreateClient, useGetAllClients } from './hooks/queryHooks';
+import { useEffect, useState } from "react";
+import { Button, useDisclosure, Box } from "@chakra-ui/react";
+import ActionModal from "./components/ActionModal";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Info } from "../../components/Info";
+import DynamicTable from "../../components/DynamicTable";
+import ModalComponent from "../../components/Modal";
+import generateInputs from "../../components/DynamicForm";
+import TableTop from "../../components/TableTop";
+import { useNavigate } from "react-router-dom";
+import { columns, schema, inputObjList, tableTopInput, data } from "./helpers";
+import { useCreateClient, useGetAllClients } from "./hooks/queryHooks";
 
 export type FormValues = {
   name: string;
@@ -21,14 +21,23 @@ const Index = () => {
   const [topInputObj, setTopInputObj] = useState<{
     firstName: string;
     lastName: string;
-    phone: number;
+    phone: string | undefined;
     email: string;
-  }>({ firstName: '', lastName: '', email: '', phone: 0 });
+    address: string | undefined;
+    company: string | undefined;
+  }>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: "",
+    company: "",
+  });
   const { data, isLoading } = useGetAllClients(topInputObj);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
 
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
 
   const {
     mutate: createProject,
@@ -56,10 +65,13 @@ const Index = () => {
   };
 
   const onSubmit = (values: CFormValues) => {
+    if (!values.phone) {
+      values.phone = undefined;
+    }
     createProject({ data: values });
   };
 
-  const topTableButtons = [{ name: 'Add Client', onClick: onOpen }];
+  const topTableButtons = [{ name: "Add Client", onClick: onOpen }];
 
   const handleInputChange = (
     name: string,
@@ -70,7 +82,9 @@ const Index = () => {
         firstName: string;
         lastName: string;
         email: string;
-        phone: number;
+        phone: string | undefined;
+        company: string | undefined;
+        address: string | undefined;
       }) => ({
         ...prevState,
         [name]: value,
@@ -82,7 +96,6 @@ const Index = () => {
     // activateAgent(params);
     // handleClose();
   };
-
 
   return (
     <>
@@ -98,7 +111,7 @@ const Index = () => {
         <DynamicTable columns={columns} data={data?.Clients ?? []} />
       )}
       <ModalComponent
-        title="Create Project"
+        title="Add New Client"
         isOpen={isOpen}
         onClose={onClose}
         button={

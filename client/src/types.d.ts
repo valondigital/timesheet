@@ -82,7 +82,9 @@ type CFormValues = {
   firstName: string;
   lastName: string;
   email: string;
-  phone: number;
+  phone: string | undefined;
+  company: string | undefined;
+  address: string | undefined;
 };
 
 interface LFormValues  {
