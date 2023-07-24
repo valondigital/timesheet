@@ -7,17 +7,19 @@ import getURLParams from "utils/getUrlParams";
 
 class Services {
   async getAllTasks(param: TFormValues) {
+    const filters = getURLParams(param);
     const response = await  axios({
       method: "GET",
-      url: `${endpoints.tasks}`,
+      url: `${endpoints.tasks}${filters}`,
     });
     return response?.data?.data as DefaultData
   };
 
   async getAllAssignedTasks(param: TFormValues) {
+    const filters = getURLParams(param);
     const response = await  axios({
       method: "GET",
-      url: `${endpoints.userTasks(localStorage.userId)}`,
+      url: `${endpoints.userTasks(localStorage.userId)}${filters}`,
     });
     return response?.data as DefaultData
   };

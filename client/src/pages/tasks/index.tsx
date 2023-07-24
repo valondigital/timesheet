@@ -19,6 +19,7 @@ export type TFormValues = {
   description: string;
   project: string;
   assignedTo: string;
+  status: string | undefined;
 };
 
 const Index = () => {
@@ -31,6 +32,7 @@ const Index = () => {
     description: '',
     project: '',
     assignedTo: '',
+    status:''
   });
   const { data, isLoading: tasksLoading } = useGetAllTasks(topInputObj);
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -158,11 +160,10 @@ const Index = () => {
       label: 'Status',
       type: 'select',
       options: [
+        { value: '', name: 'All' },
         { value: 'PENDING', name: 'Pending' },
-        { value: 'ACTIVE', name: 'Active' },
-        { value: 'SUSPENDED', name: 'Suspended' },
-        { value: 'IN_ACTIVE', name: 'Inactive' },
-        { value: 'ON_HOLD', name: 'On hold' },
+        { value: 'IN_PROGRESS', name: 'In Progress' },
+        { value: 'COMPLETED', name: 'Completed' },
       ],
     },
   ];
@@ -199,13 +200,6 @@ const Index = () => {
           {inputObjList(register, errors).map((input) => generateInputs(input))}
         </form>
       </ModalComponent>
-      <ActionModal
-        title="reactivate"
-        status={status}
-        isOpen={open}
-        onClose={handleClose}
-        handleSubmit={handleAddProjectToClient}
-      />
     </>
   );
 };

@@ -18,8 +18,9 @@ const Index = () => {
     description: string;
     project: string;
     assignedTo: string;
-  }>({ name: '', description: '', project: '', assignedTo: '' });
-  const { data, isLoading } = useGetAllAssignedTasks(localStorage.userId);
+    status: string;
+  }>({ name: '', description: '', project: '', assignedTo: '', status:'' });
+  const { data, isLoading } = useGetAllAssignedTasks(topInputObj);
   const [open, setOpen] = useState(false);
 
   const [status] = useState('');
@@ -38,6 +39,7 @@ const Index = () => {
         description: string;
         project: string;
         assignedTo: string;
+        status: string;
       }) => ({
         ...prevState,
         [name]: value,
@@ -63,11 +65,10 @@ const Index = () => {
       label: 'Status',
       type: 'select',
       options: [
+        { value: '', name: 'All' },
         { value: 'PENDING', name: 'Pending' },
-        { value: 'ACTIVE', name: 'Active' },
-        { value: 'SUSPENDED', name: 'Suspended' },
-        { value: 'IN_ACTIVE', name: 'Inactive' },
-        { value: 'ON_HOLD', name: 'On hold' },
+        { value: 'IN_PROGRESS', name: 'In Progress' },
+        { value: 'COMPLETED', name: 'Completed' },
       ],
     },
   ];

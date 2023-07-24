@@ -22,16 +22,16 @@ import { NavigateFunction } from 'react-router-dom';
 
 
 const statusTypes = [
-  {name: "inProgress", color: 'yellow'},
-  {name: "pending", color: 'red'},
-  {name: "completed", color: 'green'},
+  {name: "IN_PROGRESS", color: 'yellow', label: "IN PROGRESS" },
+  {name: "PENDING", color: 'red', label: "PENDING"},
+  {name: "COMPLETED", color: 'green', label: "COMPLETED"},
 ]
 
 const getStatusTag= (name:string) => {
   let color;
   statusTypes.forEach((status) => {
      if(status.name === name){
-        color = <Tag variant='solid' colorScheme={status.color}>{status.name}</Tag>
+        color = <Tag variant='solid' colorScheme={status.color}>{status.label}</Tag>
      } 
   })
   return color
@@ -44,6 +44,7 @@ export const schema = yup
     description: yup.string().required(),
     project: yup.string().required(),
     assignedTo: yup.string().required(),
+    status: yup.string()
   })
   .required();
 
