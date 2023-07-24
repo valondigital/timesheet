@@ -73,7 +73,7 @@ export const columns = (
       cell: (info) =>
         info.row.original.checkOut ? (
           <Tag variant="solid" colorScheme="green">
-            Completed
+            Clocked Out
           </Tag>
         ) : (
           <Menu>
