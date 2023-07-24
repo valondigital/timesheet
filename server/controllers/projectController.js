@@ -6,10 +6,11 @@ const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 
 exports.createProject = catchAsync(async (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, client } = req.body;
   const newProject = await Project.create({
     name,
     description,
+    client
   });
   res.status(200).json({
     message: 'Project created successfully',

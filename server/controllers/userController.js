@@ -1,6 +1,5 @@
 const User = require('../models/userModel');
 const Task = require('../models/taskModel');
-const TimeLog = require('../models/timeLogModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -133,7 +132,14 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 exports.getTasksByUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const tasks = await Task.find({ assignedTo: id });
+    const features = new APIFeatures(Task.find({ assignedTo: id }), req.query)
+      .filter()
+      .sort()
+      .limitField()
+      .paginate();
+
+    const tasks = await features.query;
+    // const tasks = await Task.find({ assignedTo: id });
     res.status(200).json({ tasks });
   } catch (err) {
     console.error(err);
