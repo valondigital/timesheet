@@ -19,6 +19,7 @@ import { columns, schema } from "./helpers";
 import { useGetAllLogs, useCreateLog } from "./hooks/queryHooks";
 import { useGetUsersTasks } from "./useGetUsersTasks";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Index = () => {
   const { usersTasks } = useGetUsersTasks();
@@ -32,6 +33,7 @@ const Index = () => {
   const [tasks, setTasks] = useState<Record<string, any>[]>([]);
   const { data, isLoading } = useGetAllLogs();
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const queryClient = useQueryClient();
 
   const {
     mutate: clockIn,
@@ -59,6 +61,7 @@ const Index = () => {
     if (isSuccess) {
       onClose();
     }
+    queryClient.invalidateQueries(['allLogs']);
     getArray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, usersTasks]);

@@ -1,4 +1,4 @@
-import { useQuery, useMutation, MutationFunction } from '@tanstack/react-query';
+import { useQuery, useMutation, MutationFunction, QueryClient } from '@tanstack/react-query';
 import Services from './services';
 import { ErrorObj } from 'utils/types';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -31,7 +31,8 @@ export const useGetAllAssignedTasks = (payload: TFormValues) => {
 
 export const useCreateLog = () => {
   const toast = useToast();
-  return useMutation(Services.clockIn, {
+  const queryClient = new QueryClient()
+  const mutation =  useMutation(Services.clockIn, {
     onError: (data: AxiosError) => {
       console.log(data, 'failed');
       toast({
@@ -45,6 +46,7 @@ export const useCreateLog = () => {
     },
     onSuccess: (data: AxiosResponse) => {
       console.log(data, 'success');
+      queryClient.invalidateQueries(["allLogs"])
       toast({
         title: 'Task Created',
         description: 'Task created successfully',
@@ -55,6 +57,7 @@ export const useCreateLog = () => {
       });
     },
   });
+  return { mutate: mutation.mutate, isLoading: mutation.isLoading, isSuccess: mutation.isSuccess };
 };
 
 export const useUpdateLog = () => {

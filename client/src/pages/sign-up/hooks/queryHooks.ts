@@ -19,9 +19,10 @@ export const useSignUp = () => {
     onError: (data: AxiosError) => {
       console.log(data, "failed");
       const errObj: ErrorObj = data.response!.data as ErrorObj;
+      console.log(errObj, "errorssssssssssssssssss")
       toast({
-        title: "Your token has expired",
-        description: "Please login again",
+        title: "message",
+        description: `<div>${data?.response?.data}</div>`,
         status: "error",
         duration: 9000,
         isClosable: true,

@@ -11,6 +11,7 @@ export interface LocationState {
 export interface ErrorObj {
   errorCode: string;
   errorMsg: string;
+  message: string;
   object: object | null;
   status: string;
   timestamp: string;

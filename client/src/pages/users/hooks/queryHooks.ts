@@ -15,13 +15,15 @@ export const useSignUp = () => {
     ? (location.state as LocationState).from!.pathname
     : "/";
 
+    
+
   return useMutation(services.signup, {
     onError: (data: AxiosError) => {
       console.log(data, "failed");
       const errObj: ErrorObj = data.response!.data as ErrorObj;
       toast({
-        title: "Your token has expired",
-        description: "Please login again",
+        title: "Error",
+        description: errObj?.message,
         status: "error",
         duration: 9000,
         isClosable: true,
