@@ -23,61 +23,40 @@ import ClockOut from "./pages/timelog/ClockOut";
 import Layout from "./components/Layout";
 import paths from "./components/paths";
 import { UserDetailsProvider } from "setup/app-context-manager/UserDetailsContext";
-import { setupAuthAxios, setupPublicAxios } from "setup/auth/axios";
-
-type AuthContextType = {
-  accessToken: string;
-  setAccessToken: Dispatch<SetStateAction<string>>;
-};
-
-export const AuthContext = createContext<AuthContextType>({
-  accessToken: "",
-  setAccessToken: () => {},
-});
 
 function App() {
-  const [accessToken, setAccessToken] = useState("");
-
-  useEffect(() => {
-    setupPublicAxios(process.env.REACT_APP_BASE_URL);
-    setupAuthAxios(process.env.REACT_APP_BASE_URL, accessToken);
-    // setupAuthAxios(process.env.REACT_APP_BASE_URL, localStorage.bet_token);
-  }, [accessToken]);
+  // useEffect(() => {
+  //   setupPublicAxios(process.env.REACT_APP_BASE_URL);
+  //   setupAuthAxios(process.env.REACT_APP_BASE_URL, accessToken);
+  // }, [accessToken]);
 
   return (
     <ChakraProvider theme={theme}>
-      <AuthContext.Provider
-        value={{
-          accessToken,
-          setAccessToken,
-        }}
-      >
-        <Routes>
-          <Route path={paths.login} element={<SignIn />}></Route>
-          <Route
-            path={paths.home}
-            element={
-              <RequireAuth>
-                <Layout />
-              </RequireAuth>
-            }
-          >
-            <Route path={paths.home} element={<Dashboard />} />
-            <Route path={paths.profile} element={<Profile />} />
-            {/* <Route path={paths.timeclock} element={<ClockInOut />} /> */}
-            <Route path={paths.addUser} element={<SignUp />} />
-            <Route path={paths.projects} element={<Projects />} />
-            <Route path={paths.clients} element={<Clients />} />
-            <Route path={paths.tasks} element={<Tasks />} />
-            <Route path={paths.myTasks} element={<AssignedTasks />} />
-            <Route path={paths.users} element={<Users />} />
-            <Route path={paths.timesheet} element={<TimesheetBase />}>
-              <Route index element={<Timesheet />} />
-              <Route path=":logId" element={<ClockOut />} />
-            </Route>
+      <Routes>
+        <Route path={paths.login} element={<SignIn />}></Route>
+        <Route
+          path={paths.home}
+          element={
+            <RequireAuth>
+              <Layout />
+            </RequireAuth>
+          }
+        >
+          <Route path={paths.home} element={<Dashboard />} />
+          <Route path={paths.profile} element={<Profile />} />
+          {/* <Route path={paths.timeclock} element={<ClockInOut />} /> */}
+          <Route path={paths.addUser} element={<SignUp />} />
+          <Route path={paths.projects} element={<Projects />} />
+          <Route path={paths.clients} element={<Clients />} />
+          <Route path={paths.tasks} element={<Tasks />} />
+          <Route path={paths.myTasks} element={<AssignedTasks />} />
+          <Route path={paths.users} element={<Users />} />
+          <Route path={paths.timesheet} element={<TimesheetBase />}>
+            <Route index element={<Timesheet />} />
+            <Route path=":logId" element={<ClockOut />} />
           </Route>
-        </Routes>
-      </AuthContext.Provider>
+        </Route>
+      </Routes>
     </ChakraProvider>
   );
 }
@@ -87,7 +66,7 @@ export default App;
 function RequireAuth({ children }: { children: JSX.Element }) {
   let location = useLocation();
 
-  if (!localStorage.jwt_token) {
+  if (!localStorage.getItem("jwt_token")) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience

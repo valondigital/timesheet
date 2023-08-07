@@ -2,13 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import { Box, Link, Button, HStack, Flex } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useLocation, useNavigate } from "react-router-dom";
 import { paths } from "./paths";
-import { AuthContext } from "App";
 import { useQueryClient } from "@tanstack/react-query";
 
 function NavBar() {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState("");
-  const {setAccessToken} = useContext(AuthContext)
   const queryClient = useQueryClient();
   const navigate = useNavigate()
   useEffect(() => {
@@ -23,7 +21,6 @@ function NavBar() {
   const handleLogout =() => {
     localStorage.removeItem('jwt_token');
     localStorage.removeItem('userId');
-    setAccessToken('');
     queryClient.cancelQueries();
     queryClient.clear();
     navigate(paths.login);
