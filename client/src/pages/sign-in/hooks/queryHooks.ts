@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosError, AxiosResponse } from "axios";
@@ -5,11 +6,13 @@ import { useToast } from "@chakra-ui/react";
 import { ErrorObj } from "components/types";
 import services from "./services";
 import { LocationState } from "components/types";
+import { AuthContext } from "App";
 
 export const useSignIn = () => {
   const toast = useToast();
   const location = useLocation();
   const navigate = useNavigate();
+  const { setAccessToken } = useContext(AuthContext);
 
   let from = (location.state as LocationState)
     ? (location.state as LocationState).from!.pathname
@@ -30,6 +33,7 @@ export const useSignIn = () => {
     },
     onSuccess: (data: AxiosResponse) => {
       console.log(data, "success");
+      setAccessToken(data.data.token)
       localStorage.setItem("jwt_token", data.data.token);
       localStorage.setItem("userId", data.data.data.user._id);
       localStorage.setItem("user", JSON.stringify(data.data.data.user));
