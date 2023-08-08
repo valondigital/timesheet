@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Button, useDisclosure, Box } from "@chakra-ui/react";
-import ActionModal from "./components/ActionModal";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Info } from "../../components/Info";
@@ -14,7 +13,6 @@ import { useCreateTask, useGetAllTasks } from "./hooks/queryHooks";
 import { useGetUsers } from "./useGetUsers";
 import { useGetProjects } from "./useGetProjects";
 import { PaginationState } from "@tanstack/react-table";
-import { useQueryClient } from "@tanstack/react-query";
 
 export type TFormValues = {
   name: string;
@@ -38,15 +36,10 @@ const Index = () => {
   });
   const [pageProps, setPageProps] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 2,
+    pageSize: 5,
   });
   const { data, isLoading: tasksLoading } = useGetAllTasks(topInputObj, pageProps);
-  const queryClient = useQueryClient()
   const { isOpen, onClose, onOpen } = useDisclosure();
-
-  const [open, setOpen] = useState(false);
-
-  const [status] = useState("");
 
   const {
     mutate: createTask,
@@ -78,13 +71,9 @@ const Index = () => {
       onClose();
     }
     getArray();
-    queryClient.invalidateQueries(['allTasks'])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, usersData, projectsData, data]);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const onSubmit = (values: TFormValues) => {
     createTask({ data: values });
@@ -100,11 +89,6 @@ const Index = () => {
       ...prevState,
       [name]: value,
     }));
-  };
-
-  const handleAddProjectToClient = () => {
-    // activateAgent(params);
-    // handleClose();
   };
 
   const inputObjList = (

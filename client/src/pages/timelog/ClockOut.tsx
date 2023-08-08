@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -12,20 +12,25 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-} from '@chakra-ui/react';
-import { Stack } from '@chakra-ui/react';
-import { Info } from 'components/Info';
-import { useParams } from 'react-router-dom';
-import { useGetLogDetails, useUpdateLog } from './hooks/queryHooks';
+  Textarea,
+} from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
+import { Info } from "components/Info";
+import { useParams } from "react-router-dom";
+import { useGetLogDetails, useUpdateLog } from "./hooks/queryHooks";
+import { areDatesOnSameDay } from "./helpers";
+import { formatDate, formatDateTwo } from "./../../utils/formatDate";
 
 const ClockOut = () => {
   const { logId } = useParams() as { logId: string };
   const [totalTime, setTotalTime] = useState(0);
+  const [note, setNote] = useState("");
   const [timeSpentPerTask, setTimeSpentPerTask] = useState<{
     [taskId: string]: number;
   }>({});
-  const { data, isLoading } = useGetLogDetails(logId);
-  const { mutate: updateLog, isLoading: updateLogLoading } = useUpdateLog();
+  const { data } = useGetLogDetails(logId);
+  const { mutate: updateLog } = useUpdateLog();
+  const answer = areDatesOnSameDay(data?.log?.checkIn);
 
   const handleChange = (taskId: string, value: string) => {
     const timeSpent = parseInt(value, 10); // Convert value to a number using parseInt
@@ -35,8 +40,8 @@ const ClockOut = () => {
   const handleSubmit = () => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString();
-    const payload = { workHours: totalTime, checkOut: formattedDate };
-    updateLog([logId, payload])
+    const payload = { workHours: totalTime, checkOut: formattedDate, note };
+    updateLog([logId, payload]);
   };
 
   useEffect(() => {
@@ -56,8 +61,8 @@ const ClockOut = () => {
       </Info>
       <Box mt={8} maxW="50%">
         <form>
-          {data?.log?.tasks?.map((item) => (
-            <UnorderedList mb={8}>
+          {data?.log?.tasks?.map((item, idx) => (
+            <UnorderedList mb={8} key={idx}>
               <ListItem>
                 <Flex>
                   <FormControl>
@@ -81,9 +86,23 @@ const ClockOut = () => {
               </ListItem>
             </UnorderedList>
           ))}
+          {!answer && (
+            <Box mb={8}>
+              <FormControl>
+                <FormLabel>
+                  Please state why you forgot to clock out on{" "}
+                  {formatDateTwo(data?.log?.checkIn)}
+                </FormLabel>
+                <Textarea
+                  onChange={(e) => setNote(e.target.value)}
+                  value={note}
+                />
+              </FormControl>
+            </Box>
+          )}
           <Button
             variant="secondary"
-            isDisabled={totalTime !== 8}
+            isDisabled={!answer ? totalTime !== 8 || note.trim() === "" :  totalTime !== 8}
             onClick={handleSubmit}
           >
             Clock Out

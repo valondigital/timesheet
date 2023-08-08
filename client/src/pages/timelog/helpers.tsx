@@ -1,10 +1,7 @@
-import {
-  createColumnHelper,
-  CellContext,
-} from '@tanstack/react-table';
-import * as yup from 'yup';
-import { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
-import { FiMoreVertical } from 'react-icons/fi';
+import { createColumnHelper, CellContext } from "@tanstack/react-table";
+import * as yup from "yup";
+import { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
+import { FiMoreVertical } from "react-icons/fi";
 
 import {
   Menu,
@@ -13,13 +10,13 @@ import {
   Center,
   Button,
   Tag,
-} from '@chakra-ui/react';
-import { formatDate } from 'utils/formatDate';
+} from "@chakra-ui/react";
+import { formatDate } from "utils/formatDate";
 
 const statusTypes = [
-  { name: 'inProgress', color: 'yellow' },
-  { name: 'pending', color: 'red' },
-  { name: 'completed', color: 'green' },
+  { name: "inProgress", color: "yellow" },
+  { name: "pending", color: "red" },
+  { name: "completed", color: "green" },
 ];
 
 const getStatusTag = (name: string) => {
@@ -53,23 +50,23 @@ export const columns = (
   handleClockOut: (data: CellContext<ITData, object | React.ReactNode>) => void
 ): ITDataColumnDef<ITData>[] => {
   return [
-    columnHelper.accessor('checkIn', {
-      header: 'Checked In',
+    columnHelper.accessor("checkIn", {
+      header: "Checked In",
       cell: (info) => formatDate(info.getValue<string>()),
     }),
-    columnHelper.accessor('workHours', {
-      header: 'Work Hours',
-      cell: (info) => info.getValue() ?? getStatusTag('pending'),
+    columnHelper.accessor("workHours", {
+      header: "Work Hours",
+      cell: (info) => info.getValue() ?? getStatusTag("pending"),
     }),
-    columnHelper.accessor('checkOut', {
-      header: 'Checked Out',
+    columnHelper.accessor("checkOut", {
+      header: "Checked Out",
       cell: (info) =>
         info.getValue()
           ? formatDate(info.getValue<string>())
-          : getStatusTag('pending'),
+          : getStatusTag("pending"),
     }),
     columnHelper.accessor((row) => row.id, {
-      header: 'Actions',
+      header: "Actions",
       cell: (info) =>
         info.row.original.checkOut ? (
           <Tag variant="solid" colorScheme="green">
@@ -108,55 +105,55 @@ export const inputObjList = (
   errors: FieldErrorsImpl<TFormValues>
 ) => [
   {
-    name: 'checkIn',
-    label: 'Check In',
-    placeholder: '',
-    type: 'date',
-    register: register('name', {
-      required: 'Please enter a valid task name',
+    name: "checkIn",
+    label: "Check In",
+    placeholder: "",
+    type: "date",
+    register: register("name", {
+      required: "Please enter a valid task name",
     }),
     isInvalid: !!errors.name,
     error: errors?.name,
   },
   {
-    name: 'description',
-    label: 'Description',
-    placeholder: '',
-    type: 'text',
-    register: register('description'),
+    name: "description",
+    label: "Description",
+    placeholder: "",
+    type: "text",
+    register: register("description"),
     isInvalid: !!errors.description,
     error: errors?.description,
   },
   {
-    name: 'project',
-    label: 'Project',
-    placeholder: 'Enter email address',
-    type: 'select',
+    name: "project",
+    label: "Project",
+    placeholder: "Enter email address",
+    type: "select",
     options: [
-      { value: 'pending', name: 'Pending' },
-      { value: 'inProgress', name: 'Active' },
-      { value: 'completed', name: 'Suspended' },
+      { value: "pending", name: "Pending" },
+      { value: "inProgress", name: "Active" },
+      { value: "completed", name: "Suspended" },
     ],
 
-    register: register('project', {
-      required: 'Please select a parent object',
+    register: register("project", {
+      required: "Please select a parent object",
     }),
     isInvalid: !!errors.project,
     error: errors?.project,
   },
   {
-    name: 'assignedTo',
-    label: 'Assignee',
-    type: 'select',
+    name: "assignedTo",
+    label: "Assignee",
+    type: "select",
     options: [
-      { value: 'PENDING', name: 'Pending' },
-      { value: 'ACTIVE', name: 'Active' },
-      { value: 'SUSPENDED', name: 'Suspended' },
-      { value: 'IN_ACTIVE', name: 'Inactive' },
-      { value: 'ON_HOLD', name: 'On hold' },
+      { value: "PENDING", name: "Pending" },
+      { value: "ACTIVE", name: "Active" },
+      { value: "SUSPENDED", name: "Suspended" },
+      { value: "IN_ACTIVE", name: "Inactive" },
+      { value: "ON_HOLD", name: "On hold" },
     ],
-    register: register('assignedTo', {
-      required: 'Please select an assignee',
+    register: register("assignedTo", {
+      required: "Please select an assignee",
     }),
     isInvalid: !!errors.assignedTo,
     error: errors?.assignedTo,
@@ -165,78 +162,97 @@ export const inputObjList = (
 
 export const tableTopInput = [
   {
-    name: 'query',
-    label: 'Search',
-    placeholder: 'Search by name, email',
-    type: 'text',
+    name: "query",
+    label: "Search",
+    placeholder: "Search by name, email",
+    type: "text",
   },
 
   {
-    name: 'status',
-    label: 'Status',
-    type: 'select',
+    name: "status",
+    label: "Status",
+    type: "select",
     options: [
-      { value: 'PENDING', name: 'Pending' },
-      { value: 'ACTIVE', name: 'Active' },
-      { value: 'SUSPENDED', name: 'Suspended' },
-      { value: 'IN_ACTIVE', name: 'Inactive' },
-      { value: 'ON_HOLD', name: 'On hold' },
+      { value: "PENDING", name: "Pending" },
+      { value: "ACTIVE", name: "Active" },
+      { value: "SUSPENDED", name: "Suspended" },
+      { value: "IN_ACTIVE", name: "Inactive" },
+      { value: "ON_HOLD", name: "On hold" },
     ],
   },
 ];
 
 export const tempData = {
-  fullName: 'Adeniji Adefisayo',
-  state: 'Osun',
+  fullName: "Adeniji Adefisayo",
+  state: "Osun",
   walletBalance: 2300,
-  ageBracket: 'THIRTYONE_TO_FORTY',
-  mobileNo: '+23498019290019',
-  email: 'test@yahoo.com',
+  ageBracket: "THIRTYONE_TO_FORTY",
+  mobileNo: "+23498019290019",
+  email: "test@yahoo.com",
 };
 
 const orderStatuses = [
-  { value: 'COMPLETED', name: 'Completed' },
-  { value: 'PENDING', name: 'Pending' },
-  { value: 'PROCESSING', name: 'Processing' },
-  { value: 'CANCELLED', name: 'Cancelled' },
-  { value: '', name: 'All' },
+  { value: "COMPLETED", name: "Completed" },
+  { value: "PENDING", name: "Pending" },
+  { value: "PROCESSING", name: "Processing" },
+  { value: "CANCELLED", name: "Cancelled" },
+  { value: "", name: "All" },
 ];
 
 export const orderTableTopInput: InputObj[] = [
   {
-    name: 'query',
-    label: '',
-    placeholder: 'Order Number',
-    type: 'text',
+    name: "query",
+    label: "",
+    placeholder: "Order Number",
+    type: "text",
   },
   {
-    name: 'status',
-    label: '',
-    placeholder: 'Filter by Status',
-    type: 'select',
-    defaultValue: '',
+    name: "status",
+    label: "",
+    placeholder: "Filter by Status",
+    type: "select",
+    defaultValue: "",
     options: orderStatuses.map(({ value, name }) => ({ value, name })),
   },
 
   {
-    name: 'dateRange',
-    label: '',
-    placeholder: '',
-    type: 'dateRange',
+    name: "dateRange",
+    label: "",
+    placeholder: "",
+    type: "dateRange",
   },
 ];
 
 export const data = [
   {
-    name: 'Valon Timesheet',
-    description: 'This is just a test project',
+    name: "Valon Timesheet",
+    description: "This is just a test project",
   },
   {
-    name: 'Valon Notepad',
-    description: 'This is just a test project',
+    name: "Valon Notepad",
+    description: "This is just a test project",
   },
   {
-    name: 'Valon Timesheet',
-    description: 'This is just a test project',
+    name: "Valon Timesheet",
+    description: "This is just a test project",
   },
 ];
+
+export const areDatesOnSameDay = (isoString1: string | undefined): boolean | undefined => {
+  if (isoString1) {
+    const date1 = new Date(isoString1);
+    const date2 = new Date();
+
+    const year1 = date1.getFullYear();
+    const month1 = date1.getMonth();
+    const day1 = date1.getDate();
+
+    const year2 = date2.getFullYear();
+    const month2 = date2.getMonth();
+    const day2 = date2.getDate();
+
+    return year1 === year2 && month1 === month2 && day1 === day2;
+  }
+
+  return undefined
+};
