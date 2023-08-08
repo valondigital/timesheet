@@ -20,6 +20,7 @@ import { useGetAllLogs, useCreateLog } from "./hooks/queryHooks";
 import { useGetUsersTasks } from "./useGetUsersTasks";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { PaginationState } from "@tanstack/react-table";
 
 const Index = () => {
   const { usersTasks } = useGetUsersTasks();
@@ -32,6 +33,10 @@ const Index = () => {
   }>({ name: "", description: "", project: "", assignedTo: "" });
   const [tasks, setTasks] = useState<Record<string, any>[]>([]);
   const { data, isLoading } = useGetAllLogs();
+  const [pageProps, setPageProps] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
   const { isOpen, onClose, onOpen } = useDisclosure();
   const queryClient = useQueryClient();
 
@@ -152,6 +157,10 @@ const Index = () => {
         <DynamicTable
           columns={columns(handleClockOut)}
           data={data?.logs ?? []}
+          setPageProps={setPageProps}
+          pageProps={pageProps}
+          // totalElements={data?.results}
+          totalPages={data?.totalPages}
         />
       )}
       <ModalComponent

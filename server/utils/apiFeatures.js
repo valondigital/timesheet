@@ -38,9 +38,9 @@ class APIFeatures {
   }
 
   paginate() {
-    const page = this.queryString.page * 1 || 1;
+    const page = this.queryString.page * 1 || 0;
     const size = this.queryString.size * 1 || 10;
-    const skip = (page - 1) * size;
+    const skip = (page - 0) * size;
     this.query = this.query.skip(skip).limit(size);
     return this;
   }

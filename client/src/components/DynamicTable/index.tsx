@@ -6,7 +6,7 @@ import {
   useReactTable,
   ColumnDef,
   PaginationState,
-  OnChangeFn
+  OnChangeFn,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -27,9 +27,9 @@ interface Props {
   hidePagination?: boolean;
   totalCount?: number;
   setPageProps?: OnChangeFn<PaginationState>;
-  pageProps? : PaginationState,
-  totalPages?: number,
-  isLoading?: boolean
+  pageProps?: PaginationState;
+  totalPages?: number;
+  isLoading?: boolean;
 }
 
 const Index = ({
@@ -40,7 +40,7 @@ const Index = ({
   setPageProps,
   pageProps,
   totalPages,
-  isLoading
+  isLoading,
 }: Props) => {
   const { colorMode } = useColorMode();
   const pagination = useMemo(
@@ -62,7 +62,6 @@ const Index = ({
     manualPagination: true,
     debugTable: true,
   });
-
 
   const tableHeadRows = table.getHeaderGroups().map((headerGroup) => (
     <Tr key={headerGroup.id}>
@@ -100,10 +99,9 @@ const Index = ({
       })}
     </Tr>
   ));
-
   return (
     <TableContainer width="100%">
-       {isLoading && <Loading text="loading data" />}
+      {isLoading && <Loading text="loading data" />}
       <Table>
         <Thead backgroundColor={colorMode === "dark" ? "black" : "#F0F2F5"}>
           {tableHeadRows}

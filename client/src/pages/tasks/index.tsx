@@ -1,18 +1,20 @@
-import { useEffect, useState } from 'react';
-import { Button, useDisclosure, Box } from '@chakra-ui/react';
-import ActionModal from './components/ActionModal';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Info } from '../../components/Info';
-import DynamicTable from '../../components/DynamicTable';
-import ModalComponent from '../../components/Modal';
-import generateInputs from '../../components/DynamicForm';
-import TableTop from '../../components/TableTop';
-import { FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
-import { columns, schema } from './helpers';
-import { useCreateTask, useGetAllTasks } from './hooks/queryHooks';
-import { useGetUsers } from './useGetUsers';
-import { useGetProjects } from './useGetProjects';
+import { useEffect, useState } from "react";
+import { Button, useDisclosure, Box } from "@chakra-ui/react";
+import ActionModal from "./components/ActionModal";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Info } from "../../components/Info";
+import DynamicTable from "../../components/DynamicTable";
+import ModalComponent from "../../components/Modal";
+import generateInputs from "../../components/DynamicForm";
+import TableTop from "../../components/TableTop";
+import { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
+import { columns, schema } from "./helpers";
+import { useCreateTask, useGetAllTasks } from "./hooks/queryHooks";
+import { useGetUsers } from "./useGetUsers";
+import { useGetProjects } from "./useGetProjects";
+import { PaginationState } from "@tanstack/react-table";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type TFormValues = {
   name: string;
@@ -28,17 +30,23 @@ const Index = () => {
   const [users, setUsers] = useState<Record<string, any>[]>([]);
   const [projects, setProjects] = useState<Record<string, any>[]>([]);
   const [topInputObj, setTopInputObj] = useState<TFormValues>({
-    name: '',
-    description: '',
-    project: '',
-    assignedTo: '',
-    status:''
+    name: "",
+    description: "",
+    project: "",
+    assignedTo: "",
+    status: "",
   });
-  const { data, isLoading: tasksLoading } = useGetAllTasks(topInputObj);
+  const [pageProps, setPageProps] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 2,
+  });
+  const { data, isLoading: tasksLoading } = useGetAllTasks(topInputObj, pageProps);
+  const queryClient = useQueryClient()
   const { isOpen, onClose, onOpen } = useDisclosure();
+
   const [open, setOpen] = useState(false);
 
-  const [status] = useState('');
+  const [status] = useState("");
 
   const {
     mutate: createTask,
@@ -70,7 +78,8 @@ const Index = () => {
       onClose();
     }
     getArray();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    queryClient.invalidateQueries(['allTasks'])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, usersData, projectsData, data]);
 
   const handleClose = () => {
@@ -81,7 +90,7 @@ const Index = () => {
     createTask({ data: values });
   };
 
-  const topTableButtons = [{ name: 'Create Task', onClick: onOpen }];
+  const topTableButtons = [{ name: "Create Task", onClick: onOpen }];
 
   const handleInputChange = (
     name: string,
@@ -103,45 +112,45 @@ const Index = () => {
     errors: FieldErrorsImpl<TFormValues>
   ) => [
     {
-      name: 'name',
-      label: 'Task',
-      placeholder: '',
-      type: 'text',
-      register: register('name', {
-        required: 'Please enter a valid task name',
+      name: "name",
+      label: "Task",
+      placeholder: "",
+      type: "text",
+      register: register("name", {
+        required: "Please enter a valid task name",
       }),
       isInvalid: !!errors.name,
       error: errors?.name,
     },
     {
-      name: 'description',
-      label: 'Description',
-      placeholder: '',
-      type: 'text',
-      register: register('description'),
+      name: "description",
+      label: "Description",
+      placeholder: "",
+      type: "text",
+      register: register("description"),
       isInvalid: !!errors.description,
       error: errors?.description,
     },
     {
-      name: 'project',
-      label: 'Project',
-      placeholder: 'Enter email address',
-      type: 'select',
+      name: "project",
+      label: "Project",
+      placeholder: "Enter email address",
+      type: "select",
       options: projects,
 
-      register: register('project', {
-        required: 'Please select a parent object',
+      register: register("project", {
+        required: "Please select a parent object",
       }),
       isInvalid: !!errors.project,
       error: errors?.project,
     },
     {
-      name: 'assignedTo',
-      label: 'Assignee',
-      type: 'select',
+      name: "assignedTo",
+      label: "Assignee",
+      type: "select",
       options: users,
-      register: register('assignedTo', {
-        required: 'Please select an assignee',
+      register: register("assignedTo", {
+        required: "Please select an assignee",
       }),
       isInvalid: !!errors.assignedTo,
       error: errors?.assignedTo,
@@ -150,20 +159,20 @@ const Index = () => {
 
   const tableTopInput = [
     {
-      name: 'query',
-      label: 'Search',
-      placeholder: 'Search by name, email',
-      type: 'text',
+      name: "query",
+      label: "Search",
+      placeholder: "Search by name, email",
+      type: "text",
     },
     {
-      name: 'status',
-      label: 'Status',
-      type: 'select',
+      name: "status",
+      label: "Status",
+      type: "select",
       options: [
-        { value: '', name: 'All' },
-        { value: 'PENDING', name: 'Pending' },
-        { value: 'IN_PROGRESS', name: 'In Progress' },
-        { value: 'COMPLETED', name: 'Completed' },
+        { value: "", name: "All" },
+        { value: "PENDING", name: "Pending" },
+        { value: "IN_PROGRESS", name: "In Progress" },
+        { value: "COMPLETED", name: "Completed" },
       ],
     },
   ];
@@ -179,7 +188,14 @@ const Index = () => {
       {tasksLoading || usersLoading || projectsLoading ? (
         <Box>...Loading</Box>
       ) : (
-        <DynamicTable columns={columns} data={data?.Tasks ?? []} />
+        <DynamicTable
+          columns={columns}
+          data={data?.data ?? []}
+          setPageProps={setPageProps}
+          pageProps={pageProps}
+          totalCount={data?.totalElements}
+          totalPages={data?.totalPages}
+        />
       )}
       <ModalComponent
         title="Create Task"
