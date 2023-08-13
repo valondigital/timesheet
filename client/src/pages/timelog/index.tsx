@@ -51,8 +51,13 @@ const Index = () => {
     formState: { errors },
   } = useForm<LFormValues>({ resolver: yupResolver(schema) });
 
+  const filterCompletedTasks = (tasks: ITData[] | undefined) => {
+    return tasks?.filter((task) => task.status !== "COMPLETED");
+  };
+
   const getArray = () => {
-    const ret = usersTasks?.map((item) => ({
+    const filteredTasks = filterCompletedTasks(usersTasks)
+    const ret = filteredTasks?.map((item) => ({
       value: item?._id,
       name: item?.name,
     }));
@@ -79,7 +84,7 @@ const Index = () => {
     clockIn({ data: { ...values, tasks: filteredTasks } });
   };
 
-  const topTableButtons = [{ name: "Clock In", onClick: onOpen }];
+  const topTableButtons = [{ name: "Clock In", onClick: onOpen, size: "sm" }];
 
   const inputObjList = (
     register: UseFormRegister<LFormValues>,
@@ -158,7 +163,6 @@ const Index = () => {
           data={data?.logs ?? []}
           setPageProps={setPageProps}
           pageProps={pageProps}
-          // totalElements={data?.results}
           totalPages={data?.totalPages}
         />
       )}

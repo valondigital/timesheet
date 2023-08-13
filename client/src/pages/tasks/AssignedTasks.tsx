@@ -4,8 +4,9 @@ import ActionModal from './components/ActionModal';
 import { Info } from '../../components/Info';
 import DynamicTable from '../../components/DynamicTable';
 import TableTop from '../../components/TableTop';
-import { columns } from './helpers';
+// import { columns } from './helpers';
 import { useGetAllAssignedTasks } from './hooks/queryHooks';
+import useGetTaskColumns from './useGetTaskColumns';
 
 export type FormValues = {
   name: string;
@@ -21,6 +22,7 @@ const Index = () => {
     status: string;
   }>({ name: '', description: '', project: '', assignedTo: '', status:'' });
   const { data, isLoading } = useGetAllAssignedTasks(topInputObj);
+  const columns = useGetTaskColumns()
   const [open, setOpen] = useState(false);
 
   const [status] = useState('');

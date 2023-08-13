@@ -10,7 +10,7 @@ const TableTop = ({
   onChange,
 }: {
   inputObj: InputObj[];
-  buttons?: { name: string; onClick: () => void }[];
+  buttons?: { name: string; size?: string; onClick: () => void }[];
   onChange: (name: string, value: string | Record<string, Date>) => void;
 }) => {
   const debouncedOnChange = underscore.debounce(onChange, 1000);
@@ -53,7 +53,7 @@ const TableTop = ({
           <FormLabel visibility="hidden" mb={0}>
             {button.name}
           </FormLabel>
-          <Button variant="secondary" onClick={() => onClick(button.name)}>{button.name}</Button>
+          <Button variant="secondary" onClick={() => onClick(button.name)} size={button.size ?? "md"}>{button.name}</Button>
         </Box>
       ))}
     </Flex>

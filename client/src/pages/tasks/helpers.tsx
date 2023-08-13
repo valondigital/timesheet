@@ -39,6 +39,7 @@ export const getStatusTag = (name: string | undefined) => {
   return color;
 };
 
+
 export const schema = yup
   .object()
   .shape({
@@ -50,40 +51,6 @@ export const schema = yup
   })
   .required();
 
-const columnHelper = createColumnHelper<ITData>();
-
-export const columns: ITDataColumnDef<ITData>[] = [
-  columnHelper.accessor("name", {
-    header: "Task",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("description", {
-    header: "Description",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("project", {
-    header: "Project",
-    cell: (info) => info.getValue<Record<string, string>>()?.name,
-  }),
-  columnHelper.accessor("assignedTo", {
-    header: "Assignee",
-    cell: (info) => info.getValue<Record<string, string>>()?.firstName,
-  }),
-  columnHelper.accessor("status", {
-    header: "Status",
-    cell: (info) => getStatusTag(info.getValue<string>()),
-  }),
-  columnHelper.accessor((row) => row.id, {
-    header: "Actions",
-    cell: (info) => (
-      <Link to={`${info.getValue()}`}>
-        <Button variant="primary" size="sm">
-          View Details
-        </Button>
-      </Link>
-    ),
-  }),
-];
 
 export type FormValues = {
   name: string;

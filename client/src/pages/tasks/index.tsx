@@ -8,11 +8,12 @@ import ModalComponent from "../../components/Modal";
 import generateInputs from "../../components/DynamicForm";
 import TableTop from "../../components/TableTop";
 import { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
-import { columns, schema } from "./helpers";
+import { schema } from "./helpers";
 import { useCreateTask, useGetAllTasks } from "./hooks/queryHooks";
 import { useGetUsers } from "./useGetUsers";
 import { useGetProjects } from "./useGetProjects";
 import { PaginationState } from "@tanstack/react-table";
+import useGetTaskColumns from './useGetTaskColumns';
 
 export type TFormValues = {
   name: string;
@@ -24,6 +25,7 @@ export type TFormValues = {
 
 const Index = () => {
   const { usersData, isLoading: usersLoading } = useGetUsers();
+  const columns = useGetTaskColumns()
   const { projectsData, isLoading: projectsLoading } = useGetProjects();
   const [users, setUsers] = useState<Record<string, any>[]>([]);
   const [projects, setProjects] = useState<Record<string, any>[]>([]);

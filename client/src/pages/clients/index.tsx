@@ -71,7 +71,7 @@ const Index = () => {
     createProject({ data: values });
   };
 
-  const topTableButtons = [{ name: "Add Client", onClick: onOpen }];
+  const topTableButtons = [{ name: "Add Client", onClick: onOpen, size:"md" }];
 
   const handleInputChange = (
     name: string,
