@@ -19,7 +19,7 @@ exports.createTimeLog = catchAsync(async (req, res) => {
 
 exports.getAllLogs = catchAsync(async (req, res) => {
   console.log(req.user);
-  const logs = await TimeLog.find({user: req.user});
+  const logs = await TimeLog.find({ user: req.user });
 
   res.status(200).json({
     status: 'success',
@@ -43,13 +43,13 @@ exports.getLogDetails = catchAsync(async (req, res) => {
   res.status(200).json({
     status: 'success',
     data: {
-      log
+      log,
     },
   });
 });
 
 exports.updateTimeLog = catchAsync(async (req, res, next) => {
-  const {  checkOut, workHours, note } = req.body;
+  const { checkOut, workHours, note } = req.body;
   const timeLog = await TimeLog.findById(req.params.id);
 
   if (!timeLog) {
@@ -57,7 +57,7 @@ exports.updateTimeLog = catchAsync(async (req, res, next) => {
       new AppError(`Time log with ID ${req.params.id} not found.`, 404)
     );
   }
-  
+
   timeLog.checkOut = checkOut;
   timeLog.workHours = workHours;
   timeLog.note = note;

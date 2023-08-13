@@ -4,6 +4,30 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 
+// Custom middleware to check user authorization for updating tasks
+exports.checkTaskAuthorization = catchAsync(async (req, res, next) => {
+  const taskId = req.params.id;
+  const userId = req.user.id;
+
+  const task = await Task.findById(taskId);
+
+  if (!task) {
+    return next(new AppError('Task not found', 404));
+  }
+
+  if (
+    task.assignedTo._id.toString() !== userId &&
+    req.user.role !== 'admin' &&
+    req.user.role !== 'super-admin' &&
+    req.user.role !== 'project-manager'
+  ) {
+    return next(new AppError('Unauthorized to update this task', 403));
+  }
+
+  // If the user is authorized, pass control to the next middleware
+  next();
+});
+
 exports.createTask = catchAsync(async (req, res) => {
   const { name, description, project, assignedTo, dueDate } = req.body;
   const newTask = await Task.create({
@@ -57,6 +81,20 @@ exports.getTaskDetails = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       Task,
+    },
+  });
+});
+
+exports.updateTask = catchAsync(async (req, res) => {
+  const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  res.status(200).json({
+    status: 'success',
+    message: 'Task updated sucessfully',
+    data: {
+      task,
     },
   });
 });
