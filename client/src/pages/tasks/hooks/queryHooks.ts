@@ -16,10 +16,13 @@ export const useGetAllTasks = (
   );
 };
 
-export const useGetAllAssignedTasks = (payload: TFormValues) => {
+export const useGetAllAssignedTasks = (
+  payload: TFormValues,
+  pageProps: PaginationState
+) => {
   return useQuery<DefaultData, ErrorObj>({
-    queryKey: ["allAssignedTasks", payload],
-    queryFn: () => Services.getAllAssignedTasks(payload),
+    queryKey: ["allAssignedTasks", {...payload, ...pageProps}],
+    queryFn: () => Services.getAllAssignedTasks(payload, pageProps),
     keepPreviousData: true,
   });
 };
@@ -31,7 +34,7 @@ export const useGetTaskDetails = (taskId: string) => {
 };
 
 export const useUpdateTask = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const toast = useToast();
   const updateTaskMutation: MutationFunction<any, [string, any]> = (
     params: [string, any]
@@ -60,7 +63,7 @@ export const useUpdateTask = () => {
         isClosable: true,
         position: "top",
       });
-      queryClient.invalidateQueries(['taskDetails']);
+      queryClient.invalidateQueries(["taskDetails"]);
     },
   });
 };

@@ -1,12 +1,13 @@
-import { useState } from 'react';
-import { Box } from '@chakra-ui/react';
-import ActionModal from './components/ActionModal';
-import { Info } from '../../components/Info';
-import DynamicTable from '../../components/DynamicTable';
-import TableTop from '../../components/TableTop';
+import { useState } from "react";
+import { Box } from "@chakra-ui/react";
+import ActionModal from "./components/ActionModal";
+import { Info } from "../../components/Info";
+import DynamicTable from "../../components/DynamicTable";
+import TableTop from "../../components/TableTop";
 // import { columns } from './helpers';
-import { useGetAllAssignedTasks } from './hooks/queryHooks';
-import useGetTaskColumns from './useGetTaskColumns';
+import { useGetAllAssignedTasks } from "./hooks/queryHooks";
+import useGetTaskColumns from "./useGetTaskColumns";
+import { PaginationState } from "@tanstack/react-table";
 
 export type FormValues = {
   name: string;
@@ -20,12 +21,17 @@ const Index = () => {
     project: string;
     assignedTo: string;
     status: string;
-  }>({ name: '', description: '', project: '', assignedTo: '', status:'' });
-  const { data, isLoading } = useGetAllAssignedTasks(topInputObj);
-  const columns = useGetTaskColumns()
+  }>({ name: "", description: "", project: "", assignedTo: "", status: "" });
+  const [pageProps, setPageProps] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 5,
+  });
+  const { data, isLoading } = useGetAllAssignedTasks(topInputObj, pageProps);
+  console.log({data})
+  const columns = useGetTaskColumns();
   const [open, setOpen] = useState(false);
 
-  const [status] = useState('');
+  const [status] = useState("");
 
   const handleClose = () => {
     setOpen(false);
@@ -56,21 +62,21 @@ const Index = () => {
 
   const tableTopInput = [
     {
-      name: 'query',
-      label: 'Search',
-      placeholder: 'Search by name, email',
-      type: 'text',
+      name: "query",
+      label: "Search",
+      placeholder: "Search by name, email",
+      type: "text",
     },
 
     {
-      name: 'status',
-      label: 'Status',
-      type: 'select',
+      name: "status",
+      label: "Status",
+      type: "select",
       options: [
-        { value: '', name: 'All' },
-        { value: 'PENDING', name: 'Pending' },
-        { value: 'IN_PROGRESS', name: 'In Progress' },
-        { value: 'COMPLETED', name: 'Completed' },
+        { value: "", name: "All" },
+        { value: "PENDING", name: "Pending" },
+        { value: "IN_PROGRESS", name: "In Progress" },
+        { value: "COMPLETED", name: "Completed" },
       ],
     },
   ];
@@ -82,7 +88,14 @@ const Index = () => {
       {isLoading ? (
         <Box>...Loading</Box>
       ) : (
-        <DynamicTable columns={columns} data={data?.tasks ?? []} />
+        <DynamicTable
+          columns={columns}
+          data={data?.data ?? []}
+          setPageProps={setPageProps}
+          pageProps={pageProps}
+          totalCount={data?.totalElements}
+          totalPages={data?.totalPages}
+        />
       )}
       <ActionModal
         title="reactivate"

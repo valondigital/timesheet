@@ -6,24 +6,26 @@ import { PaginationState } from "@tanstack/react-table";
 
 class Services {
   async getAllTasks(param: TFormValues, pageProps: PaginationState) {
-    const filters = getURLParams(param);
     const params = getURLParams({
       page: pageProps.pageIndex,
       size: pageProps.pageSize,
+      ...param
     });
-    console.log({ params });
     const response = await axios({
       method: "GET",
-      url: `${endpoints.tasks}${filters}${params}`,
+      url: `${endpoints.tasks}${params}`,
     });
     return response?.data as DefaultData;
   }
 
-  async getAllAssignedTasks(param: TFormValues) {
-    const filters = getURLParams(param);
-    const response = await axios({
+  async getAllAssignedTasks(param: TFormValues, pageProps: PaginationState) {
+    const params = getURLParams({
+      page: pageProps.pageIndex,
+      size: pageProps.pageSize,
+      ...param
+    });    const response = await axios({
       method: "GET",
-      url: `${endpoints.userTasks(localStorage.userId)}${filters}`,
+      url: `${endpoints.userTasks(localStorage.userId)}${params}`,
     });
     return response?.data as DefaultData;
   }

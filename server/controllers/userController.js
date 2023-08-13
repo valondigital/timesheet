@@ -132,6 +132,17 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 exports.getTasksByUser = async (req, res, next) => {
   try {
     const { id } = req.params;
+
+    // Create a separate APIFeatures instance for counting total tasks
+    const countFeatures = new APIFeatures(
+      Task.find({ assignedTo: id }),
+      req.query
+    ).filter();
+
+    // Count the total assigned tasks
+    const totalElements = await countFeatures.query.countDocuments();
+
+    // Now create a new APIFeatures instance for paginating
     const features = new APIFeatures(Task.find({ assignedTo: id }), req.query)
       .filter()
       .sort()
@@ -139,21 +150,18 @@ exports.getTasksByUser = async (req, res, next) => {
       .paginate();
 
     const tasks = await features.query;
-    // const tasks = await Task.find({ assignedTo: id });
-    res.status(200).json({ tasks });
+
+    const pageSize = req.query.size ? Number(req.query.size) : 10;
+    const totalPages = Math.ceil(totalElements / pageSize);
+
+    res.status(200).json({
+      status: 'success',
+      totalElements,
+      totalPages,
+      data: tasks,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-// exports.getLogssByUser = async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const tasks = await TimeLog.find({ [user._id]: id });
-//     res.status(200).json({ tasks });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
