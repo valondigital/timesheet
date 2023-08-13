@@ -35,6 +35,24 @@ class Services {
       data: payload.data,
     });
   }
+
+  async getTaskDetails(taskId: string) {
+    const response = await  axios({
+      method: "GET",
+      url: `${endpoints.tasks}/${(taskId)}`,
+    });
+    return response?.data?.data as Task
+  };
+
+  async updateTask(taskId: string, payload: Object) {
+    const response = await  axios({
+      method: "PATCH",
+      url: `${endpoints.tasks}/${(taskId)}`,
+      data: payload
+    });
+    return response?.data as DefaultData
+  };
+
 }
 
 export default new Services();

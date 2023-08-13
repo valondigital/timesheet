@@ -24,7 +24,6 @@ exports.checkTaskAuthorization = catchAsync(async (req, res, next) => {
     return next(new AppError('Unauthorized to update this task', 403));
   }
 
-  // If the user is authorized, pass control to the next middleware
   next();
 });
 
@@ -79,9 +78,7 @@ exports.getTaskDetails = catchAsync(async (req, res, next) => {
   }
   res.status(200).json({
     status: 'success',
-    data: {
-      Task,
-    },
+    data: task,
   });
 });
 

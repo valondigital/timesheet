@@ -32,7 +32,6 @@ class Services {
   };
 
   async updateLog(logId: string, payload: Object) {
-    console.log(logId, "check log ID")
     const response = await  axios({
       method: "PATCH",
       url: `${endpoints.timelogs}/${(logId)}`,

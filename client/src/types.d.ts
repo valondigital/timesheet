@@ -116,6 +116,7 @@ interface Task {
   name: string;
   description: string;
   project: {
+    client: CFormValues;
     _id: string;
     tasks: any[]; // Replace 'any' with the appropriate type if needed
     name: string;

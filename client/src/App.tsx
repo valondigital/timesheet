@@ -23,6 +23,7 @@ import ClockOut from "./pages/timelog/ClockOut";
 import Layout from "./components/Layout";
 import paths from "./components/paths";
 import { UserDetailsProvider } from "setup/app-context-manager/UserDetailsContext";
+import TaskDetails from "pages/tasks/TaskDetails";
 
 function App() {
   // useEffect(() => {
@@ -48,7 +49,10 @@ function App() {
           <Route path={paths.addUser} element={<SignUp />} />
           <Route path={paths.projects} element={<Projects />} />
           <Route path={paths.clients} element={<Clients />} />
-          <Route path={paths.tasks} element={<Tasks />} />
+          <Route path={paths.tasks}>
+            <Route index element={<Tasks />} />
+            <Route path=":taskId" element={<TaskDetails />} />
+          </Route>
           <Route path={paths.myTasks} element={<AssignedTasks />} />
           <Route path={paths.users} element={<Users />} />
           <Route path={paths.timesheet} element={<TimesheetBase />}>

@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, MutationFunction } from "@tanstack/react-query";
 import Services from "./services";
 import { ErrorObj } from "utils/types";
 import { AxiosError, AxiosResponse } from "axios";
@@ -10,8 +10,9 @@ export const useGetAllTasks = (
   payload: TFormValues,
   pageProps: PaginationState
 ) => {
-  return useQuery<DefaultData, ErrorObj>(["allTasks", {...payload, ...pageProps}], () =>
-    Services.getAllTasks(payload, pageProps)
+  return useQuery<DefaultData, ErrorObj>(
+    ["allTasks", { ...payload, ...pageProps }],
+    () => Services.getAllTasks(payload, pageProps)
   );
 };
 
@@ -20,6 +21,47 @@ export const useGetAllAssignedTasks = (payload: TFormValues) => {
     queryKey: ["allAssignedTasks", payload],
     queryFn: () => Services.getAllAssignedTasks(payload),
     keepPreviousData: true,
+  });
+};
+
+export const useGetTaskDetails = (taskId: string) => {
+  return useQuery<Task, ErrorObj>(["taskDetails"], () =>
+    Services.getTaskDetails(taskId)
+  );
+};
+
+export const useUpdateTask = () => {
+  const queryClient = useQueryClient()
+  const toast = useToast();
+  const updateTaskMutation: MutationFunction<any, [string, any]> = (
+    params: [string, any]
+  ) => {
+    const [taskId, payload] = params;
+    return Services.updateTask(taskId, payload);
+  };
+
+  return useMutation(updateTaskMutation, {
+    onError: (data: AxiosError) => {
+      toast({
+        title: "Invalid Update",
+        description: "Please select valid status",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    },
+    onSuccess: (data: AxiosResponse) => {
+      toast({
+        title: "Task Updated",
+        description: "Task updated successfullly",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+      queryClient.invalidateQueries(['taskDetails']);
+    },
   });
 };
 

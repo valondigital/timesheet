@@ -17,12 +17,6 @@ export const useGetLogDetails = (logId: string) => {
   );
 };
 
-// export const useGetLogDetails = (logId: string) => {
-//   return useQuery<DefaultData, ErrorObj>(['allLogs'], () =>
-//     Services.getLogDetails(logId)
-//   );
-// };
-
 export const useGetAllAssignedTasks = (payload: TFormValues) => {
   return useQuery<DefaultData, ErrorObj>(['allAssignedTasks', payload], () =>
     Services.getAllAssignedTasks(payload)
