@@ -55,8 +55,11 @@ const Index = () => {
     return tasks?.filter((task) => task.status !== "COMPLETED");
   };
 
+  console.log({usersTasks})
+
   const getArray = () => {
     const filteredTasks = filterCompletedTasks(usersTasks)
+    console.log({filteredTasks})
     const ret = filteredTasks?.map((item) => ({
       value: item?._id,
       name: item?.name,

@@ -11,6 +11,6 @@ export const useGetUsersTasks = () => {
   const { data } = useGetAllAssignedTasks(topInputObj);
 
   return {
-    usersTasks: data?.tasks,
+    usersTasks: data?.data,
   };
 };
