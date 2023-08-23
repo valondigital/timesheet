@@ -39,8 +39,8 @@ const Pagination = ({
     >
       <Box mt={5} mb={4} display="flex" justifyContent="left">
         <Text>
-          showing {pageIndex * pageSize + 1} to
-          {pageIndex * pageSize + pageSize} result of {totalCount} results
+         {`showing ${pageIndex * pageSize + 1} to
+          ${pageIndex * pageSize + pageSize} result of ${totalCount} results`}
         </Text>
       </Box>
 

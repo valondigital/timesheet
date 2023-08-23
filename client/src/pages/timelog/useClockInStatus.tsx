@@ -6,7 +6,7 @@ export const useClockInStatus = () => {
   const currentHour = currentDate.getHours();
   let status;
 
-  if (!data) {
+  if (!data?.data) {
     status = "clock-in";
   } else if (data && currentHour < 17) {
     status = "edit-log";

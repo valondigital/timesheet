@@ -53,8 +53,8 @@ export const useCreateLog = () => {
       console.log(data, "success");
       queryClient.invalidateQueries(["allLogs"]);
       toast({
-        title: "Task Created",
-        description: "Task created successfully",
+        title: "Clocked In Succesful",
+        description: "You have clocked in successfully",
         status: "success",
         duration: 9000,
         isClosable: true,

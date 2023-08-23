@@ -82,6 +82,7 @@ const Index = () => {
       onClose();
     }
     queryClient.invalidateQueries(["allLogs"]);
+    queryClient.invalidateQueries({ queryKey: ['clockInStatus'] })
     getArray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, usersTasks]);
@@ -162,6 +163,8 @@ const Index = () => {
     onEditOpen();
     setLogId(data.row.original.id);
   };
+
+
 
   return (
     <>
