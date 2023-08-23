@@ -54,6 +54,27 @@ export const ButtonStyle = {
         }
       }
     }),
+    tertiary: (props: StyleFunctionProps) => ({
+      bg: props.theme.colors[props.colorMode].lightBlue,
+      color: props.theme.colors[props.colorMode].text,
+      width: '127px',
+      borderRadius: "5px",
+      ':hover': {
+        bg: props.theme.colors[props.colorMode].lightBlue,
+        boxShadow: 'md',
+      },
+      ':focus': {
+        bg: props.theme.colors[props.colorMode].lightBlue,
+        boxShadow: 'md',
+      },
+      ':disabled': {
+        bg: props.theme.colors.muted,
+        ':hover': {
+          bg: props.theme.colors[props.colorMode].lightBlue,
+          boxShadow: 'md',
+        }
+      }
+    }),
     noBg: (props: StyleFunctionProps) => ({
       ':hover': {
         boxShadow: 'md',

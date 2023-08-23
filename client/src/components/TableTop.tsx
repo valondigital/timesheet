@@ -4,13 +4,20 @@ import generateInputs from "./DynamicForm";
 import underscore from "underscore";
 
 
+type ButtonProps = {
+  name: string;
+  size?: string;
+  onClick: () => void;
+};
+
+
 const TableTop = ({
   inputObj,
   buttons,
   onChange,
 }: {
   inputObj: InputObj[];
-  buttons?: { name: string; size?: string; onClick: () => void }[];
+  buttons?: ButtonProps[] | false; // Updated type definition here
   onChange: (name: string, value: string | Record<string, Date>) => void;
 }) => {
   const debouncedOnChange = underscore.debounce(onChange, 1000);
@@ -22,9 +29,14 @@ const TableTop = ({
   }, [debouncedOnChange]);
 
   const onClick = (buttonName: string) => {
-    buttons?.find((button) => button.name === buttonName)?.onClick();
+    if (Array.isArray(buttons)) {
+      const matchedButton = buttons.find((button) => button.name === buttonName);
+      if (matchedButton) {
+        matchedButton.onClick();
+      }
+    }
   };
-
+  
   return (
     <Flex mb={2} bgColor="gray.50" mt={4} p={3} flexWrap="wrap">
       {inputObj.map((input) => (
@@ -48,7 +60,7 @@ const TableTop = ({
         </Box>
       ))}
     
-      {buttons?.map((button) => (
+      {buttons !== false && buttons?.map((button: ButtonProps) => (
         <Box key={button.name}>
           <FormLabel visibility="hidden" mb={0}>
             {button.name}

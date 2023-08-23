@@ -20,6 +20,8 @@ import { useGetUsersTasks } from "./useGetUsersTasks";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { PaginationState } from "@tanstack/react-table";
+import { useClockInStatus } from "./useClockInStatus";
+import EditLogTasks from "./EditLogTasks";
 
 const Index = () => {
   const { usersTasks } = useGetUsersTasks();
@@ -31,12 +33,21 @@ const Index = () => {
     assignedTo: string;
   }>({ name: "", description: "", project: "", assignedTo: "" });
   const [tasks, setTasks] = useState<Record<string, any>[]>([]);
+  const [logId, setLogId] = useState<string | null>(null);
   const { data, isLoading } = useGetAllLogs();
+  const { status } = useClockInStatus();
+
+  console.log({ status });
   const [pageProps, setPageProps] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const {
+    isOpen: editOpen,
+    onClose: editClose,
+    onOpen: onEditOpen,
+  } = useDisclosure();
   const queryClient = useQueryClient();
 
   const {
@@ -56,8 +67,7 @@ const Index = () => {
   };
 
   const getArray = () => {
-    const filteredTasks = filterCompletedTasks(usersTasks)
-    console.log({filteredTasks})
+    const filteredTasks = filterCompletedTasks(usersTasks);
     const ret = filteredTasks?.map((item) => ({
       value: item?._id,
       name: item?.name,
@@ -71,7 +81,7 @@ const Index = () => {
     if (isSuccess) {
       onClose();
     }
-    queryClient.invalidateQueries(['allLogs']);
+    queryClient.invalidateQueries(["allLogs"]);
     getArray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, usersTasks]);
@@ -148,19 +158,24 @@ const Index = () => {
     navigate(`/timesheet/${data.row.original.id}`);
   };
 
+  const handleEditLog = (data: any = {}) => {
+    onEditOpen();
+    setLogId(data.row.original.id);
+  };
+
   return (
     <>
       <Info>Clock In and Clock Out to Manage Your Work Hours</Info>
       <TableTop
         onChange={handleInputChange}
         inputObj={tableTopInput}
-        buttons={topTableButtons}
+        buttons={status === "clock-in" && topTableButtons}
       />
       {isLoading ? (
         <Box>...Loading</Box>
       ) : (
         <DynamicTable
-          columns={columns(handleClockOut)}
+          columns={columns(handleClockOut, handleEditLog, status)}
           data={data?.logs ?? []}
           setPageProps={setPageProps}
           pageProps={pageProps}
@@ -177,6 +192,7 @@ const Index = () => {
             variant="secondary"
             onClick={handleSubmit(onSubmit)}
             type="submit"
+            size="lg"
             isLoading={createProjectLoading}
           >
             Submit
@@ -204,6 +220,9 @@ const Index = () => {
           ))}
         </form>
       </ModalComponent>
+      {logId && (
+        <EditLogTasks editOpen={editOpen} editClose={editClose} logId={logId} />
+      )}
     </>
   );
 };
