@@ -47,7 +47,9 @@ export const schema = yup
 const columnHelper = createColumnHelper<ITData>();
 
 export const columns = (
-  handleClockOut: (data: CellContext<ITData, object | React.ReactNode>) => void
+  handleClockOut: (data: CellContext<ITData, object | React.ReactNode>) => void,
+  handleEditLog: (data: CellContext<ITData, object | React.ReactNode>) => void,
+  status: string
 ): ITDataColumnDef<ITData>[] => {
   return [
     columnHelper.accessor("checkIn", {
@@ -72,24 +74,22 @@ export const columns = (
           <Tag variant="solid" colorScheme="green">
             Clocked Out
           </Tag>
+        ) : status === "edit-log" ? (
+          <Button
+            variant="tertiary"
+            size="sm"
+            onClick={() => handleEditLog(info)}
+          >
+            Edit ClockIn
+          </Button>
         ) : (
-          <Menu>
-            <MenuButton variant="noBg" p={0} as={Button}>
-              <Center>
-                <FiMoreVertical />
-              </Center>
-            </MenuButton>
-
-            <MenuList>
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => handleClockOut(info)}
-              >
-                Clock Out
-              </Button>
-            </MenuList>
-          </Menu>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => handleClockOut(info)}
+          >
+            Clock Out
+          </Button>
         ),
     }),
   ];
@@ -238,7 +238,9 @@ export const data = [
   },
 ];
 
-export const areDatesOnSameDay = (isoString1: string | undefined): boolean | undefined => {
+export const areDatesOnSameDay = (
+  isoString1: string | undefined
+): boolean | undefined => {
   if (isoString1) {
     const date1 = new Date(isoString1);
     const date2 = new Date();
@@ -254,5 +256,5 @@ export const areDatesOnSameDay = (isoString1: string | undefined): boolean | und
     return year1 === year2 && month1 === month2 && day1 === day2;
   }
 
-  return undefined
+  return undefined;
 };
