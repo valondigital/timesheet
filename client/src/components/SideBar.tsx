@@ -20,7 +20,7 @@ const Sidebar = () => {
       userDetails.role === 'admin' ||
       userDetails.role === 'super-admin' ||
       userDetails.role === 'project-manager' ||
-      !['Users', 'Clients', 'Projects', 'All Tasks'].includes(item.name)
+      !['Users', 'Clients', 'Projects', 'All Tasks', 'Clock In Statistics'].includes(item.name)
     );
   });
 
