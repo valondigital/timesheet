@@ -5,6 +5,7 @@ const endpoints = {
   clients: '/clients',
   tasks: '/tasks',
   users: '/users',
+  clockInStatus: '/check-all-users-clock-in-status',
   usersClockInStatus: '/users/checkClockInStatus',
   timelogs: '/timelogs',
   userTasks: (id: string) => `/users/${id}/tasks`

@@ -22,6 +22,7 @@ export const paths: Record<string, string> = {
   enterNewPassword: '/enternewpassword',
   passwordCreated: '/passwordcreated',
   transactions: '/transactions',
+  clockInStats: '/check-all-users-clock-in-status'
 };
 
 export const pageTitles: Record<string, string> = {
@@ -33,6 +34,7 @@ export const pageTitles: Record<string, string> = {
   tasks: 'All Tasks',
   myTasks: 'My Assigned Tasks',
   timesheet: 'My Timesheet',
+  timesheetStats: 'Timesheet Statistics',
 };
 
 export const NavNames = {
@@ -46,12 +48,14 @@ export const NavNames = {
   myTasks: 'My Tasks',
   users: 'Users',
   timesheet: 'My Timesheet',
+  timesheetStats: 'Clock In Statistics',
 };
 
 export const pathObject = [
   { icon: FaBuromobelexperte, name: NavNames.dashboard, route: paths.home },
   { icon: FiUser, name: NavNames.profile, route: paths.profile },
   { icon: AiOutlineFileText, name: NavNames.timesheet, route: paths.timesheet },
+  { icon: AiOutlineFileText, name: NavNames.timesheetStats, route: paths.clockInStats },
   { icon: RiUserSearchLine, name: NavNames.users, route: paths.users },
   { icon: BiTimeFive, name: NavNames.projects, route: paths.projects },
   { icon: RiUserSearchLine, name: NavNames.clients, route: paths.clients },

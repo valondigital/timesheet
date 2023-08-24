@@ -17,6 +17,7 @@ import Clients from "./pages/clients";
 import Tasks from "./pages/tasks";
 import AssignedTasks from "./pages/tasks/AssignedTasks";
 import Users from "./pages/users";
+import ClockInStats from "./pages/stats";
 import TimesheetBase from "./pages/timelog/Base";
 import Timesheet from "./pages/timelog";
 import ClockOut from "./pages/timelog/ClockOut";
@@ -55,6 +56,7 @@ function App() {
           </Route>
           <Route path={paths.myTasks} element={<AssignedTasks />} />
           <Route path={paths.users} element={<Users />} />
+          <Route path={paths.clockInStats} element={<ClockInStats />} />
           <Route path={paths.timesheet} element={<TimesheetBase />}>
             <Route index element={<Timesheet />} />
             <Route path=":logId" element={<ClockOut />} />
