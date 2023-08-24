@@ -19,7 +19,7 @@ const timeLogSchema = new mongoose.Schema(
     },
     workHours: {
       type: Number,
-      default: null
+      default: null,
     },
     note: {
       type: String,
@@ -29,12 +29,11 @@ const timeLogSchema = new mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-
 timeLogSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'tasks',
     select: '-createdAt -updatedAt -__v',
-  })
+  });
   next();
 });
 
