@@ -106,15 +106,6 @@ exports.checkUserClockInStatus = catchAsync(async (req, res) => {
   });
 });
 
-// const hasClockedIn = (usersSet, userId) => {
-//   for (const user of usersSet) {
-//     if (user.userId === userId) {
-//       return true;
-//     }
-//   }
-//   return false;
-// };
-
 exports.checkAllUsersClockInStatus = catchAsync(async (req, res) => {
   const { startOfDay, endOfDay } = checkDateStatus();
   const logs = await TimeLog.find({

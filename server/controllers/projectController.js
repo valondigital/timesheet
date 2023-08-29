@@ -28,13 +28,16 @@ exports.getAllProjects = catchAsync(async (req, res) => {
     .paginate();
 
   const Projects = await features.query;
+  const totalElements = await Project.countDocuments();
+  const pageSize = req.query.size ? Number(req.query.size) : 10;
+  const totalPages = Math.ceil(totalElements / pageSize);
 
   res.status(200).json({
     status: 'success',
     results: Projects.length,
-    data: {
-      Projects,
-    },
+    totalElements,
+    totalPages,
+    data: Projects,
   });
 });
 
