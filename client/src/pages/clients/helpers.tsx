@@ -47,7 +47,10 @@ export const columns: ITDataColumnDef<ITData>[] = [
   }),
   columnHelper.accessor("phone", {
     header: "Mobile",
-    cell: (info) => info.getValue(),
+    cell: (info) =>{
+      const value =  info.getValue()
+      return value ?? "....."
+    },
   }),
   columnHelper.accessor((row) => row.id, {
     header: "Actions",

@@ -5,6 +5,7 @@ import { useToast } from "@chakra-ui/react";
 import { ErrorObj } from "components/types";
 import services from "./services";
 import { LocationState } from "components/types";
+import { PaginationState } from '@tanstack/react-table';
 
 export const useSignUp = () => {
   const toast = useToast();
@@ -45,8 +46,8 @@ export const useSignUp = () => {
   });
 };
 
-export const useGetAllUsers = (payload: TFormValues) => {
-  return useQuery<DefaultData, ErrorObj>(['allClients', payload], () =>
-    services.getAllUsers(payload)
+export const useGetAllUsers = (payload: TFormValues, pageProps: PaginationState) => {
+  return useQuery<DefaultData, ErrorObj>(['allUsers', {...payload, ...pageProps}], () =>
+    services.getAllUsers(payload, pageProps)
   );
 };

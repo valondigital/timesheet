@@ -26,6 +26,10 @@ import EditLogTasks from "./EditLogTasks";
 const Index = () => {
   const { usersTasks } = useGetUsersTasks();
   const navigate = useNavigate();
+  const [pageProps, setPageProps] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 5,
+  });
   const [topInputObj, setTopInputObj] = useState<{
     name: string;
     description: string;
@@ -34,14 +38,9 @@ const Index = () => {
   }>({ name: "", description: "", project: "", assignedTo: "" });
   const [tasks, setTasks] = useState<Record<string, any>[]>([]);
   const [logId, setLogId] = useState<string | null>(null);
-  const { data, isLoading } = useGetAllLogs();
+  const { data, isLoading } = useGetAllLogs(pageProps);
   const { status } = useClockInStatus();
 
-  console.log({ status });
-  const [pageProps, setPageProps] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
-  });
   const { isOpen, onClose, onOpen } = useDisclosure();
   const {
     isOpen: editOpen,
@@ -82,7 +81,7 @@ const Index = () => {
       onClose();
     }
     queryClient.invalidateQueries(["allLogs"]);
-    queryClient.invalidateQueries({ queryKey: ['clockInStatus'] })
+    queryClient.invalidateQueries({ queryKey: ["clockInStatus"] });
     getArray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, usersTasks]);
@@ -164,8 +163,6 @@ const Index = () => {
     setLogId(data.row.original.id);
   };
 
-
-
   return (
     <>
       <Info>Clock In and Clock Out to Manage Your Work Hours</Info>
@@ -179,9 +176,10 @@ const Index = () => {
       ) : (
         <DynamicTable
           columns={columns(handleClockOut, handleEditLog, status)}
-          data={data?.logs ?? []}
+          data={data?.data ?? []}
           setPageProps={setPageProps}
           pageProps={pageProps}
+          totalCount={data?.totalElements}
           totalPages={data?.totalPages}
         />
       )}

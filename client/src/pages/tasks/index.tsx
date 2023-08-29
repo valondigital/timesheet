@@ -56,7 +56,7 @@ const Index = () => {
   } = useForm<TFormValues>({ resolver: yupResolver(schema) });
 
   const getArray = () => {
-    const ret = usersData?.map((item) => ({
+    const ret = usersData?.data?.map((item) => ({
       value: item?._id,
       name: item?.firstName,
     }));

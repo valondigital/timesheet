@@ -3,10 +3,11 @@ import Services from './services';
 import { ErrorObj } from 'utils/types';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useToast } from '@chakra-ui/react';
+import { PaginationState } from '@tanstack/react-table';
 
-export const useGetAllClients = (payload: CFormValues) => {
-  return useQuery<DefaultData, ErrorObj>(['allClients', payload], () =>
-    Services.getAllClients(payload)
+export const useGetAllClients = (payload: CFormValues, pageProps: PaginationState) => {
+  return useQuery<DefaultData, ErrorObj>(['allClients', {...payload, ...pageProps}], () =>
+    Services.getAllClients(payload, pageProps)
   );
 };
 

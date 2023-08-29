@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
-import { Button, useDisclosure, Box } from '@chakra-ui/react';
-import ActionModal from './components/ActionModal';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Info } from '../../components/Info';
-import DynamicTable from '../../components/DynamicTable';
-import ModalComponent from '../../components/Modal';
-import generateInputs from '../../components/DynamicForm';
-import TableTop from '../../components/TableTop';
+import { useEffect, useState } from "react";
+import { Button, useDisclosure, Box } from "@chakra-ui/react";
+import ActionModal from "./components/ActionModal";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Info } from "../../components/Info";
+import DynamicTable from "../../components/DynamicTable";
+import ModalComponent from "../../components/Modal";
+import generateInputs from "../../components/DynamicForm";
+import TableTop from "../../components/TableTop";
 import { FieldErrorsImpl, UseFormRegister, FieldError } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
-import { columns, schema, tableTopInput, data } from './helpers';
-import { useGetAllProjects, useCreateProject } from './hooks/queryHooks';
-import { useGetUsers } from 'pages/tasks/useGetUsers';
-import { useGetAllClients } from './../clients/hooks/queryHooks';
+import { useNavigate } from "react-router-dom";
+import { columns, schema, tableTopInput, data } from "./helpers";
+import { useGetAllProjects, useCreateProject } from "./hooks/queryHooks";
+import { useGetUsers } from "pages/tasks/useGetUsers";
+import { useGetAllClients } from "./../clients/hooks/queryHooks";
+import { PaginationState } from "@tanstack/react-table";
 
 export type FormValues = {
   name: string;
@@ -25,7 +26,11 @@ const Index = () => {
   const [topInputObj, setTopInputObj] = useState<{
     name: string;
     query: string;
-  }>({ name: '', query: '' });
+  }>({ name: "", query: "" });
+  const [pageProps, setPageProps] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 5,
+  });
   const [clientInputObj, setClientInputObj] = useState<{
     firstName: string;
     lastName: string;
@@ -33,15 +38,24 @@ const Index = () => {
     email: string;
     address: string | undefined;
     company: string | undefined;
-  }>({ firstName: '', lastName: '', email: '', phone: '', address: '', company: '' });
-  const {data: clientsData} = useGetAllClients(clientInputObj)
+  }>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: "",
+    company: "",
+  });
+  const { data: clientsData } = useGetAllClients(clientInputObj, {
+    pageIndex: 0,
+    pageSize: 100,
+  });
   const [clients, setClients] = useState<Record<string, any>[]>([]);
-  const { data, isLoading } = useGetAllProjects(topInputObj);
+  const { data, isLoading } = useGetAllProjects(topInputObj, pageProps);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
 
-  const [status, setStatus] = useState('');
-
+  const [status, setStatus] = useState("");
 
   const {
     mutate: createProject,
@@ -49,22 +63,20 @@ const Index = () => {
     isSuccess,
   } = useCreateProject();
 
-  console.log(clientsData?.Clients, "clients from array")
   const getArray = () => {
-    const res = clientsData?.Clients?.map((item) => ({
+    const res = clientsData?.data?.map((item) => ({
       value: item?._id,
       name: `${item?.firstName} ${item?.lastName}`,
     }));
     setClients(res ?? []);
   };
 
-
   useEffect(() => {
     if (isSuccess) {
       onClose();
     }
     getArray();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, clientsData]);
   const {
     register,
@@ -89,7 +101,7 @@ const Index = () => {
     createProject({ data: values });
   };
 
-  const topTableButtons = [{ name: 'Add Project', onClick: onOpen }];
+  const topTableButtons = [{ name: "Add Project", onClick: onOpen }];
 
   const handleInputChange = (
     name: string,
@@ -132,18 +144,17 @@ const Index = () => {
       error: errors?.description,
     },
     {
-      name: 'client',
-      label: 'Client',
-      type: 'select',
+      name: "client",
+      label: "Client",
+      type: "select",
       options: clients,
-      register: register('client', {
-        required: 'Please select an assignee',
+      register: register("client", {
+        required: "Please select an assignee",
       }),
       isInvalid: !!errors.client,
       error: errors?.client,
     },
   ];
-  
 
   return (
     <>
@@ -156,7 +167,14 @@ const Index = () => {
       {isLoading ? (
         <Box>...Loading</Box>
       ) : (
-        <DynamicTable columns={columns} data={data?.Projects ?? []} />
+        <DynamicTable
+          columns={columns}
+          data={data?.data ?? []}
+          setPageProps={setPageProps}
+          pageProps={pageProps}
+          totalCount={data?.totalElements}
+          totalPages={data?.totalPages}
+        />
       )}
       <ModalComponent
         title="Create Project"

@@ -10,6 +10,10 @@ export const formatDateTwo = (dateString: string | undefined) => {
       year: "numeric",
       month: "long",
       day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      timeZone: "GMT"
     });
   }
 };

@@ -2,6 +2,8 @@ const TimeLog = require('../models/timeLogModel');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const TimeLogMethods = require('../utils/timelog');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.createTimeLog = catchAsync(async (req, res) => {
   const { checkIn, tasks } = req.body;
@@ -27,13 +29,26 @@ exports.createTimeLog = catchAsync(async (req, res) => {
 });
 
 exports.getAllLogs = catchAsync(async (req, res) => {
-  const logs = await TimeLog.find({ user: req.user });
+  const features = new APIFeatures(
+    TimeLog.find({ user: req.user }).sort({ createdAt: -1 }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitField()
+    .paginate();
+
+  const Logs = await features.query;
+  const totalElements = await TimeLog.countDocuments();
+  const pageSize = req.query.size ? Number(req.query.size) : 10;
+  const totalPages = Math.ceil(totalElements / pageSize);
 
   res.status(200).json({
     status: 'success',
-    data: {
-      logs,
-    },
+    results: Logs.length,
+    totalElements,
+    totalPages,
+    data: Logs,
   });
 });
 
@@ -111,20 +126,31 @@ exports.checkAllUsersClockInStatus = catchAsync(async (req, res) => {
     checkIn: { $gte: startOfDay, $lt: endOfDay },
   });
   const usersWithClockedInStatus = new Set();
-
-  // Loop through the logs and add user IDs to the set
   logs.forEach((log) => {
-    usersWithClockedInStatus.add(log.user.toString());
+    usersWithClockedInStatus.add({
+      userId: log.user.toString(),
+      checkIn: log.checkIn,
+      checkOut: log.checkOut,
+    });
   });
-
-  // Query all users and determine their clock-in status based on the set
   const allUsers = await User.find({});
   const usersClockInStatus = allUsers.map((user) => ({
     userId: user._id,
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    hasClockedIn: usersWithClockedInStatus.has(user._id.toString()),
+    checkIn: TimeLogMethods.getCheckInTime(
+      usersWithClockedInStatus,
+      user._id.toString()
+    ),
+    checkOut: TimeLogMethods.getCheckOutTime(
+      usersWithClockedInStatus,
+      user._id.toString()
+    ),
+    hasClockedIn: TimeLogMethods.hasClockedIn(
+      usersWithClockedInStatus,
+      user._id.toString()
+    ),
   }));
 
   res.status(200).json({
