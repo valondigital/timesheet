@@ -11,6 +11,7 @@ import TableTop from "../../components/TableTop";
 import { useNavigate } from "react-router-dom";
 import { columns, schema, inputObjList, tableTopInput, data } from "./helpers";
 import { useCreateClient, useGetAllClients } from "./hooks/queryHooks";
+import { PaginationState } from "@tanstack/react-table";
 
 export type FormValues = {
   name: string;
@@ -33,7 +34,12 @@ const Index = () => {
     address: "",
     company: "",
   });
-  const { data, isLoading } = useGetAllClients(topInputObj);
+  const [pageProps, setPageProps] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 5,
+  });
+
+  const { data, isLoading } = useGetAllClients(topInputObj, pageProps);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
 
@@ -71,7 +77,7 @@ const Index = () => {
     createProject({ data: values });
   };
 
-  const topTableButtons = [{ name: "Add Client", onClick: onOpen, size:"md" }];
+  const topTableButtons = [{ name: "Add Client", onClick: onOpen, size: "md" }];
 
   const handleInputChange = (
     name: string,
@@ -108,7 +114,14 @@ const Index = () => {
       {isLoading ? (
         <Box>...Loading</Box>
       ) : (
-        <DynamicTable columns={columns} data={data?.Clients ?? []} />
+        <DynamicTable
+          columns={columns}
+          data={data?.data ?? []}
+          setPageProps={setPageProps}
+          pageProps={pageProps}
+          totalCount={data?.totalElements}
+          totalPages={data?.totalPages}
+        />
       )}
       <ModalComponent
         title="Add New Client"

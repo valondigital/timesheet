@@ -9,10 +9,13 @@ import { ErrorObj } from "utils/types";
 import { AxiosError, AxiosResponse } from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { PaginationState } from "@tanstack/react-table";
 
-export const useGetAllLogs = () => {
-  return useQuery<DefaultData, ErrorObj>(["allLogs"], () =>
-    Services.getAllLogs()
+export const useGetAllLogs = (
+  pageProps: PaginationState
+) => {
+  return useQuery<DefaultData, ErrorObj>(["allLogs", pageProps], () =>
+    Services.getAllLogs(pageProps)
   );
 };
 

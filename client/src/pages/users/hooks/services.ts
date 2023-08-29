@@ -2,6 +2,7 @@ import endpoints from "components/endpoints";
 import { Params } from "components/types";
 import { authAxios as axios } from "setup/auth/axios";
 import getURLParams from "utils/getUrlParams";
+import { PaginationState } from '@tanstack/react-table';
 
 class Services {
   signup(payload: Params) {
@@ -11,13 +12,17 @@ class Services {
       data: payload.data,
     });
   }
-  async getAllUsers(param: TFormValues) {
-    const params = getURLParams(param);
+  async getAllUsers(param: TFormValues, pageProps: PaginationState) {
+    const params = getURLParams({
+      ...param, 
+      page: pageProps.pageIndex,
+      size: pageProps.pageSize
+    });
     const response = await  axios({
       method: "GET",
-      url: `${endpoints.users}`,
+      url: `${endpoints.users}${params}`,
     });
-    return response?.data?.data as DefaultData
+    return response?.data as DefaultData
   };
   
 }

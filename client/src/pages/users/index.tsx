@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react';
-import { Button, useDisclosure, Box } from '@chakra-ui/react';
-import ActionModal from './components/ActionModal';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Info } from '../../components/Info';
-import DynamicTable from '../../components/DynamicTable';
-import ModalComponent from '../../components/Modal';
-import generateInputs from '../../components/DynamicForm';
-import TableTop from '../../components/TableTop';
-import { useNavigate } from 'react-router-dom';
-import { columns, schema, inputObjList, tableTopInput, data } from './helpers';
-import { useSignUp, useGetAllUsers } from './hooks/queryHooks';
+import { useEffect, useState } from "react";
+import { Button, useDisclosure, Box } from "@chakra-ui/react";
+import ActionModal from "./components/ActionModal";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Info } from "../../components/Info";
+import DynamicTable from "../../components/DynamicTable";
+import ModalComponent from "../../components/Modal";
+import generateInputs from "../../components/DynamicForm";
+import TableTop from "../../components/TableTop";
+import { useNavigate } from "react-router-dom";
+import { columns, schema, inputObjList, tableTopInput, data } from "./helpers";
+import { useSignUp, useGetAllUsers } from "./hooks/queryHooks";
+import { PaginationState } from "@tanstack/react-table";
 
 const Index = () => {
   const [topInputObj, setTopInputObj] = useState<{
@@ -18,12 +19,16 @@ const Index = () => {
     description: string;
     project: string;
     assignedTo: string;
-  }>({ name: '', description: '', project: '', assignedTo: '' });
-  const { data, isLoading } = useGetAllUsers(topInputObj);
+  }>({ name: "", description: "", project: "", assignedTo: "" });
+  const [pageProps, setPageProps] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 5,
+  });
+  const { data, isLoading } = useGetAllUsers(topInputObj, pageProps);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
 
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
 
   const {
     mutate: createUser,
@@ -54,7 +59,7 @@ const Index = () => {
     createUser({ data: values });
   };
 
-  const topTableButtons = [{ name: 'Add User', onClick: onOpen }];
+  const topTableButtons = [{ name: "Add User", onClick: onOpen }];
 
   const handleInputChange = (
     name: string,
@@ -89,7 +94,14 @@ const Index = () => {
       {isLoading ? (
         <Box>...Loading</Box>
       ) : (
-        <DynamicTable columns={columns} data={data?.users ?? []} />
+        <DynamicTable
+          columns={columns}
+          data={data?.data ?? []}
+          setPageProps={setPageProps}
+          pageProps={pageProps}
+          totalCount={data?.totalElements}
+          totalPages={data?.totalPages}
+        />
       )}
       <ModalComponent
         title="Add User"

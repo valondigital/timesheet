@@ -5,7 +5,7 @@ import React, { useState } from "react";
 export const useGetProjects = () => {
   const [pageProps, setPageProps] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 5,
+    pageSize: 100,
   });
   const [topInputObj, setTopInputObj] = useState<{
     name: string;
@@ -15,7 +15,7 @@ export const useGetProjects = () => {
   }>({ name: "", description: "", project: "", assignedTo: "" });
   const { data, isLoading } = useGetAllProjects(topInputObj, pageProps);
   return {
-    projectsData: data?.Projects,
+    projectsData: data?.data,
     isLoading,
   };
 };

@@ -46,10 +46,12 @@ const Index = () => {
     address: "",
     company: "",
   });
-  const { data: clientsData } = useGetAllClients(clientInputObj);
+  const { data: clientsData } = useGetAllClients(clientInputObj, {
+    pageIndex: 0,
+    pageSize: 100,
+  });
   const [clients, setClients] = useState<Record<string, any>[]>([]);
   const { data, isLoading } = useGetAllProjects(topInputObj, pageProps);
-  console.log(data, "here is the projects data!!!");
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [open, setOpen] = useState(false);
 
@@ -61,9 +63,8 @@ const Index = () => {
     isSuccess,
   } = useCreateProject();
 
-  console.log(clientsData?.Clients, "clients from array");
   const getArray = () => {
-    const res = clientsData?.Clients?.map((item) => ({
+    const res = clientsData?.data?.map((item) => ({
       value: item?._id,
       name: `${item?.firstName} ${item?.lastName}`,
     }));

@@ -10,7 +10,7 @@ exports.createProject = catchAsync(async (req, res) => {
   const newProject = await Project.create({
     name,
     description,
-    client
+    client,
   });
   res.status(200).json({
     message: 'Project created successfully',
