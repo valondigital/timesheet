@@ -45,7 +45,10 @@ exports.createTask = catchAsync(async (req, res) => {
 });
 
 exports.getAllTasks = catchAsync(async (req, res) => {
-  const features = new APIFeatures(Task.find(), req.query)
+  const features = new APIFeatures(
+    Task.find().sort({ createdAt: -1 }),
+    req.query
+  )
     .filter()
     .sort()
     .limitField()
