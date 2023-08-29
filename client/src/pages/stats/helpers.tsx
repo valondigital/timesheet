@@ -2,6 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import * as yup from "yup";
 import { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
 import { Tag } from "@chakra-ui/react";
+import { formatDateTwo } from "utils/formatDate";
 
 const statusTypes = [
   { value: true, color: "green", label: "True" },
@@ -47,6 +48,20 @@ export const columns: ITDataColumnDef<ITData>[] = [
   columnHelper.accessor("email", {
     header: "Email",
     cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("checkIn", {
+    header: "Email",
+    cell: (info) => {
+      const value = info.getValue<string>();
+      return formatDateTwo(value) || "Not yet";
+    },
+  }),
+  columnHelper.accessor("checkOut", {
+    header: "Checked Out",
+    cell: (info) => {
+      const value = info.getValue<string>();
+      return formatDateTwo(value) || "Not yet";
+    },
   }),
   columnHelper.accessor("hasClockedIn", {
     header: "Clocked In Status",
