@@ -52,7 +52,7 @@ exports.getAllLogs = catchAsync(async (req, res) => {
   });
 });
 
-exports.getLogDetails = catchAsync(async (req, res) => {
+exports.getLogDetails = catchAsync(async (req, res, next) => {
   const log = await TimeLog.findById(req.params.id);
 
   if (!log) {
@@ -95,10 +95,10 @@ exports.updateTimeLog = catchAsync(async (req, res, next) => {
   });
 });
 
-const checkDateStatus = () => {
-  const startOfDay = new Date();
+const checkDateStatus = (customDate) => {
+  const startOfDay = new Date(customDate);
   startOfDay.setHours(0, 0, 0, 0);
-  const endOfDay = new Date();
+  const endOfDay = new Date(customDate);
   endOfDay.setHours(23, 59, 59, 999);
   return {
     startOfDay,
@@ -121,7 +121,7 @@ exports.checkUserClockInStatus = catchAsync(async (req, res) => {
 });
 
 exports.checkAllUsersClockInStatus = catchAsync(async (req, res) => {
-  const { startOfDay, endOfDay } = checkDateStatus();
+  const { startOfDay, endOfDay } = checkDateStatus(req.query.date);
   const logs = await TimeLog.find({
     checkIn: { $gte: startOfDay, $lt: endOfDay },
   });

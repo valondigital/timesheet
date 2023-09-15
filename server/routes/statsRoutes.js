@@ -16,4 +16,11 @@ router
     checkAllUsersClockInStatus
   );
 
+// router
+//   .route('/:date')
+//   .get(
+//     protectRoute,
+//     restrictTo('admin', 'super-admin'),
+//     checkAllUsersClockInStatus
+//   );
 module.exports = router;
