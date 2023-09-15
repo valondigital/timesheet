@@ -8,7 +8,7 @@ class Services {
     const params = getURLParams(param);
     const response = await axios({
       method: "GET",
-      url: `${endpoints.clockInStatus}`,
+      url: `${endpoints.clockInStatus}${params}`,
     });
     return response?.data as DefaultData;
   }

@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Box } from "@chakra-ui/react";
 import { Info } from "../../components/Info";
 import DynamicTable from "../../components/DynamicTable";
-import { columns } from "./helpers";
+import { columns, getFormattedDate } from "./helpers";
 import { useGetAllClockInStatus } from "./hooks/queryHooks";
+import TableTop from "./../../components/TableTop";
 
 const Index = () => {
   const [topInputObj, setTopInputObj] = useState<{
@@ -11,13 +12,46 @@ const Index = () => {
     description: string;
     project: string;
     assignedTo: string;
-  }>({ name: "", description: "", project: "", assignedTo: "" });
+    date: string;
+  }>({
+    name: "",
+    description: "",
+    project: "",
+    assignedTo: "",
+    date: getFormattedDate(),
+  });
   const { data, isLoading } = useGetAllClockInStatus(topInputObj);
 
-  console.log(data, "here is the datate !!!")
+  const tableTopInput = [
+    {
+      name: "date",
+      label: "Filter clock in and out status by date",
+      placeholder: "Search by name, email",
+      type: "date",
+    },
+  ];
+
+  const handleInputChange = (
+    name: string,
+    value: string | Record<string, Date>
+  ) => {
+    setTopInputObj(
+      (prevState: {
+        name: string;
+        description: string;
+        project: string;
+        assignedTo: string;
+        date: string;
+      }) => ({
+        ...prevState,
+        [name]: value,
+      })
+    );
+  };
 
   return (
     <>
+      <TableTop onChange={handleInputChange} inputObj={tableTopInput} />
       <Info>View all users and manage them</Info>
       {isLoading ? (
         <Box>...Loading</Box>
