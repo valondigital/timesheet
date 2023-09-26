@@ -4,6 +4,7 @@ const {
   createDepartment,
   deleteDepartment,
   getDepartmentDetails,
+  updateDepartment,
 } = require('../controllers/deptController');
 const authController = require('../controllers/authController');
 
@@ -19,6 +20,7 @@ router
 router
   .route('/:id')
   .get(getDepartmentDetails)
+  .patch(protectRoute, restrictTo('admin', 'super-admin'), updateDepartment)
   .delete(protectRoute, restrictTo('admin', 'super-admin'), deleteDepartment);
 
 module.exports = router;

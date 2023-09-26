@@ -47,7 +47,7 @@ router.route('/').get(protectRoute, getAllUsers);
 router
   .route('/:id')
   .get(getUserDetails)
-  .patch(updateUser)
+  .patch(protectRoute, updateUser)
   .delete(protectRoute, restrictTo('admin', 'super-admin'), deleteUser);
 
 router.route('/:id/tasks').get(protectRoute, getTasksByUser);

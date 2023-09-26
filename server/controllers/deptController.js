@@ -31,6 +31,27 @@ exports.getAllDepartments = catchAsync(async (req, res) => {
   });
 });
 
+exports.updateDepartment = catchAsync(async (req, res) => {
+  const department = await Department.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  if (!department) {
+    return res.status(404).json({ status: 'Department not found' });
+  }
+
+  res.status(200).json({
+    status: 'Department updated successfully',
+    data: {
+      department,
+    },
+  });
+});
+
 exports.deleteDepartment = async (req, res) => {
   try {
     await Department.findByIdAndDelete(req.params.id);

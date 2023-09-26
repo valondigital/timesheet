@@ -12,12 +12,15 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 exports.getAllUsers = catchAsync(async (req, res) => {
-  const features = new APIFeatures(User.find(), req.query)
+  const query = User.find().populate({
+    path: 'department',
+    select: '-createdAt -employees -_id -__v -updatedAt',
+  });
+  const features = new APIFeatures(query, req.query)
     .filter()
     .sort()
     .limitField()
     .paginate();
-
   const users = await features.query;
   const totalElements = await User.countDocuments();
   const pageSize = req.query.size ? Number(req.query.size) : 10;

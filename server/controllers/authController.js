@@ -61,6 +61,7 @@ exports.signUp = catchAsync(async (req, res) => {
     country,
     passwordChangedAt,
     role,
+    department,
   } = req.body;
   const password = generateRandomPassword();
   const newUser = await User.create({
@@ -73,6 +74,7 @@ exports.signUp = catchAsync(async (req, res) => {
     passwordChangedAt,
     country,
     role,
+    department,
   });
   const loginDetails = {
     email,
@@ -215,7 +217,6 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // Get the user from the collection
-  console.log(req.user, 'user');
   const user = await User.findById(req.user.id).select('+password');
 
   // check if the posted password is correct

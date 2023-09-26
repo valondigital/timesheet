@@ -60,8 +60,13 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['employee', 'admin', 'super-admin', 'project-manager'],
+      enum: ['employee', 'admin', 'super-admin', 'project-manager', 'hod'],
       default: 'employee',
+    },
+    department: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Department',
+      required: [true, 'User must belong to a department'],
     },
     isActive: {
       type: Boolean,
@@ -72,10 +77,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    availableLeaveDays: { type: Number, default: 20 },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
   },
+
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 

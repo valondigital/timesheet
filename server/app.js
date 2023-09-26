@@ -15,6 +15,7 @@ const projectRouter = require('./routes/projectRoutes');
 const clientRouter = require('./routes/clientRoutes');
 const timeLogRouter = require('./routes/timeLogRoutes');
 const statsRouter = require('./routes/statsRoutes');
+const userLeaveRouter = require('./routes/userLeaveRoutes');
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use('/api/v1/clients', clientRouter);
 app.use('/api/v1/projects', projectRouter);
 app.use('/api/v1/tasks', taskRouter);
 app.use('/api/v1/timelogs', timeLogRouter);
+app.use('/api/v1/leave-applications', userLeaveRouter);
 app.use('/api/v1/check-all-users-clock-in-status', statsRouter);
 
 app.all('*', (req, res, next) => {
