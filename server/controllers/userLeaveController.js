@@ -45,8 +45,6 @@ exports.applyForLeave = catchAsync(async (req, res, next) => {
     applicant: req.user.id,
     ...req.body,
   });
-  user.availableLeaveDays -= leaveDaysRequested;
-  // await user.save();
   res.status(200).json({
     message: 'Leave application successful',
     data: {
