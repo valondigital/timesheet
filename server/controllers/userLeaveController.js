@@ -31,7 +31,6 @@ exports.applyForLeave = catchAsync(async (req, res, next) => {
   const startDate = new Date(req.body.startLeaveDate);
   const endDate = new Date(req.body.endLeaveDate);
   const leaveDaysRequested = calculateLeaveDays(startDate, endDate);
-  console.log({ leaveDaysRequested }, user.availableLeaveDays);
   if (leaveDaysRequested > 14) {
     return res
       .status(400)
