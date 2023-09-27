@@ -34,7 +34,7 @@ const PageHeader = (props: { title: string }) => {
 
 
   return (
-    <StyledBox>
+    <StyledBox position="fixed" width="85vw"  zIndex={2}>
       <Flex
         alignItems="center"
         justifyContent="space-between"

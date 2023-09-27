@@ -1,10 +1,3 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -27,10 +20,6 @@ import { UserDetailsProvider } from "setup/app-context-manager/UserDetailsContex
 import TaskDetails from "pages/tasks/TaskDetails";
 
 function App() {
-  // useEffect(() => {
-  //   setupPublicAxios(process.env.REACT_APP_BASE_URL);
-  //   setupAuthAxios(process.env.REACT_APP_BASE_URL, accessToken);
-  // }, [accessToken]);
 
   return (
     <ChakraProvider theme={theme}>
@@ -46,7 +35,6 @@ function App() {
         >
           <Route path={paths.home} element={<Dashboard />} />
           <Route path={paths.profile} element={<Profile />} />
-          {/* <Route path={paths.timeclock} element={<ClockInOut />} /> */}
           <Route path={paths.addUser} element={<SignUp />} />
           <Route path={paths.projects} element={<Projects />} />
           <Route path={paths.clients} element={<Clients />} />
