@@ -1,7 +1,7 @@
 export const tokens = {
   light: {
     primary: "#000814",
-    secondary: "#FFC300",
+    secondary: "#013042",
     gray1: "#333333",
     gray3: "#BDBDBD",
     gray4: "#18181B",
@@ -19,7 +19,8 @@ export const tokens = {
     muted: "#64748b",
     blue1: "#003566",
     blue2: "#001D3D",
-    blue: "#003566",
+    blue: '#01222f',
+    // blue: "#0c2c8c",
     grey: "#F9F9F9",
     pink: "#FEF5FF",
     bgGrey: "#F8F8F8",

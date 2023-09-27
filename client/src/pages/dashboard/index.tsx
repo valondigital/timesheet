@@ -4,14 +4,15 @@ import Card from "./components/Card";
 import Metrics from "./components/Metrics";
 import { stats } from "./helpers";
 import styled from "styled-components";
+import WelcomeCard from "./components/WelcomeCard";
 
 const Index = () => {
-
   return (
     <Box>
+      <WelcomeCard />
       <Grid templateColumns="repeat(4, 1fr)" gap={4}>
         {stats.map((item) => (
-          <StyledGridItem p={4}>
+          <StyledGridItem p={4} bg="white">
             <Card title={item.title} amount={item.amount} icon={item.icon} />
           </StyledGridItem>
         ))}

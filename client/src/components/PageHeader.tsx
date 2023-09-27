@@ -6,17 +6,22 @@ import {
   Link,
   Text,
   useMediaQuery,
-} from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { Link as ReactRouterLink, useLocation, useNavigate } from 'react-router-dom';
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import {
+  Link as ReactRouterLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import styled from 'styled-components'
 
-import breakPoints from '../utils/breakPoints';
-import paths from './paths';
+import breakPoints from "../utils/breakPoints";
+import Hamburger from "./Hamburger";
+import paths from "./paths";
 
 const PageHeader = (props: { title: string }) => {
   const location = useLocation();
-  const [pageTitle, setPageTitle] = useState('');
-  const navigate = useNavigate()
+  const [pageTitle, setPageTitle] = useState("");
   useEffect(() => {
     const currentPage = Object.keys(paths).find(
       (key) => paths[key] === location.pathname
@@ -27,32 +32,28 @@ const PageHeader = (props: { title: string }) => {
   }, [location.pathname]);
   const [isLargerThan1500] = useMediaQuery(breakPoints.laptopL);
 
-  const handleLogOut = () => {
-    localStorage.removeItem('jwt_token')
-    localStorage.removeItem('user')
-    localStorage.removeItem('userId')
-    navigate('/login')
-  }
 
   return (
-    <Box>
+    <StyledBox>
       <Flex
         alignItems="center"
         justifyContent="space-between"
         p={4}
-        pl={isLargerThan1500 ? 20 : 10}
-        bgColor="dark.grey"
+        // pl={isLargerThan1500 ? 20 : 10}
+        bgColor="white"
       >
-        <Text variant="whiteBoldNormal" color="dark.primary">
+        <Text variant="whiteBoldNormal" color="light.primary">
           {pageTitle.replace(/^\w/, (c) => c.toUpperCase())}
         </Text>
         <HStack align="center">
-          <Button variant="primary" onClick={handleLogOut}>Log Out</Button>
-          <Button variant="secondary">Get Started</Button>
+          <Hamburger/>
         </HStack>
       </Flex>
-    </Box>
+    </StyledBox>
   );
 };
 
+const StyledBox = styled(Box)`
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+`;
 export default PageHeader;

@@ -53,7 +53,7 @@ export const NavNames = {
 
 export const pathObject = [
   { icon: FaBuromobelexperte, name: NavNames.dashboard, route: paths.home },
-  { icon: FiUser, name: NavNames.profile, route: paths.profile },
+  // { icon: FiUser, name: NavNames.profile, route: paths.profile },
   { icon: AiOutlineFileText, name: NavNames.timesheet, route: paths.timesheet },
   { icon: AiOutlineFileText, name: NavNames.timesheetStats, route: paths.clockInStats },
   { icon: RiUserSearchLine, name: NavNames.users, route: paths.users },

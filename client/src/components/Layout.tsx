@@ -8,10 +8,10 @@ import PageScaffold from "./PageScaffold";
 const Layout = () => {
   return (
     <Grid templateColumns="repeat(6, 1fr)">
-      <GridItem minH="100vh" bg="light.primary">
+      <GridItem minH="100vh" bg="light.blue">
         <Sidebar />
       </GridItem>
-      <GridItem colSpan={5}>
+      <GridItem colSpan={5} bg="gray.200">
         <PageScaffold title="scaffold">
           <Outlet />
         </PageScaffold>

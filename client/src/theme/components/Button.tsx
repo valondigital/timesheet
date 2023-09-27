@@ -12,7 +12,7 @@ export const ButtonStyle = {
   },
   variants: {
     primary: (props: StyleFunctionProps) => ({
-      bg: props.theme.colors[props.colorMode].blue2,
+      bg: props.theme.colors[props.colorMode].blue,
       color: props.theme.colors[props.colorMode].text,
       width: '127px',
       fontWeight: '600',
