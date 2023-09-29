@@ -5,6 +5,7 @@ const endpoints = {
   clients: '/clients',
   tasks: '/tasks',
   users: '/users',
+  leaveApplications: '/leave-applications',
   clockInStatus: '/check-all-users-clock-in-status',
   usersClockInStatus: '/users/checkClockInStatus',
   timelogs: '/timelogs',

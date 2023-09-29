@@ -70,10 +70,10 @@ export const TextStyle = {
       color: '#667085',
     }),
     nav: (props: StyleFunctionProps) => ({
-      fontSize: { base: '16px', lg: '1.1vw' },
+      fontSize: { base: '16px', lg: '1.0vw' },
       fontFamily: 'Inter',
       fontStyle: 'normal',
-      fontWeight: 700,
+      fontWeight: 400,
       lineHeight: 'normal',
       color:
         props.colorMode === 'dark'

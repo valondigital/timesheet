@@ -8,6 +8,8 @@ import Profile from "./pages/profile";
 import Projects from "./pages/projects";
 import Clients from "./pages/clients";
 import Tasks from "./pages/tasks";
+import AllLeave from "./pages/staff-leave";
+
 import AssignedTasks from "./pages/tasks/AssignedTasks";
 import Users from "./pages/users";
 import ClockInStats from "./pages/stats";
@@ -41,6 +43,10 @@ function App() {
           <Route path={paths.tasks}>
             <Route index element={<Tasks />} />
             <Route path=":taskId" element={<TaskDetails />} />
+          </Route>
+          <Route path={paths.leave}>
+            <Route index element={<AllLeave />} />
+            <Route path=":leaveId" element={<TaskDetails />} />
           </Route>
           <Route path={paths.myTasks} element={<AssignedTasks />} />
           <Route path={paths.users} element={<Users />} />

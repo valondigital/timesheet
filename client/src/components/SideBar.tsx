@@ -12,10 +12,13 @@ import { Link as ReactRouterLink, useLocation } from "react-router-dom";
 import paths, { pathObject } from "./paths";
 import { useUserDetailsContext } from "setup/app-context-manager/UserDetailsContext";
 import logo from "assets/brand/logo-white.png";
+import GroupNav, { SingleNav } from "./GroupNav";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
   const { userDetails } = useUserDetailsContext();
+
+
 
   const filteredPaths = pathObject.filter((item) => {
     return (
@@ -28,9 +31,18 @@ const Sidebar = () => {
         "Projects",
         "All Tasks",
         "Clock In Statistics",
-      ].includes(item.name)
+      ].includes(item.main.name)
     );
   });
+
+  const navs = filteredPaths.map((item) => (
+    item.sub.length ?
+    <GroupNav {...item} key={item.main.name}/>
+    :
+    <SingleNav  path={item.main.path || ''} 
+    name={item.main.name} 
+    icon ={item.main.icon}  key={item.main.name} />
+  ));
 
   return (
     <Box py={4}>
@@ -38,33 +50,7 @@ const Sidebar = () => {
         <Image src={logo} height="100%" width="60%" />
       </Box>
       <Flex direction="column">
-        {filteredPaths.map((item) => (
-          <Link
-            key={item.route}
-            as={ReactRouterLink}
-            to={item.route}
-            p={4}
-            bg={pathname === item.route ? "light.secondary" : ""}
-            px={2}
-          >
-            <Flex align="center">
-              <Icon
-                as={item.icon}
-                boxSize={6}
-                // color={pathname === item.route ? "dark.text" : "light.text"}
-                color="light.text"
-              />
-              <Text
-                ml={2}
-                // color={pathname === item.route ? "dark.text" : "light.text"}
-                color="light.text"
-                variant="nav"
-              >
-                {item.name}
-              </Text>
-            </Flex>
-          </Link>
-        ))}
+        {navs}
       </Flex>
     </Box>
   );
