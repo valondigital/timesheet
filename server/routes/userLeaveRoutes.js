@@ -4,6 +4,7 @@ const {
   getAllLeaveApplications,
   updateLeaveStatusByHod,
   updateLeaveStatusByAdmin,
+  getLeaveApplicationDetails,
 } = require('../controllers/userLeaveController');
 const authController = require('../controllers/authController');
 
@@ -20,6 +21,13 @@ router
   )
   .post(protectRoute, applyForLeave);
 
+router
+  .route('/:id')
+  .get(
+    protectRoute,
+    restrictTo('admin', 'super-admin'),
+    getLeaveApplicationDetails
+  );
 router.route('/:id/hod-approval').patch(protectRoute, updateLeaveStatusByHod);
 
 router.route('/:id/admin-approval').patch(

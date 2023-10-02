@@ -106,7 +106,7 @@ const Index = ({
         <Thead backgroundColor={colorMode === "dark" ? "black" : "#F0F2F5"}>
           {tableHeadRows}
         </Thead>
-        <Tbody>{tableBodyRows}</Tbody>
+        <Tbody bg="white">{tableBodyRows}</Tbody>
       </Table>
       {!hidePagination && (
         <Pagination

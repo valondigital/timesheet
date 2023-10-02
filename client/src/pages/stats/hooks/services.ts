@@ -4,7 +4,7 @@ import { authAxios as axios } from "setup/auth/axios";
 import getURLParams from "utils/getUrlParams";
 
 class Services {
-  async getAllUsersClockInStats(param: TFormValues) {
+  async getAllUsersClockInStats(param: { date: string }) {
     const params = getURLParams(param);
     const response = await axios({
       method: "GET",

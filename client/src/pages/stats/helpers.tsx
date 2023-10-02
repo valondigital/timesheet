@@ -50,7 +50,7 @@ export const columns: ITDataColumnDef<ITData>[] = [
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("checkIn", {
-    header: "Email",
+    header: "Checked In",
     cell: (info) => {
       const value = info.getValue<string>();
       return formatDateTwo(value) || "Not yet";

@@ -1,10 +1,12 @@
-import {
-  createColumnHelper,
-  ColumnDef,
-  CellContext,
-} from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import * as yup from "yup";
-import { FiMoreVertical } from "react-icons/fi";
+import { Icon } from "@chakra-ui/react";
+import { FiDelete, FiEye, FiMoreHorizontal, FiTrash } from "react-icons/fi";
+import {
+  calculateDateDifference,
+  formatDate,
+  formatDateWithoutTime,
+} from "utils/formatDate";
 
 import {
   Menu,
@@ -13,9 +15,28 @@ import {
   MenuItem,
   Center,
   Button,
-  Text,
+  Tag,
 } from "@chakra-ui/react";
-import { NavigateFunction } from "react-router-dom";
+
+const statusTypes = [
+  { value: "approved", color: "green", label: "Approved" },
+  { value: "pending", color: "yellow", label: "Pending" },
+  { value: "declined", color: "red", label: "Declined" },
+];
+
+export const getStatusTag = (value: string | undefined) => {
+  let color;
+  statusTypes.forEach((status) => {
+    if (status.value === value) {
+      color = (
+        <Tag variant="solid" colorScheme={status.color}>
+          {status.label}
+        </Tag>
+      );
+    }
+  });
+  return color;
+};
 
 export const schema = yup
   .object()
@@ -26,42 +47,76 @@ export const schema = yup
   })
   .required();
 
+type NavigateFunction = (to: string) => void;
+
 const columnHelper = createColumnHelper<ITData>();
 
-export const columns: ITDataColumnDef<ITData>[] = [
-  columnHelper.accessor("name", {
-    header: "Name",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("description", {
-    header: "Description",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("client", {
-    header: "Client",
-    cell: (info) => {
-      const firstName = info.getValue<Record<string, string>>()?.firstName;
-      const lastName = info.getValue<Record<string, string>>()?.lastName;
-      return `${firstName} ${lastName}`
-    },
-  }),
-  columnHelper.accessor((row) => row.id, {
-    header: "Actions",
-    cell: (info) => (
-      <Menu>
-        <MenuButton variant="noBg" p={0} as={Button}>
-          <Center>
-            <FiMoreVertical />
-          </Center>
-        </MenuButton>
+export const columns = (
+  navigate: NavigateFunction
+): ITDataColumnDef<ITData>[] => {
+  return [
+    columnHelper.accessor("applicant", {
+      header: "Staff Name",
+      cell: (info) => {
+        const firstName = info.getValue<Record<string, string>>()?.firstName;
+        const lastName = info.getValue<Record<string, string>>()?.lastName;
+        return `${firstName} ${lastName}`;
+      },
+    }),
+    columnHelper.accessor("leaveType", {
+      header: "Leave Type",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("createdAt", {
+      header: "Applied Date",
+      cell: (info) => {
+        const value = info.getValue<string>();
+        return formatDate(value) || "Not yet";
+      },
+    }),
+    columnHelper.accessor("hodApproval", {
+      header: "HOD Status",
+      cell: (info) => {
+        const status = info.getValue<Record<string, string>>()?.status;
+        return getStatusTag(status);
+      },
+    }),
+    columnHelper.accessor("adminApproval", {
+      header: "Admin Status",
+      cell: (info) => {
+        const status = info.getValue<Record<string, string>>()?.status;
+        return getStatusTag(status);
+      },
+    }),
+    columnHelper.accessor((row) => row.id, {
+      header: "Actions",
+      cell: (info) => {
+        const originalId = info.row.original._id;
+        const id: string = typeof originalId === "string" ? originalId : "";
 
-        <MenuList>
-          <MenuItem>View Detail</MenuItem>
-        </MenuList>
-      </Menu>
-    ),
-  }),
-];
+        return (
+          <Menu size="sm">
+            <MenuButton p={0} as={Button}>
+              <Center>
+                <FiMoreHorizontal />
+              </Center>
+            </MenuButton>
+            <MenuList>
+              <MenuItem minH="48px" onClick={() => navigate(id)}>
+                <Icon as={FiEye} mr={4} />
+                <span>View</span>
+              </MenuItem>
+              <MenuItem minH="48px">
+                <Icon as={FiTrash} mr={4} />
+                <span>Delete</span>
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        );
+      },
+    }),
+  ];
+};
 
 export type FormValues = {
   name: string;
@@ -143,5 +198,66 @@ export const data = [
   {
     name: "Valon Timesheet",
     description: "This is just a test project",
+  },
+];
+
+export const inputObjList = (leave : Leave) => [
+  {
+    name: "name",
+    label: "Full Name",
+    value: `${leave?.applicant?.firstName} ${leave?.applicant?.lastName}`,
+    type: "text",
+  },
+  {
+    name: "email",
+    label: "Email Address",
+    value: `${leave?.applicant?.email}`,
+    type: "email",
+  },
+  {
+    name: "phone",
+    label: "Phone Number",
+    value: `${leave?.applicant?.phone}`,
+    type: "number",
+  },
+  {
+    name: "leaveType",
+    label: "Leave Type",
+    value: `${leave?.leaveType}`,
+    type: "text",
+  },
+  {
+    name: "appliedDate",
+    label: "Applied Date",
+    value: `${formatDate(leave?.createdAt) || "Null"}`,
+    type: "text",
+  },
+  {
+    name: "noOfDays",
+    label: "Applied No. Of Days",
+    value: `${
+      calculateDateDifference(leave?.startLeaveDate, leave?.endLeaveDate)
+    }`,
+    type: "text",
+  },
+  {
+    name: "avalableNoOfDays",
+    label: "Available No. Of Days",
+    value: `${leave?.applicant?.availableLeaveDays}`,
+    type: "text",
+  },
+  {
+    name: "leavePeriod",
+    label: "Leave Period",
+    value: `From ${formatDateWithoutTime(
+      leave?.startLeaveDate
+    )} to ${formatDateWithoutTime(leave?.endLeaveDate)}`,
+    type: "text",
+  },
+  {
+    name: "appliedDate",
+    label: "Applied Date",
+    value: `${formatDate(leave?.createdAt) || "Null"}`,
+    type: "text",
   },
 ];

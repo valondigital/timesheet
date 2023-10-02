@@ -15,3 +15,9 @@ export const useGetAllLeaveApplications = (
   );
 };
 
+export const useGetLeaveDetails = (leaveId: string) => {
+  return useQuery<Leave, ErrorObj>(["leaveDetails"], () =>
+    Services.getLeaveDetails(leaveId)
+  );
+};
+

@@ -8,16 +8,8 @@ import TableTop from "./../../components/TableTop";
 
 const Index = () => {
   const [topInputObj, setTopInputObj] = useState<{
-    name: string;
-    description: string;
-    project: string;
-    assignedTo: string;
     date: string;
   }>({
-    name: "",
-    description: "",
-    project: "",
-    assignedTo: "",
     date: getFormattedDate(),
   });
   const { data, isLoading } = useGetAllClockInStatus(topInputObj);
@@ -37,10 +29,6 @@ const Index = () => {
   ) => {
     setTopInputObj(
       (prevState: {
-        name: string;
-        description: string;
-        project: string;
-        assignedTo: string;
         date: string;
       }) => ({
         ...prevState,

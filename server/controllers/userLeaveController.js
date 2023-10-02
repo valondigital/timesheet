@@ -74,6 +74,25 @@ exports.getAllLeaveApplications = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getLeaveApplicationDetails = catchAsync(async (req, res, next) => {
+  const leaveApplication = await UserLeave.findById(req.params.id);
+
+  if (!leaveApplication) {
+    return next(
+      new AppError(
+        `Can't find leaveApplication with id ${req.params.id} on this server`,
+        404
+      )
+    );
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      leave: leaveApplication,
+    },
+  });
+});
+
 exports.updateLeaveStatusByHod = catchAsync(async (req, res, next) => {
   const leaveApplication = await UserLeave.findById(req.params.id);
   if (!leaveApplication) {
@@ -129,7 +148,6 @@ exports.updateLeaveStatusByAdmin = catchAsync(async (req, res, next) => {
   leaveApplication.adminApproval.approvedBy = adminId;
   const { startLeaveDate, endLeaveDate } = leaveApplication;
   const leaveDaysRequested = calculateLeaveDays(startLeaveDate, endLeaveDate);
-  console.log({ leaveDaysRequested, startLeaveDate, endLeaveDate });
   const payload = {
     availableLeaveDays: applicant.availableLeaveDays - leaveDaysRequested,
   };

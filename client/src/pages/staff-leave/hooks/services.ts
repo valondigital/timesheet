@@ -28,6 +28,13 @@ class Services {
       data: payload.data,
     });
   }
+  async getLeaveDetails(leaveId:string){
+    const response = await  axios({
+      method: "GET",
+      url: `${endpoints.leaveApplications}/${(leaveId)}`,
+    });
+    return response?.data?.data?.leave as Leave
+  }
 }
 
 export default new Services();

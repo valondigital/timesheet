@@ -136,6 +136,48 @@ interface Task {
   id: string;
 }
 
+interface Leave {
+  _id: string;
+  createdAt?: string;
+  startLeaveDate: string;
+  endLeaveDate: string;
+  applicant: {
+    role: string;
+    availableLeaveDays: number;
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    id: string | null;
+  };
+  startLeaveDate: string; // You might want to use Date type here
+  endLeaveDate: string;   // You might want to use Date type here
+  reason: string;
+  leaveType: string;
+  hodApproval: {
+    status: string;
+    approvedBy: {
+      role: string;
+      firstName: string;
+      lastName: string;
+      id: string | null;
+    } | null;
+  };
+  adminApproval: {
+    status: string;
+    approvedBy: {
+      role: string;
+      firstName: string;
+      lastName: string;
+      id: string | null;
+    } | null;
+  };
+  __v: number;
+  id: string;
+}
+
+
 interface Log {
   tasks: Task[];
   checkOut: string | null;
