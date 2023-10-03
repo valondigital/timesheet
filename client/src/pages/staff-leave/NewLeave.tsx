@@ -1,27 +1,13 @@
 import {
   Box,
   Grid,
-  GridItem,
-  Textarea,
-  Text,
-  Badge,
-  Flex,
   Button,
-  useDisclosure,
-  FormControl,
-  FormLabel,
-  Select,
 } from "@chakra-ui/react";
-import ModalComponent from "components/Modal";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
 import generateGridInputs from "./components/GridForm";
 import LeaveDetailsHeader from "./components/Jumbotron";
-import { statusTypes, schema, leaveTypes } from "./helpers";
+import {  schema, leaveTypes } from "./helpers";
 import {
   useApplyForLeave,
-  useGetLeaveDetails,
-  useUpdateLeaveStatus,
 } from "./hooks/queryHooks";
 import { useForm, UseFormRegister } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

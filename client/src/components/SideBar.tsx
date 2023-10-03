@@ -25,12 +25,14 @@ const Sidebar = () => {
       userDetails.role === "admin" ||
       userDetails.role === "super-admin" ||
       userDetails.role === "project-manager" ||
+      userDetails.role === "hod" ||
       ![
         "Users",
         "Clients",
         "Projects",
         "All Tasks",
         "Clock In Statistics",
+        "All Leave"
       ].includes(item.main.name)
     );
   });

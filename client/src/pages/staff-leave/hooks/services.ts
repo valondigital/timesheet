@@ -37,7 +37,6 @@ class Services {
     return response?.data?.data?.leave as Leave;
   }
   async updateLeave(leaveId: string, payload: Object) {
-    console.log(user.role, "************role")
     const response = await axios({
       method: "PATCH",
       url: `${endpoints.leaveApplications}/${leaveId}/${

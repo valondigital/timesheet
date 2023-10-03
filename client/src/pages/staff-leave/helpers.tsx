@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import * as yup from "yup";
 import { Icon } from "@chakra-ui/react";
-import { FiDelete, FiEye, FiMoreHorizontal, FiTrash } from "react-icons/fi";
+import { FiEye, FiMoreHorizontal, FiTrash } from "react-icons/fi";
 import {
   calculateDateDifference,
   formatDate,
@@ -202,7 +202,7 @@ export const data = [
   },
 ];
 
-export const inputObjList = (leave : Leave) => [
+export const inputObjList = (leave: Leave) => [
   {
     name: "name",
     label: "Full Name",
@@ -236,9 +236,10 @@ export const inputObjList = (leave : Leave) => [
   {
     name: "noOfDays",
     label: "Applied No. Of Days",
-    value: `${
-      calculateDateDifference(leave?.startLeaveDate, leave?.endLeaveDate)
-    }`,
+    value: `${calculateDateDifference(
+      leave?.startLeaveDate,
+      leave?.endLeaveDate
+    )}`,
     type: "text",
   },
   {
@@ -266,18 +267,18 @@ export const inputObjList = (leave : Leave) => [
 export const leaveTypes = [
   {
     name: "Educational",
-    value: "educational"
+    value: "educational",
   },
   {
     name: "Medical",
-    value: "medical"
+    value: "medical",
   },
   {
     name: "Casual",
-    value: "casual"
+    value: "casual",
   },
   {
     name: "Other",
-    value: "other"
+    value: "other",
   },
-]
+];
