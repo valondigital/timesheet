@@ -21,6 +21,7 @@ import paths from "./components/paths";
 import { UserDetailsProvider } from "setup/app-context-manager/UserDetailsContext";
 import TaskDetails from "pages/tasks/TaskDetails";
 import LeaveDetails from "pages/staff-leave/LeaveDetails";
+import NewLeave from "pages/staff-leave/NewLeave";
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
           <Route path={paths.leave}>
             <Route index element={<AllLeave />} />
             <Route path=":leaveId" element={<LeaveDetails />} />
+            <Route path="apply" element={<NewLeave />} />
           </Route>
           <Route path={paths.myTasks} element={<AssignedTasks />} />
           <Route path={paths.users} element={<Users />} />

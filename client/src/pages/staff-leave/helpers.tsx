@@ -18,7 +18,7 @@ import {
   Tag,
 } from "@chakra-ui/react";
 
-const statusTypes = [
+export const statusTypes = [
   { value: "approved", color: "green", label: "Approved" },
   { value: "pending", color: "yellow", label: "Pending" },
   { value: "declined", color: "red", label: "Declined" },
@@ -41,9 +41,10 @@ export const getStatusTag = (value: string | undefined) => {
 export const schema = yup
   .object()
   .shape({
-    name: yup.string().required(),
-    description: yup.string().required(),
-    client: yup.string().required(),
+    startLeaveDate: yup.date().required(),
+    endLeaveDate: yup.date().required(),
+    reason: yup.string().required(),
+    leaveType: yup.string().required(),
   })
   .required();
 
@@ -261,3 +262,22 @@ export const inputObjList = (leave : Leave) => [
     type: "text",
   },
 ];
+
+export const leaveTypes = [
+  {
+    name: "Educational",
+    value: "educational"
+  },
+  {
+    name: "Medical",
+    value: "medical"
+  },
+  {
+    name: "Casual",
+    value: "casual"
+  },
+  {
+    name: "Other",
+    value: "other"
+  },
+]

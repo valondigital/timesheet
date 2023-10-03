@@ -19,7 +19,6 @@ export const useCreateProject = () => {
   const toast = useToast();
   return useMutation(Services.createProject, {
     onError: (data: AxiosError) => {
-      console.log(data, "failed");
       toast({
         title: "Invalid Entries",
         description: "Please enter a valid name for your project",

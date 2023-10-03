@@ -26,7 +26,6 @@ const Index = () => {
 
   return (
     <>
-      {/* <TableTop onChange={handleInputChange} inputObj={tableTopInput} /> */}
       <Info>View all users and manage them</Info>
       {isLoading ? (
         <Box>...Loading</Box>

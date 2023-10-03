@@ -4,6 +4,7 @@ import { Params } from "components/types";
 import getURLParams from "utils/getUrlParams";
 import { PaginationState } from "@tanstack/react-table";
 
+const user = JSON.parse(localStorage.user);
 class Services {
   async getAllLeaveApplications(
     param: Record<string, string>,
@@ -21,19 +22,30 @@ class Services {
     return response.data as DefaultData;
   }
 
-  async createProject(payload: Params) {
+  async applyForLeave(payload: Params) {
     return axios({
       method: "POST",
-      url: endpoints.projects,
+      url: endpoints.leaveApplications,
       data: payload.data,
     });
   }
-  async getLeaveDetails(leaveId:string){
-    const response = await  axios({
+  async getLeaveDetails(leaveId: string) {
+    const response = await axios({
       method: "GET",
-      url: `${endpoints.leaveApplications}/${(leaveId)}`,
+      url: `${endpoints.leaveApplications}/${leaveId}`,
     });
-    return response?.data?.data?.leave as Leave
+    return response?.data?.data?.leave as Leave;
+  }
+  async updateLeave(leaveId: string, payload: Object) {
+    console.log(user.role, "************role")
+    const response = await axios({
+      method: "PATCH",
+      url: `${endpoints.leaveApplications}/${leaveId}/${
+        user.role === "admin" ? "admin-approval" : "hod-approval"
+      }`,
+      data: payload,
+    });
+    return response?.data as DefaultData;
   }
 }
 

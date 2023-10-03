@@ -8,11 +8,9 @@ import DynamicTable from "../../components/DynamicTable";
 import ModalComponent from "../../components/Modal";
 import generateInputs from "../../components/DynamicForm";
 import TableTop from "../../components/TableTop";
-import { FieldErrorsImpl, UseFormRegister, FieldError } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { columns, schema, tableTopInput, data } from "./helpers";
+import { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
+import { columns, schema, tableTopInput } from "./helpers";
 import { useGetAllProjects, useCreateProject } from "./hooks/queryHooks";
-import { useGetUsers } from "pages/tasks/useGetUsers";
 import { useGetAllClients } from "./../clients/hooks/queryHooks";
 import { PaginationState } from "@tanstack/react-table";
 
@@ -84,7 +82,6 @@ const Index = () => {
     formState: { errors },
   } = useForm<FormValues>({ resolver: yupResolver(schema) });
 
-  // const { mutate: activateAgent } = useActivateAgent(params);
 
   useEffect(() => {
     if (isSuccess) {

@@ -21,6 +21,7 @@ export const paths: Record<string, string> = {
   tasks: "/tasks",
   myTasks: "/my-tasks",
   leave: "/staff-leave",
+  applyLeave: "/staff-leave/apply",
   leaveHistory: '/leave-history',
   timesheet: "/timesheet",
   wallet: "/wallet",
@@ -56,6 +57,7 @@ export const NavNames = {
   timesheet: "My Timesheet",
   timesheetStats: "Clock In Statistics",
   leave: "All leave",
+  applyLeave: "Apply Leave",
   leaveHistory: "Leave History",
 
 };
@@ -130,6 +132,14 @@ export const pathObject = [
       icon: <FaBuromobelexperte fontSize={24} color="white" />,
       name: NavNames.leave,
       path: paths.leave,
+    },
+    sub: [],
+  },
+  {
+    main: {
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      name: NavNames.applyLeave,
+      path: paths.applyLeave,
     },
     sub: [],
   },

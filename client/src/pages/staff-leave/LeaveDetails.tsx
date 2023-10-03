@@ -7,19 +7,30 @@ import {
   Badge,
   Flex,
   Button,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  Select,
 } from "@chakra-ui/react";
+import ModalComponent from "components/Modal";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import generateGridInputs from "./components/GridForm";
 import LeaveDetailsHeader from "./components/Jumbotron";
-import { inputObjList } from "./helpers";
-import { useGetLeaveDetails } from "./hooks/queryHooks";
+import { inputObjList, statusTypes } from "./helpers";
+import { useGetLeaveDetails, useUpdateLeaveStatus } from "./hooks/queryHooks";
 
 const LeaveDetails = () => {
   const { leaveId } = useParams() as { leaveId: string };
   const { data: leave } = useGetLeaveDetails(leaveId);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [status, setStatus] = useState("approved");
+  const { mutate } = useUpdateLeaveStatus();
+  
 
-  const handleModal = () => {
-    console.log("Modal button clicked!!!");
+  const handleLeaveUpdate = () => {
+    mutate([leaveId, { status }]);
+    onClose();
   };
 
   if (leave) {
@@ -40,9 +51,9 @@ const LeaveDetails = () => {
               <Textarea value={leave?.reason} size="lg" />
             </GridItem>
           </Grid>
-          <Flex justifyContent="space-between" my={8} maxWidth="50%">
-            <Text>
-              <strong>HOD Approval:</strong>{" "}
+          <Flex justifyContent="space-between" my={8} maxWidth="60%">
+            <Text fontSize="md">
+              <strong>Leave Status From HOD</strong>{" "}
               <Badge
                 colorScheme={
                   leave.hodApproval?.status === "approved" ? "green" : "red"
@@ -51,7 +62,7 @@ const LeaveDetails = () => {
                 {leave.hodApproval?.status}
               </Badge>
             </Text>
-            <Text>
+            <Text fontSize="md" fontWeight="medium">
               <strong>Admin Approval:</strong>{" "}
               <Badge
                 colorScheme={
@@ -61,31 +72,40 @@ const LeaveDetails = () => {
                 {leave.adminApproval?.status}
               </Badge>
             </Text>
-            <Button variant="primary" size="sm" onClick={handleModal}>
+            <Button variant="primary" size="sm" onClick={onOpen}>
               Take Action
             </Button>
           </Flex>
-          {/* <ModalComponent
-            title="Create Project"
+          <ModalComponent
+            title="Update Task Status"
             isOpen={isOpen}
             onClose={onClose}
+            size="md"
             button={
               <Button
                 variant="secondary"
-                onClick={handleSubmit(onSubmit)}
+                onClick={handleLeaveUpdate}
                 type="submit"
-                isLoading={createProjectLoading}
+                size="sm"
               >
                 Submit
               </Button>
             }
           >
-            <form onSubmit={handleSubmit(onSubmit)}>
-              {inputObjList(register, errors).map((input) =>
-                generateInputs(input)
-              )}
+            <form onSubmit={handleLeaveUpdate}>
+              <FormControl id="status">
+                <FormLabel>Status</FormLabel>
+                <Select
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  {statusTypes.map((item) => (
+                    <option value={item.value}>{item.label}</option>
+                  ))}
+                </Select>
+              </FormControl>
             </form>
-          </ModalComponent> */}
+          </ModalComponent>
         </Box>
       </>
     );
