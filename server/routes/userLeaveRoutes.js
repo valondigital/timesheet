@@ -16,7 +16,7 @@ router
   .route('/')
   .get(
     protectRoute,
-    restrictTo('admin', 'super-admin'),
+    restrictTo('admin', 'super-admin', 'hod'),
     getAllLeaveApplications
   )
   .post(protectRoute, applyForLeave);
@@ -25,7 +25,7 @@ router
   .route('/:id')
   .get(
     protectRoute,
-    restrictTo('admin', 'super-admin'),
+    restrictTo('admin', 'super-admin', 'hod'),
     getLeaveApplicationDetails
   );
 router.route('/:id/hod-approval').patch(protectRoute, updateLeaveStatusByHod);

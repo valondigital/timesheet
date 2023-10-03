@@ -139,7 +139,7 @@ exports.updateLeaveStatusByAdmin = catchAsync(async (req, res, next) => {
 
   if (leaveApplication.hodApproval.status !== 'approved') {
     return res.status(403).json({
-      message: `Leave application not approved by ${department.hod.firstName} ${department.hod.lastName}`,
+      message: `Leave application has not yet been approved by ${department.hod.firstName} ${department.hod.lastName}`,
     });
   }
 
