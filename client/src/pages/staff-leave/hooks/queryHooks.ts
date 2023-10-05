@@ -20,6 +20,16 @@ export const useGetAllLeaveApplications = (
   );
 };
 
+export const useGetLeaveHistory = (
+  payload: Record<string, string>,
+  pageProps: PaginationState
+) => {
+  return useQuery<DefaultData, ErrorObj>(
+    ["allProjects", { ...payload, ...pageProps }],
+    () => Services.getLeaveHistory(payload, pageProps)
+  );
+};
+
 export const useGetLeaveDetails = (leaveId: string) => {
   return useQuery<Leave, ErrorObj>(["leaveDetails"], () =>
     Services.getLeaveDetails(leaveId)

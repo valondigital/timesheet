@@ -75,7 +75,7 @@ export const pathObject = [
     main: {
       name: NavNames.timesheet,
       path: paths.timesheet,
-      icon: <FaShopify fontSize={24} color="white" />,
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -83,7 +83,7 @@ export const pathObject = [
     main: {
       name: NavNames.timesheetStats,
       path: paths.clockInStats,
-      icon: <BiWallet fontSize={24} color="white" />,
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -91,7 +91,7 @@ export const pathObject = [
     main: {
       name: NavNames.users,
       path: paths.users,
-      icon: <RiUserSearchLine fontSize={24} color="white" />,
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -99,7 +99,7 @@ export const pathObject = [
     main: {
       name: NavNames.clients,
       path: paths.clients,
-      icon: <RiUserSearchLine fontSize={24} color="white" />,
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -107,7 +107,7 @@ export const pathObject = [
     main: {
       name: NavNames.tasks,
       path: paths.tasks,
-      icon: <FaTasks fontSize={24} color="white" />,
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -115,7 +115,7 @@ export const pathObject = [
     main: {
       name: NavNames.myTasks,
       path: paths.myTasks,
-      icon: <FaTasks fontSize={24} color="white" />,
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -123,7 +123,7 @@ export const pathObject = [
     main: {
       name: NavNames.projects,
       path: paths.projects,
-      icon: <BiTimeFive fontSize={24} color="white" />,
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -143,14 +143,6 @@ export const pathObject = [
     },
     sub: [],
   },
-  // {
-  //   main: {
-  //     icon: <FaBuromobelexperte fontSize={24} color="white" />,
-  //     name: NavNames.leave,
-  //     path: paths.leave,
-  //   },
-  //   sub: [],
-  // },
   {
     main: {
       icon: <FaBuromobelexperte fontSize={24} color="white" />,

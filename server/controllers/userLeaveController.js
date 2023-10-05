@@ -74,6 +74,30 @@ exports.getAllLeaveApplications = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getUserLeaveHistory = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(
+    UserLeave.find({ applicant: req.user }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitField()
+    .paginate();
+
+  const LeaveApplications = await features.query;
+  const totalElements = await UserLeave.countDocuments();
+  const pageSize = req.query.size ? Number(req.query.size) : 10;
+  const totalPages = Math.ceil(totalElements / pageSize);
+
+  res.status(200).json({
+    status: 'success',
+    results: LeaveApplications.length,
+    totalElements,
+    totalPages,
+    data: LeaveApplications,
+  });
+});
+
 exports.getLeaveApplicationDetails = catchAsync(async (req, res, next) => {
   const leaveApplication = await UserLeave.findById(req.params.id);
 

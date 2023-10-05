@@ -6,6 +6,7 @@ const endpoints = {
   tasks: '/tasks',
   users: '/users',
   leaveApplications: '/leave-applications',
+  leaveHistory: '/leave-applications/leave-history',
   clockInStatus: '/check-all-users-clock-in-status',
   usersClockInStatus: '/users/checkClockInStatus',
   timelogs: '/timelogs',

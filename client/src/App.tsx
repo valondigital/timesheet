@@ -22,6 +22,7 @@ import { UserDetailsProvider } from "setup/app-context-manager/UserDetailsContex
 import TaskDetails from "pages/tasks/TaskDetails";
 import LeaveDetails from "pages/staff-leave/LeaveDetails";
 import NewLeave from "pages/staff-leave/NewLeave";
+import LeaveHistory from './pages/staff-leave/LeaveHistory';
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
           <Route path={paths.addUser} element={<SignUp />} />
           <Route path={paths.projects} element={<Projects />} />
           <Route path={paths.clients} element={<Clients />} />
+          <Route path={paths.leaveHistory} element={<LeaveHistory />} />
           <Route path={paths.tasks}>
             <Route index element={<Tasks />} />
             <Route path=":taskId" element={<TaskDetails />} />

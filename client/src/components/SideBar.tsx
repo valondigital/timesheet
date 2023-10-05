@@ -32,7 +32,7 @@ const Sidebar = () => {
         "Projects",
         "All Tasks",
         "Clock In Statistics",
-        "All Leave"
+        "All leave"
       ].includes(item.main.name)
     );
   });

@@ -26,7 +26,13 @@ const LeaveDetails = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [status, setStatus] = useState("approved");
   const { mutate } = useUpdateLeaveStatus();
-  
+  const user = JSON.parse(localStorage.user);
+
+  const isAdminOrHod = () => {
+    return user.role === "admin" || user.role === "hod";
+  };
+
+  console.log({ isAdminOrHod });
 
   const handleLeaveUpdate = () => {
     mutate([leaveId, { status }]);
@@ -72,12 +78,14 @@ const LeaveDetails = () => {
                 {leave.adminApproval?.status}
               </Badge>
             </Text>
-            <Button variant="primary" size="sm" onClick={onOpen}>
-              Take Action
-            </Button>
+            {isAdminOrHod() && (
+              <Button variant="primary" size="sm" onClick={onOpen}>
+                Take Action
+              </Button>
+            )}
           </Flex>
           <ModalComponent
-            title="Update Task Status"
+            title="Update Leave Application Status"
             isOpen={isOpen}
             onClose={onClose}
             size="md"

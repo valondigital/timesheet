@@ -1,6 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import * as yup from "yup";
-import { Icon } from "@chakra-ui/react";
+import { Box, Icon } from "@chakra-ui/react";
 import { FiEye, FiMoreHorizontal, FiTrash } from "react-icons/fi";
 import {
   calculateDateDifference,
@@ -56,17 +56,23 @@ export const columns = (
   navigate: NavigateFunction
 ): ITDataColumnDef<ITData>[] => {
   return [
-    columnHelper.accessor("applicant", {
-      header: "Staff Name",
-      cell: (info) => {
-        const firstName = info.getValue<Record<string, string>>()?.firstName;
-        const lastName = info.getValue<Record<string, string>>()?.lastName;
-        return `${firstName} ${lastName}`;
-      },
-    }),
     columnHelper.accessor("leaveType", {
       header: "Leave Type",
       cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("startLeaveDate", {
+      header: "Date From",
+      cell: (info) => {
+        const value = info.getValue<string>();
+        return formatDateWithoutTime(value) || "Not yet";
+      },
+    }),
+    columnHelper.accessor("endLeaveDate", {
+      header: "Date To",
+      cell: (info) => {
+        const value = info.getValue<string>();
+        return formatDateWithoutTime(value) || "Not yet";
+      },
     }),
     columnHelper.accessor("createdAt", {
       header: "Applied Date",
@@ -96,23 +102,12 @@ export const columns = (
         const id: string = typeof originalId === "string" ? originalId : "";
 
         return (
-          <Menu size="sm">
-            <MenuButton p={0} as={Button}>
-              <Center>
-                <FiMoreHorizontal />
-              </Center>
-            </MenuButton>
-            <MenuList>
-              <MenuItem minH="48px" onClick={() => navigate(id)}>
-                <Icon as={FiEye} mr={4} />
-                <span>View</span>
-              </MenuItem>
-              <MenuItem minH="48px">
-                <Icon as={FiTrash} mr={4} />
-                <span>Delete</span>
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <Box
+            cursor="pointer"
+            onClick={() => navigate(`/staff-leave/${id}`)}
+          >
+            <Icon as={FiEye} mr={4} />
+          </Box>
         );
       },
     }),
