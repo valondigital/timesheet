@@ -3,12 +3,32 @@ import {
   FaBuromobelexperte,
   FaDashcube,
   FaMinus,
+  FaPencilRuler,
   FaShopify,
-  FaTasks,
+  // FaTasks,
   FaTimesCircle,
 } from "react-icons/fa";
 import { AiOutlineFileText, AiOutlineSmallDash } from "react-icons/ai";
 import { RiUserSearchLine } from "react-icons/ri";
+import {
+  FaHome,
+  FaUser,
+  FaClock,
+  FaSignOutAlt,
+  FaBriefcase,
+  FaUserFriends,
+  FaTasks,
+  FaListAlt,
+  FaUsers,
+  FaCalendar,
+  FaChartBar,
+  FaUmbrella,
+  FaFileAlt,
+  FaCalendarPlus,
+  FaHistory,
+  FaCalendarDay,
+  FaPlusCircle,
+} from "react-icons/fa";
 
 export const paths: Record<string, string> = {
   home: "/",
@@ -22,7 +42,7 @@ export const paths: Record<string, string> = {
   myTasks: "/my-tasks",
   leave: "/staff-leave",
   applyLeave: "/staff-leave/apply",
-  leaveHistory: '/leave-history',
+  leaveHistory: "/leave-history",
   publicHolidays: "/public-holidays",
   addPublicHoliday: "/public-holidays/add",
   timesheet: "/timesheet",
@@ -62,13 +82,13 @@ export const NavNames = {
   applyLeave: "Apply Leave",
   leaveHistory: "Leave History",
   publicHolidays: "Public Holidays",
-  addPublicHoliday: "Add Public Holiday"
+  addPublicHoliday: "Add Public Holiday",
 };
 
 export const pathObject = [
   {
     main: {
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaHome fontSize={24} color="white" />,
       name: NavNames.dashboard,
       path: paths.home,
     },
@@ -78,7 +98,7 @@ export const pathObject = [
     main: {
       name: NavNames.timesheet,
       path: paths.timesheet,
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaCalendar fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -86,7 +106,7 @@ export const pathObject = [
     main: {
       name: NavNames.timesheetStats,
       path: paths.clockInStats,
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaCalendarDay fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -94,7 +114,7 @@ export const pathObject = [
     main: {
       name: NavNames.users,
       path: paths.users,
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaUsers fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -102,7 +122,7 @@ export const pathObject = [
     main: {
       name: NavNames.clients,
       path: paths.clients,
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaUserFriends fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -110,7 +130,7 @@ export const pathObject = [
     main: {
       name: NavNames.tasks,
       path: paths.tasks,
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaPencilRuler fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -118,7 +138,7 @@ export const pathObject = [
     main: {
       name: NavNames.myTasks,
       path: paths.myTasks,
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaTasks fontSize={24} color="white" />,
     },
     sub: [],
   },
@@ -126,13 +146,13 @@ export const pathObject = [
     main: {
       name: NavNames.projects,
       path: paths.projects,
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaBriefcase fontSize={24} color="white" />,
     },
     sub: [],
   },
   {
     main: {
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaUmbrella fontSize={24} color="white" />,
       name: NavNames.leave,
       path: paths.leave,
     },
@@ -140,7 +160,7 @@ export const pathObject = [
   },
   {
     main: {
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaFileAlt fontSize={24} color="white" />,
       name: NavNames.applyLeave,
       path: paths.applyLeave,
     },
@@ -148,7 +168,7 @@ export const pathObject = [
   },
   {
     main: {
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaCalendarDay fontSize={24} color="white" />,
       name: NavNames.leaveHistory,
       path: paths.leaveHistory,
     },
@@ -156,15 +176,15 @@ export const pathObject = [
   },
   {
     main: {
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaHistory fontSize={24} color="white" />,
       name: NavNames.publicHolidays,
-      path: paths.publicHolidays
+      path: paths.publicHolidays,
     },
     sub: [],
   },
   {
     main: {
-      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      icon: <FaCalendarPlus fontSize={24} color="white" />,
       name: NavNames.addPublicHoliday,
       path: paths.addPublicHoliday,
     },

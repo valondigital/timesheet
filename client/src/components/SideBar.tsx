@@ -24,6 +24,7 @@ const Sidebar = () => {
         "All Tasks",
         "Clock In Statistics",
         "All leave",
+        "Add Public Holiday",
       ].includes(item.main.name)
     );
   });

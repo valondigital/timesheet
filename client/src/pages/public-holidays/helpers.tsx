@@ -85,19 +85,19 @@ export const columns = (
       header: "Description",
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor((row) => row.id, {
-      header: "Actions",
-      cell: (info) => {
-        const originalId = info.row.original._id;
-        const id: string = typeof originalId === "string" ? originalId : "";
+    // columnHelper.accessor((row) => row.id, {
+    //   header: "Actions",
+    //   cell: (info) => {
+    //     const originalId = info.row.original._id;
+    //     const id: string = typeof originalId === "string" ? originalId : "";
 
-        return (
-          <Box cursor="pointer" onClick={() => navigate(`/staff-leave/${id}`)}>
-            <Icon as={FiEye} mr={4} />
-          </Box>
-        );
-      },
-    }),
+    //     return (
+    //       <Box cursor="pointer" onClick={() => navigate(`/staff-leave/${id}`)}>
+    //         <Icon as={FiEye} mr={4} />
+    //       </Box>
+    //     );
+    //   },
+    // }),
   ];
 };
 
