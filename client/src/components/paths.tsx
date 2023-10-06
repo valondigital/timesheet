@@ -23,6 +23,8 @@ export const paths: Record<string, string> = {
   leave: "/staff-leave",
   applyLeave: "/staff-leave/apply",
   leaveHistory: '/leave-history',
+  publicHolidays: "/public-holidays",
+  addPublicHoliday: "/public-holidays/add",
   timesheet: "/timesheet",
   wallet: "/wallet",
   forgotPassword: "/forgotpassword",
@@ -59,7 +61,8 @@ export const NavNames = {
   leave: "All leave",
   applyLeave: "Apply Leave",
   leaveHistory: "Leave History",
-
+  publicHolidays: "Public Holidays",
+  addPublicHoliday: "Add Public Holiday"
 };
 
 export const pathObject = [
@@ -148,6 +151,22 @@ export const pathObject = [
       icon: <FaBuromobelexperte fontSize={24} color="white" />,
       name: NavNames.leaveHistory,
       path: paths.leaveHistory,
+    },
+    sub: [],
+  },
+  {
+    main: {
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      name: NavNames.publicHolidays,
+      path: paths.publicHolidays
+    },
+    sub: [],
+  },
+  {
+    main: {
+      icon: <FaBuromobelexperte fontSize={24} color="white" />,
+      name: NavNames.addPublicHoliday,
+      path: paths.addPublicHoliday,
     },
     sub: [],
   },

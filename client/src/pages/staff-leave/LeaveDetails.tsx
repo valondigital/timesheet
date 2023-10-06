@@ -32,8 +32,6 @@ const LeaveDetails = () => {
     return user.role === "admin" || user.role === "hod";
   };
 
-  console.log({ isAdminOrHod });
-
   const handleLeaveUpdate = () => {
     mutate([leaveId, { status }]);
     onClose();

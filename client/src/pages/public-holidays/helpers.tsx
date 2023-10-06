@@ -1,6 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import * as yup from "yup";
-import { Box, Icon } from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import { FiEye, FiMoreHorizontal, FiTrash } from "react-icons/fi";
 import {
   calculateDateDifference,
@@ -19,12 +19,11 @@ import {
 } from "@chakra-ui/react";
 
 export const statusTypes = [
-  { value: "approved", color: "green", label: "Approved" },
-  { value: "pending", color: "yellow", label: "Pending" },
-  { value: "declined", color: "red", label: "Declined" },
+  { value: true, color: "green", label: "True" },
+  { value: false, color: "red", label: "False" },
 ];
 
-export const getStatusTag = (value: string | undefined) => {
+export const getStatusTag = (value: boolean | undefined) => {
   let color;
   statusTypes.forEach((status) => {
     if (status.value === value) {
@@ -41,10 +40,10 @@ export const getStatusTag = (value: string | undefined) => {
 export const schema = yup
   .object()
   .shape({
-    startLeaveDate: yup.date().required(),
-    endLeaveDate: yup.date().required(),
-    reason: yup.string().required(),
-    leaveType: yup.string().required(),
+    name: yup.string().required(),
+    date: yup.date().required(),
+    notes: yup.string().required(),
+    country: yup.string().required(),
   })
   .required();
 
@@ -56,44 +55,35 @@ export const columns = (
   navigate: NavigateFunction
 ): ITDataColumnDef<ITData>[] => {
   return [
-    columnHelper.accessor("leaveType", {
-      header: "Leave Type",
+    columnHelper.accessor("name", {
+      header: "Holiday",
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor("startLeaveDate", {
-      header: "Date From",
+    columnHelper.accessor("date", {
+      header: "Date",
       cell: (info) => {
         const value = info.getValue<string>();
         return formatDateWithoutTime(value) || "Not yet";
       },
     }),
-    columnHelper.accessor("endLeaveDate", {
-      header: "Date To",
+    columnHelper.accessor("country", {
+      header: "Region",
       cell: (info) => {
-        const value = info.getValue<string>();
-        return formatDateWithoutTime(value) || "Not yet";
+        const value = info.getValue<Record<string, string>>();
+        return (
+          <Flex>
+            <Text mr={4}>{value?.name}</Text>
+            <Image
+              src={value?.flagUrl}
+              sx={{ width: "40px", objectFit: "contain" }}
+            />
+          </Flex>
+        );
       },
     }),
-    columnHelper.accessor("createdAt", {
-      header: "Applied Date",
-      cell: (info) => {
-        const value = info.getValue<string>();
-        return formatDate(value) || "Not yet";
-      },
-    }),
-    columnHelper.accessor("hodApproval", {
-      header: "HOD Status",
-      cell: (info) => {
-        const status = info.getValue<Record<string, string>>()?.status;
-        return getStatusTag(status);
-      },
-    }),
-    columnHelper.accessor("adminApproval", {
-      header: "Admin Status",
-      cell: (info) => {
-        const status = info.getValue<Record<string, string>>()?.status;
-        return getStatusTag(status);
-      },
+    columnHelper.accessor("notes", {
+      header: "Description",
+      cell: (info) => info.getValue(),
     }),
     columnHelper.accessor((row) => row.id, {
       header: "Actions",
@@ -105,79 +95,6 @@ export const columns = (
           <Box cursor="pointer" onClick={() => navigate(`/staff-leave/${id}`)}>
             <Icon as={FiEye} mr={4} />
           </Box>
-        );
-      },
-    }),
-  ];
-};
-
-export const allLeaveColumns = (
-  navigate: NavigateFunction
-): ITDataColumnDef<ITData>[] => {
-  return [
-    columnHelper.accessor("leaveType", {
-      header: "Leave Type",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("startLeaveDate", {
-      header: "Date From",
-      cell: (info) => {
-        const value = info.getValue<string>();
-        return formatDateWithoutTime(value) || "Not yet";
-      },
-    }),
-    columnHelper.accessor("endLeaveDate", {
-      header: "Date To",
-      cell: (info) => {
-        const value = info.getValue<string>();
-        return formatDateWithoutTime(value) || "Not yet";
-      },
-    }),
-    columnHelper.accessor("createdAt", {
-      header: "Applied Date",
-      cell: (info) => {
-        const value = info.getValue<string>();
-        return formatDate(value) || "Not yet";
-      },
-    }),
-    columnHelper.accessor("hodApproval", {
-      header: "HOD Status",
-      cell: (info) => {
-        const status = info.getValue<Record<string, string>>()?.status;
-        return getStatusTag(status);
-      },
-    }),
-    columnHelper.accessor("adminApproval", {
-      header: "Admin Status",
-      cell: (info) => {
-        const status = info.getValue<Record<string, string>>()?.status;
-        return getStatusTag(status);
-      },
-    }),
-    columnHelper.accessor((row) => row.id, {
-      header: "Actions",
-      cell: (info) => {
-        const originalId = info.row.original._id;
-        const id: string = typeof originalId === "string" ? originalId : "";
-
-        return (
-          <Menu size="sm">
-            <MenuButton p={0} as={Button}>
-              <Center>
-                <FiMoreHorizontal />
-              </Center>
-            </MenuButton>
-            <MenuList>
-              <MenuItem minH="48px" onClick={() => navigate(id)}>
-                <Icon as={FiEye} mr={4} />
-                <span>View</span>
-              </MenuItem>
-              <MenuItem minH="48px">
-                <Icon as={FiTrash} mr={4} />
-                <span>Delete</span>
-              </MenuItem>
-            </MenuList>
-          </Menu>
         );
       },
     }),

@@ -6,10 +6,12 @@ const endpoints = {
   tasks: '/tasks',
   users: '/users',
   leaveApplications: '/leave-applications',
+  publicHolidays: '/public-holidays',
   leaveHistory: '/leave-applications/leave-history',
   clockInStatus: '/check-all-users-clock-in-status',
   usersClockInStatus: '/users/checkClockInStatus',
   timelogs: '/timelogs',
+  countries: 'https://restcountries.com/v3.1/all',
   userTasks: (id: string) => `/users/${id}/tasks`
 };
 

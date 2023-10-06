@@ -54,11 +54,12 @@ const Sidebar = () => {
             width: "8px",
           },
           "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "gray.400", // Customize the thumb color
-            borderRadius: "full", // Round the thumb
+            backgroundColor: "gray.400",
+            borderRadius: "full",
           },
           "&::-webkit-scrollbar-track": {
-            backgroundColor: "gray.200", // Customize the track color
+            backgroundColor: "transparent"
+
           },
         }}
       >

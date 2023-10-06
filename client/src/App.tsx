@@ -9,7 +9,8 @@ import Projects from "./pages/projects";
 import Clients from "./pages/clients";
 import Tasks from "./pages/tasks";
 import AllLeave from "./pages/staff-leave";
-
+import AllPublicHolidays from "./pages/public-holidays"
+import NewPublicHoliday from "./pages/public-holidays/NewPublicHoliday"
 import AssignedTasks from "./pages/tasks/AssignedTasks";
 import Users from "./pages/users";
 import ClockInStats from "./pages/stats";
@@ -52,6 +53,10 @@ function App() {
             <Route index element={<AllLeave />} />
             <Route path=":leaveId" element={<LeaveDetails />} />
             <Route path="apply" element={<NewLeave />} />
+          </Route>
+          <Route path={paths.publicHolidays}>
+            <Route index element={<AllPublicHolidays />} />
+            <Route path="add" element={<NewPublicHoliday />} />
           </Route>
           <Route path={paths.myTasks} element={<AssignedTasks />} />
           <Route path={paths.users} element={<Users />} />

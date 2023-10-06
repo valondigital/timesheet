@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { PaginationState } from "@tanstack/react-table";
 import DynamicTable from "components/DynamicTable"
-import { useGetAllLeaveApplications } from "./hooks/queryHooks";
+import { useGetAllPublicHolidays } from "./hooks/queryHooks";
 import { Info } from "components/Info";
 import { Box } from "@chakra-ui/react";
-import { allLeaveColumns, columns } from "./helpers";
+import { columns } from "./helpers";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -19,7 +19,7 @@ const Index = () => {
 
   const navigate = useNavigate()
 
-  const { data, isLoading } = useGetAllLeaveApplications(
+  const { data, isLoading } = useGetAllPublicHolidays(
     topInputObj,
     pageProps
   );
@@ -30,7 +30,7 @@ const Index = () => {
       {isLoading ? (
         <Box>...Loading</Box>
       ) : (
-        <DynamicTable columns={allLeaveColumns(navigate)} data={data?.data ?? []} />
+        <DynamicTable columns={columns(navigate)} data={data?.data ?? []} />
       )}
     </>
   );
