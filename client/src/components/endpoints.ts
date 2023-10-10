@@ -12,6 +12,7 @@ const endpoints = {
   usersClockInStatus: '/users/checkClockInStatus',
   timelogs: '/timelogs',
   countries: 'https://restcountries.com/v3.1/all',
+  departments: '/departments',
   userTasks: (id: string) => `/users/${id}/tasks`
 };
 

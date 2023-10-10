@@ -8,6 +8,8 @@ import Profile from "./pages/profile";
 import Projects from "./pages/projects";
 import Clients from "./pages/clients";
 import Tasks from "./pages/tasks";
+import Departments from "./pages/departments";
+import DepartmentDetails from "./pages/departments/Department";
 import AllLeave from "./pages/staff-leave";
 import AllPublicHolidays from "./pages/public-holidays"
 import NewPublicHoliday from "./pages/public-holidays/NewPublicHoliday"
@@ -48,6 +50,10 @@ function App() {
           <Route path={paths.tasks}>
             <Route index element={<Tasks />} />
             <Route path=":taskId" element={<TaskDetails />} />
+          </Route>
+          <Route path={paths.departments}>
+            <Route index element={<Departments />} />
+            <Route path=":deptId" element={<DepartmentDetails />} />
           </Route>
           <Route path={paths.leave}>
             <Route index element={<AllLeave />} />

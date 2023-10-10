@@ -1,33 +1,17 @@
-import { BiTimeFive, BiWallet } from "react-icons/bi";
-import {
-  FaBuromobelexperte,
-  FaDashcube,
-  FaMinus,
-  FaPencilRuler,
-  FaShopify,
-  // FaTasks,
-  FaTimesCircle,
-} from "react-icons/fa";
-import { AiOutlineFileText, AiOutlineSmallDash } from "react-icons/ai";
-import { RiUserSearchLine } from "react-icons/ri";
+import { FaPencilRuler } from "react-icons/fa";
+import { RiBuilding2Fill } from "react-icons/ri";
 import {
   FaHome,
-  FaUser,
-  FaClock,
-  FaSignOutAlt,
   FaBriefcase,
   FaUserFriends,
   FaTasks,
-  FaListAlt,
   FaUsers,
   FaCalendar,
-  FaChartBar,
   FaUmbrella,
   FaFileAlt,
   FaCalendarPlus,
   FaHistory,
   FaCalendarDay,
-  FaPlusCircle,
 } from "react-icons/fa";
 
 export const paths: Record<string, string> = {
@@ -35,6 +19,7 @@ export const paths: Record<string, string> = {
   login: "/login",
   profile: "/profile",
   users: "/users",
+  departments: "/departments",
   addUser: "/addUser",
   projects: "/projects",
   clients: "/clients",
@@ -70,6 +55,7 @@ export const NavNames = {
   dashboard: "Dashboard",
   profile: "Profile",
   timeclock: "Time Clock",
+  departments: "Departments",
   logout: "Log Out",
   projects: "Projects",
   clients: "Clients",
@@ -115,6 +101,14 @@ export const pathObject = [
       name: NavNames.users,
       path: paths.users,
       icon: <FaUsers fontSize={24} color="white" />,
+    },
+    sub: [],
+  },
+  {
+    main: {
+      name: NavNames.departments,
+      path: paths.departments,
+      icon: <RiBuilding2Fill fontSize={24} color="white" />,
     },
     sub: [],
   },

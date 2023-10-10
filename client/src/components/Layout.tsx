@@ -1,10 +1,11 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Box, Flex } from "@chakra-ui/react";
 import Sidebar from "./SideBar";
 import PageScaffold from "./PageScaffold";
 
 const Layout = () => {
+  const [loggedIn, setLoggedIn] = useState(true)
   return (
     <Flex>
       <Box bg="light.blue" w="15vw" minH="100vh" position="fixed">

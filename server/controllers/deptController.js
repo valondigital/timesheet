@@ -25,9 +25,7 @@ exports.getAllDepartments = catchAsync(async (req, res) => {
   res.status(200).json({
     status: 'success',
     results: Departments.length,
-    data: {
-      Departments,
-    },
+    data: Departments,
   });
 });
 

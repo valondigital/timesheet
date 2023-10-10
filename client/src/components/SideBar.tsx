@@ -44,11 +44,11 @@ const Sidebar = () => {
 
   return (
     <Box py={4}>
-      <Box height="10vh">
+      <Box height="10vh" mb={4}>
         <Image src={logo} height="100%" width="60%" />
       </Box>
       <Box
-        height="90vh"
+        height="70vh"
         overflowY="auto"
         sx={{
           "&::-webkit-scrollbar": {
