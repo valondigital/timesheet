@@ -11,7 +11,7 @@ import {
 
 
 type Props = {
-  title: string;
+  title?: string;
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void,
@@ -23,7 +23,7 @@ function ModalComponent(props : Props) {
       <Modal size={props?.size ?? 'md'} isOpen={props.isOpen} onClose={props.onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign='center'>{props.title}</ModalHeader>
+          {props.title && <ModalHeader textAlign='center'>{props.title}</ModalHeader>}
           <ModalCloseButton />
           <ModalBody maxH='70vh' overflow='auto'>
               {props.children}
