@@ -28,7 +28,7 @@ export const useSignIn = () => {
     },
     onSuccess: (data: AxiosResponse) => {
       const currentTime = new Date().getTime();
-      const expirationTime = currentTime + 5000;
+      const expirationTime = currentTime + 60000;
       localStorage.setItem("jwt_token", data.data.token);
       localStorage.setItem("userId", data.data.data.user._id);
       localStorage.setItem("user", JSON.stringify(data.data.data.user));

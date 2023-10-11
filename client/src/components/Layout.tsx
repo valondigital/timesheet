@@ -17,26 +17,19 @@ import paths from "./paths";
 
 const Layout = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [count, setCount] = useState(15);
+  const [count, setCount] = useState(60);
   const [hasCheckedInactivity, setHasCheckedInactivity] = useState(false);
   const queryClient = useQueryClient();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleLogout =() => {
-    localStorage.removeItem('jwt_token');
-    localStorage.removeItem('userId');
+  const handleLogout = () => {
+    localStorage.removeItem("jwt_token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("expireTime");
     queryClient.cancelQueries();
     queryClient.clear();
     navigate(paths.login);
-  }
-
-  useEffect(() => {
-    if (!hasCheckedInactivity) {
-      // If inactivity has not been checked, run the check
-      checkForInactivity();
-      setHasCheckedInactivity(true);
-    }
-  }, [hasCheckedInactivity]);
+  };
 
   const checkForInactivity = () => {
     const expireTime = Number(localStorage.getItem("expireTime"));
@@ -45,9 +38,16 @@ const Layout = () => {
     }
   };
 
+  useEffect(() => {
+    if (!hasCheckedInactivity) {
+      checkForInactivity();
+      setHasCheckedInactivity(true);
+    }
+  }, [hasCheckedInactivity]);
+
   const updateExpireTime = () => {
     const currentTime = new Date().getTime();
-    const expirationTime = currentTime + 5000;
+    const expirationTime = currentTime + 60000;
     localStorage.setItem("expireTime", expirationTime.toString());
   };
 
@@ -66,6 +66,13 @@ const Layout = () => {
     };
   }, []);
 
+
+  const handleKeepMeSignedIn = () => {
+    updateExpireTime()
+    setCount(10)
+    setHasCheckedInactivity(false);
+    onClose()
+  }
   useEffect(() => {
     const interval = setInterval(() => {
       checkForInactivity();
@@ -81,8 +88,8 @@ const Layout = () => {
         if (count === 0) {
           clearInterval(timer);
           onClose();
-          handleLogout()
-          setHasCheckedInactivity(false)
+          handleLogout();
+          setHasCheckedInactivity(false);
         }
       }, 1000);
 
@@ -109,11 +116,16 @@ const Layout = () => {
         onClose={onClose}
         button={
           <Stack direction="row" spacing={4} align="center">
-            <Button onClick={handleLogout} type="submit" variant="primary" bg="red">
+            <Button
+              onClick={handleLogout}
+              type="submit"
+              variant="primary"
+              bg="red"
+            >
               Log Out
             </Button>
             <Button
-              onClick={onClose}
+              onClick={handleKeepMeSignedIn}
               type="submit"
               variant="primary"
               bg="green"
