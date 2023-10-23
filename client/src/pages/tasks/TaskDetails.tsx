@@ -18,9 +18,10 @@ import { useGetTaskDetails, useUpdateTask } from "./hooks/queryHooks";
 import { getStatusTag } from "./helpers";
 import ModalComponent from "components/Modal";
 
-const TaskDetailsPage = () => { const { taskId } = useParams() as { taskId: string };
+const TaskDetailsPage = () => {
+  const { taskId } = useParams() as { taskId: string };
   const { data } = useGetTaskDetails(taskId);
- 
+
   const [status, setStatus] = useState(data?.status);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { mutate } = useUpdateTask();

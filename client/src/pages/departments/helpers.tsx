@@ -22,11 +22,8 @@ import { NavigateFunction } from "react-router-dom";
 export const schema = yup
   .object()
   .shape({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    email: yup.string().required(),
-    phone: yup.number().required(),
-    country: yup.string().required(),
+    name: yup.string().required(),
+    description: yup.string().required(),
   })
   .required();
 
@@ -85,64 +82,31 @@ export type FormValues = {
 };
 
 export const inputObjList = (
-  register: UseFormRegister<IFormValues>,
-  errors: FieldErrorsImpl<IFormValues>
+  register: UseFormRegister<DFormValues>,
+  errors: FieldErrorsImpl<DFormValues>
 ) => [
   {
-    name: "firstName",
-    label: "First Name",
+    name: "name",
+    label: "Name",
     placeholder: "",
     type: "text",
-    register: register("firstName", {
-      required: "Please enter a valid task name",
+    register: register("name", {
+      required: "Please enter a valid department name",
     }),
-    isInvalid: !!errors.firstName,
-    error: errors?.firstName,
+    isInvalid: !!errors.name,
+    error: errors?.name,
   },
   {
-    name: "lastName",
-    label: "Last Name",
+    name: "description",
+    label: "Description",
     placeholder: "",
     type: "text",
-    register: register("lastName", {
-      required: "Please enter a valid task name",
+    register: register("description", {
+      required: "Please enter a valid description",
     }),
-    isInvalid: !!errors.lastName,
-    error: errors?.lastName,
-  },
-  {
-    name: "email",
-    label: "Email",
-    placeholder: "",
-    type: "email",
-    register: register("email", {
-      required: "Please enter a valid task name",
-    }),
-    isInvalid: !!errors.email,
-    error: errors?.email,
-  },
-  {
-    name: "phone",
-    label: "Phone",
-    placeholder: "",
-    type: "number",
-    register: register("phone", {
-      required: "Please enter a valid Mobile Number",
-    }),
-    isInvalid: !!errors.phone,
-    error: errors?.phone,
-  },
-  {
-    name: "country",
-    label: "Country",
-    placeholder: "",
-    type: "text",
-    register: register("country", {
-      required: "Please enter a valid country",
-    }),
-    isInvalid: !!errors.country,
-    error: errors?.country,
-  },
+    isInvalid: !!errors.description,
+    error: errors?.description,
+  }
 ];
 
 export const tableTopInput = [

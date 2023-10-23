@@ -20,13 +20,14 @@ const Hamburger = () => {
     localStorage.removeItem("jwt_token");
     localStorage.removeItem("user");
     localStorage.removeItem("userId");
+    localStorage.removeItem("expireTime");
     navigate("/login");
   };
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
         <Box display="flex" alignItems="center">
-          <Avatar src="https://bit.ly/sage-adebayo" mr={4} />
+          <Avatar src={user.imgUrl ?? "https://bit.ly/sage-adebayo"} mr={4} />
           {username}
         </Box>
       </MenuButton>

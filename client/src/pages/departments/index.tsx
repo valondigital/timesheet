@@ -42,7 +42,7 @@ const Index = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormValues>({ resolver: yupResolver(schema) });
+  } = useForm<DFormValues>({ resolver: yupResolver(schema) });
 
   // const { mutate: activateAgent } = useActivateAgent(params);
 
@@ -57,11 +57,11 @@ const Index = () => {
     setOpen(false);
   };
 
-  const onSubmit = (values: IFormValues) => {
+  const onSubmit = (values: DFormValues) => {
     createUser({ data: values });
   };
 
-  const topTableButtons = [{ name: "Add User", onClick: onOpen }];
+  const topTableButtons = [{ name: "Create Department", onClick: onOpen }];
 
   const handleInputChange = (
     name: string,
@@ -106,7 +106,7 @@ const Index = () => {
         />
       )}
       <ModalComponent
-        title="Add User"
+        title="Create Department"
         isOpen={isOpen}
         onClose={onClose}
         button={

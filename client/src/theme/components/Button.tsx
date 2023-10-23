@@ -36,7 +36,6 @@ export const ButtonStyle = {
     secondary: (props: StyleFunctionProps) => ({
       bg: props.theme.colors[props.colorMode].primary,
       color: props.theme.colors[props.colorMode].text,
-      width: '127px',
       borderRadius: "5px",
       ':hover': {
         bg: props.theme.colors[props.colorMode].primary,

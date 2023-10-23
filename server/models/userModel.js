@@ -63,6 +63,9 @@ const userSchema = new mongoose.Schema(
       enum: ['employee', 'admin', 'super-admin', 'project-manager', 'hod'],
       default: 'employee',
     },
+    imgUrl: {
+      type: String,
+    },
     department: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Department',

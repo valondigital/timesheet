@@ -78,6 +78,12 @@ type IFormValues = {
   country: string;
 };
 
+type DFormValues = {
+  name: string;
+  description: string;
+  hod?: string;
+};
+
 type CFormValues = {
   firstName: string;
   lastName: string;
@@ -123,6 +129,25 @@ interface Task {
     description: string;
   };
   assignedTo: {
+    role: string;
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    passwordChangedAt: string;
+    country: string;
+    id: string;
+  };
+  id: string;
+}
+
+interface Dept {
+  status: string;
+  _id: string;
+  name: string;
+  description: string;
+  hod: {
     role: string;
     _id: string;
     firstName: string;

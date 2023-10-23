@@ -16,9 +16,9 @@ export const useGetAllDepartments = (
   );
 };
 
-export const useGetTaskDetails = (taskId: string) => {
-  return useQuery<Task, ErrorObj>(["taskDetails"], () =>
-    Services.getTaskDetails(taskId)
+export const useGetDeptDetails = (deptId: string) => {
+  return useQuery<Dept, ErrorObj>(["deptDetails"], () =>
+    Services.getDeptDetails(deptId)
   );
 };
 
@@ -59,7 +59,7 @@ export const useUpdateTask = () => {
 
 export const useCreateDepartment = () => {
   const toast = useToast();
-  return useMutation(Services.createTask, {
+  return useMutation(Services.createDepartment, {
     onError: (data: AxiosError) => {
       console.log(data, "failed");
       toast({
@@ -74,8 +74,8 @@ export const useCreateDepartment = () => {
     onSuccess: (data: AxiosResponse) => {
       console.log(data, "success");
       toast({
-        title: "Task Created",
-        description: "Task created successfully",
+        title: "Department Created",
+        description: "Department created successfully",
         status: "success",
         duration: 3000,
         isClosable: true,

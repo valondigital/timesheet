@@ -15,7 +15,6 @@ class Services {
       method: "GET",
       url: `${endpoints.departments}${params}`,
     });
-    console.log(response?.data, "*******************departments!!!")
     return response?.data as DefaultData;
   }
 
@@ -31,20 +30,20 @@ class Services {
     return response?.data as DefaultData;
   }
 
-  async createTask(payload: Params) {
+  async createDepartment(payload: Params) {
     return axios({
       method: "POST",
-      url: endpoints.tasks,
+      url: endpoints.departments,
       data: payload.data,
     });
   }
 
-  async getTaskDetails(taskId: string) {
+  async getDeptDetails(deptId: string) {
     const response = await  axios({
       method: "GET",
-      url: `${endpoints.tasks}/${(taskId)}`,
+      url: `${endpoints.departments}/${(deptId)}`,
     });
-    return response?.data?.data as Task
+    return response?.data?.data as Dept
   };
 
   async updateTask(taskId: string, payload: Object) {

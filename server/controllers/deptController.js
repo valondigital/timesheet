@@ -44,9 +44,7 @@ exports.updateDepartment = catchAsync(async (req, res) => {
 
   res.status(200).json({
     status: 'Department updated successfully',
-    data: {
-      department,
-    },
+    data: department,
   });
 });
 
@@ -78,8 +76,6 @@ exports.getDepartmentDetails = catchAsync(async (req, res, next) => {
   }
   res.status(200).json({
     status: 'success',
-    data: {
-      department,
-    },
+    data: department,
   });
 });
