@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import { Box, Flex } from "@chakra-ui/react";
 import Sidebar from "./SideBar";
 import PageScaffold from "./PageScaffold";
-import { useIdleTimer } from 'react-idle-timer'
 const Layout = () => {
 
   
